@@ -1,0 +1,28 @@
+---
+- name: Install Packages
+  hosts: web1
+  become: yes
+  tasks:
+  - name: update the kernel
+    command: yum -y update kernel
+      
+  - name: install kernel-devel kernel-headers dkms gcc gcc-c++
+    command: yum -y install kernel-devel kernel-headers dkms gcc gcc-c++
+      
+  - name: install mailx git sqlite-devel libmcrypt-devel openssl-devel psmisc
+    command: yum -y install mailx git sqlite-devel libmcrypt-devel openssl-devel psmisc
+      
+  - name: remove mariadb-libs
+    command: yum -y remove mariadb-libs
+      
+  - name: download mysql from repo
+    command: yum -y localinstall http://dev.mysql.com/get/mysql57-community-release-el7-7.noarch.rpm
+      
+  - name: install postfix
+    command: yum -y install postfix
+      
+  - name: install mysql-community-devel mysql-community-server
+    command: yum -y install mysql-community-devel mysql-community-server
+      
+  - name: start mysqld
+    command: systemctl start mysqld

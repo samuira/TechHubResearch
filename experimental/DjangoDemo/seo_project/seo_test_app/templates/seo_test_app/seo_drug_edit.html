@@ -1,0 +1,33 @@
+{% extends "seo_test_app/base.html" %}
+
+{% block content %}
+    <div class="container">
+	    <div class="row">
+             <form name="form" action="" method="post">
+                 {% csrf_token %}
+                  <div class="form-group">
+                    <label for="title">Name</label>
+                    <input type="text" class="form-control" id="title" name="title" value="{{ drug.title }}">
+                  </div>
+                  <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea class="form-control" rows="5" id="description" name="description">{{ drug.description }}</textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="type">Type</label>
+                    <input type="text" class="form-control" id="type" name="type" value="{{ drug.type }}">
+                  </div>
+                  <div class="form-group">
+                      <label for="dorl">Select one</label>
+                      <select class="form-control" id="dorl" disabled>
+                        <option selected>Drug</option>
+                        <option>Liquor</option>
+                      </select>
+                  </div>
+
+                  <button type="submit" class="btn btn-primary">Submit</button>
+             </form>
+        </div>
+    </div>
+
+{% endblock content %}

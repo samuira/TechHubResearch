@@ -1,0 +1,62 @@
+---
+- name: Install Packages
+  hosts: web1
+  become: yes
+  vars:
+    root_db_password: karakira
+
+  tasks:
+    # - name: download remi-mysql repo
+    #   get_url: url=http://rpms.famillecollet.com/enterprise/6/test/x86_64/compat-mysql55-5.5.11-1.el6.remi.x86_64.rpm dest=/tmp/compat-mysql5.5.11.remi.rpm
+    #   tags: mysql
+
+    # - name: install remi-mysql repo
+    #   shell: /bin/rpm -Uvh /tmp/compat-mysql5.5.11.remi.rpm
+    #   register: remi_mysql_repo_result
+    #   failed_when: "'conflict' in remi_mysql_repo_result.stderr"
+    #   tags: mysql
+
+    - name: adding the repo
+      yum: name=http://dev.mysql.com/get/mysql57-community-release-el7-9.noarch.rpm state=present
+
+    - name: install MySQL
+      yum: 
+        name: ['mysql', 'mysql-server'] 
+        state: present
+      tags:
+      - mysql
+      - mysql-service
+
+    - name: run MySQL
+      service: name=mysqld state=started enabled=yes
+      tags:
+      - mysql
+      - mysql-service
+
+    - name: install required python MySQLdb lib to create databases and users
+      yum: 
+        name: ['gcc-c++', 'MySQL-python'] 
+        state: present
+      tags:
+      - mysql
+      - mysql-dependencies
+
+    # - name: Add .my.cnf
+    #   template: src=my.cnf dest=/root/.my.cnf owner=root group=root mode=0600
+
+    - name: create db user
+      mysql_user: name=root password=""  update_password=on_create  config_file=my.cnf state=present
+
+    - name: restart mysql
+      service: name=mysqld state=restarted
+
+    - name: create db user
+      mysql_user: name=karakira password=karakira login_user=root login_password=karakira priv='*.*:ALL,GRANT' host=localhost state=present
+      
+    - name: create mysql database
+      mysql_db: name=karakira state=present
+      
+
+  handlers:
+    - name: restart mysql
+      service: name=mysqld state=restarted

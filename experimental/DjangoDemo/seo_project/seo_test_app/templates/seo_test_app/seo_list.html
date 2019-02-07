@@ -1,0 +1,55 @@
+{% extends "seo_test_app/base.html" %}
+
+{% block content %}
+<div class="container" xmlns="http://www.w3.org/1999/html">
+	    <div class="row">
+            <a href="/seo_create" class="btn btn-primary pull-right"> Add+ </a>
+            </br></br></br>
+            <table id="drug" class="table table-bordered">
+               <thead>
+                   <th>Name</th>
+                   <th>Description</th>
+                   <th>Type</th>
+                   <th>Action</th>
+               </thead>
+                <tbody>
+                    {% for drug in drug %}
+                    <tr>
+                        <td>{{ drug.title }}</td>
+                        <td>{{ drug.description }}</td>
+                        <td>{{ drug.type }}</td>
+                        <td>
+                            <a href="seo_drug_edit/{{drug.id}}" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
+                            <a href="seo_drug_delete/{{drug.id}}" class="btn btn-danger" onclick="return confirm('Are you sure?')"><span class="glyphicon glyphicon-trash"></span></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </br>
+            </br>
+            <table id="liquor" class="table table-bordered">
+               <thead>
+                   <th>Name</th>
+                   <th>Description</th>
+                   <th>Type</th>
+                   <th>Action</th>
+               </thead>
+                <tbody>
+                    {% for liquor in liquor %}
+                    <tr>
+                        <td>{{ liquor.title }}</td>
+                        <td>{{ liquor.description }}</td>
+                        <td>{{ liquor.type }}</td>
+                        <td>
+                            <a href="seo_liquor_edit/{{liquor.id}}" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span></a>
+                            <a href="seo_liquor_delete/{{liquor.id}}" class="btn btn-danger" onclick="return confirm('Are you sure?')"><span class="glyphicon glyphicon-trash"></span></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock content %}

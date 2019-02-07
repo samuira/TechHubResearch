@@ -1,0 +1,187 @@
+---
+- name: Install Packages
+  hosts: web1
+  become: yes
+    
+  tasks:
+    - name: Install MySQL 5.7 repo
+      yum: name=http://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm state=present
+    - name: install python3 repo
+      yum: name=https://centos7.iuscommunity.org/ius-release.rpm state=present
+    
+    - name: Install epel-release
+      yum: 
+        name: epel-release
+
+    - name: install python3 
+      yum: 
+        name: python36u
+
+    - name: Install mysql-community-server
+      yum: 
+        name: mysql-community-server
+        state: present
+
+    - name: Install mysql-community-client
+      yum: 
+        name: mysql-community-client
+      
+
+    - name: Install MySQL-python
+      yum: 
+        name: MySQL-python
+        state: present
+
+
+    - name: Install gcc
+      yum: 
+        name: gcc
+        state: present
+        
+
+
+    - name: Install gcc-c++
+      yum: 
+        name: gcc-c++
+        state: present
+
+    - name: Install kernel-devel
+      yum: 
+        name: kernel-devel
+        state: present
+
+
+    - name: Install libxslt-devel
+      yum: 
+        name: libxslt-devel
+        state: present
+
+
+    - name: Install libffi-devel
+      yum: 
+        name: libffi-devel
+        state: present
+
+    - name: Install openssl-devel
+      yum: 
+        name: openssl-devel
+        state: present
+
+    - name: Install python-devel
+      yum: 
+        name: python36u-devel
+        state: present
+
+    - name: Install mysql-community-devel
+      yum: 
+        name: mysql-community-devel
+        state: present
+
+    - name: Install mysql-devel
+      yum: 
+        name: mysql-devel
+        state: present
+
+
+    - name: Start the MySQL service
+      service: name=mysqld state=started enabled=true
+
+    - name: Change mysql root password and keep track in 
+      shell: |
+        password_match=`awk '/A temporary password is generated for/ {a=$0} END{ print a }' /var/log/mysqld.log | awk '{print $(NF)}'`
+        echo $password_match
+        sudo mysql -uroot -p$password_match --connect-expired-password -e "SET GLOBAL validate_password_length=4; SET GLOBAL validate_password_policy=LOW; SET password for root@localhost=password('karakira'); UNINSTALL PLUGIN validate_password;"
+        echo "[client]"
+        user=root
+        password=karakira > /root/.my.cnf
+      args:
+        creates: /root/.my.cnf
+      register: change_temp_pass
+      notify: restart mysqld
+
+    - meta: flush_handlers
+    - debug:
+        var: change_temp_pass
+
+
+    - name: restart the MySQL service
+      service: name=mysqld state=restarted
+
+    - name: create db user
+      mysql_user: name=karakira password=karakira login_user=root login_password=karakira priv='*.*:ALL,GRANT' host=localhost state=present
+      
+    - name: create mysql database
+      mysql_db: name=karakira login_user=karakira login_password=karakira state=present
+
+    - name: Copy database dump file
+      copy:
+        src: db_dump/KaraKiar_Dump20181106.sql
+        dest: /tmp
+
+    - name: Restore database
+      mysql_db:
+        name: karakira
+        login_user: karakira
+        login_password: karakira
+        state: import
+        target: /tmp/KaraKiar_Dump20181106.sql
+    
+    - name: create /var/www/html/backup/karakira directory
+      file: path=/var/www/html/backup/karakira state=directory
+
+
+    - name: upgrade all packages
+      yum:
+        name: '*'
+        state: latest
+
+    - name: install makecache,pip, virtualenv, setuptools, unzip
+      yum: 
+        name: ['python-pip','python36u-setuptools', 'unzip']
+    
+    - name: Install virtualenv via pip
+      pip:
+        name: virtualenv
+
+
+    - name: Extract karakira.zip into /var/www/html/backup
+      unarchive:
+        src: /home/vagrant/code/karakira.zip
+        dest: /var/www/html/backup/karakira
+
+    - name: creating virtual env karakira
+      pip:
+        virtualenv: /var/www/html/backup/karakira_env
+        requirements: /var/www/html/backup/karakira/requirement.txt
+        virtualenv_python: python3.6
+        extra_args: --default-timeout=100
+
+    - name: creating virtual env kpi
+      pip:
+        virtualenv: /var/www/html/backup/karakira_env
+        requirements: /var/www/html/backup/karakira/kpi/requirement.txt
+        virtualenv_python: python3.6
+        extra_args: --default-timeout=100
+
+    - name: run KPI migrate -o True
+      shell: |
+        source /var/www/html/backup/karakira_env/bin/activate
+        pip install -e .
+        KPI migrate -o True
+      args:
+        chdir: /var/www/html/backup/karakira/kpi/
+      tags: run_kpi_migrate
+
+    - name: run karakira
+      shell: |
+        source /var/www/html/backup/karakira_env/bin/activate
+        nohup python manage.py runserver 0.0.0.0:8081 & > out.txt
+        exit 0
+      args:
+        chdir: /var/www/html/backup/karakira/
+      tags:
+        - run_karakira
+
+  handlers:
+    - name: restart mysqld
+      service: name=mysqld state=restarted

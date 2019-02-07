@@ -1,0 +1,77 @@
+version: "3.1"
+
+volumes:
+    db-data:
+
+services:
+
+
+  postgres:
+    container_name: docker_demo-postgres
+    image: 'postgres:9.5'
+    ports:
+      - '5432'
+    volumes:
+      - db-data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_PASSWORD=admin#123
+      - POSTGRES_DATABASE=test_db
+      - POSTGRES_USER=admin
+
+
+  django:
+    build: ./
+    container_name: docker_demo-django
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/application
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#version: '3'
+#
+#services:
+#  db:
+#    image: mysql:5.7
+##    volumes:
+##      - dbdata:/var/lib/mysql
+#    restart: always
+#    environment:
+#      MYSQL_ROOT_PASSWORD: root
+#      MYSQL_DATABASE: dockerdb
+#      MYSQL_USER: root
+#    ports:
+#        - "33061:3306"
+#
+#
+#
+#  web:
+#    build: .
+#    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+#    container_name: docker_project
+#    volumes:
+#      - .:/docker_project
+#    ports:
+#      - "8000:8000"

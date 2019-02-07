@@ -1,0 +1,58 @@
+---
+- name: Install Packages
+  hosts: web1
+  become: yes
+
+  tasks:  
+    - name: adding the repo
+      yum: name=http://dev.mysql.com/get/mysql57-community-release-el7-9.noarch.rpm state=present
+
+    - name: install MySQL
+      yum: 
+        name: ['mysql', 'mysql-server'] 
+        state: present
+      tags:
+      - mysql
+      - mysql-service
+
+    - name: run MySQL
+      service: name=mysqld state=started enabled=yes
+      tags:
+      - mysql
+      - mysql-service
+
+    - name: install required python MySQLdb lib to create databases and users
+      yum: 
+        name: ['gcc-c++', 'mysql-libs', 'mysql-connector-java', 'MySQL-python', 'mysql-devel'] 
+        state: present
+
+    - name: ensure mysql started
+      service: name=mysqld state=started enabled=yes
+
+    # - name: stop mysql
+    #   service: name=mysqld state=stopped enabled=no
+
+    # - name: setting the root password
+    #   shell: mysqld --init-file=mysql-init
+
+
+    - name: update mysql root password for all root accounts from local servers
+      mysql_user: name=root
+                  host="{{item}}"
+                  password="root"
+                  priv=*.*:ALL,GRANT
+                  login_user=root
+                  login_password="root"
+                  state=present
+
+      with_items:
+          - web1
+          - 127.0.0.1
+          - ::1
+          - localhost
+    - name :  ensure mysql started
+      service: name=mysqld state=started enabled=yes
+    - name: copy .cnf file to root
+      copy: src=my.cnf dest=/root/ owner=root mode=600
+    - name: Change Root password
+      mysql_user: name=root password="root" update_password=always
