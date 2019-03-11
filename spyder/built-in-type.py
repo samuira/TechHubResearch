@@ -3,7 +3,7 @@
 
 class BuiltInType:
     """
-    
+    Built in Types
     """
     def __init__(self):
         pass
@@ -624,6 +624,9 @@ class BuiltInType:
         print("'c' not in my_list:",'c' not in my_list)
         for fruit in ['apple','banana','mango']:
             print("I like",fruit)
+        print("enumerate({'a':1,'b':2}):",enumerate({'a':1,'b':2}))
+        for i,j in enumerate({'a':1,'b':2}):
+            print(i,j)
         return
         
     def immutable_sequence_test(self, *args, **kwargs):
@@ -2020,15 +2023,1827 @@ class BuiltInType:
         # to the character at the same position in y. If there is a third 
         # argument, it must be a string, whose characters will be mapped to 
         # None in the result.
+        # example dictionary
+        print('"abc".maketrans({"a": "123", "b": "456", "c": "789"}):',
+        "abc".maketrans({"a": "123", "b": "456", "c": "789"}))
+        # example dictionary
+        print('"abc".maketrans({97: "123", 98: "456", 99: "789"}):',
+        "abc".maketrans({97: "123", 98: "456", 99: "789"}))
+        # first string
+        print('"abc".maketrans("abc", "def"):',"abc".maketrans("abc", "def"))
+        # example dictionary
+        try:
+            print("abc".maketrans("abc", "defghi"))
+        except Exception as e:
+            print(e)
+        # Here, first the mapping between the two strings firstString and 
+        # secondString are created.
+        # Then, the third argument thirdString resets the mapping of each 
+        # character in it to None and also creates new mapping for 
+        # non-existent characters.
+        # In this case, thirdString resets the mapping of 97 ('a') and 
+        # 98 ('b') to None, and also creates a new mapping for 100 ('d') 
+        # mapped to None.
+        print('"abc".maketrans("abc", "def", "abd"):',
+        "abc".maketrans("abc", "def", "abd"))
+        
+        # str.partition(sep)
+        print('\n# str.partition(sep)')
+        # Split the string at the first occurrence of sep, and return a 
+        # 3-tuple containing the part before the separator, the separator 
+        # itself, and the part after the separator. If the separator is not 
+        # found, return a 3-tuple containing the string itself, followed by 
+        # two empty strings.
+        # 'is' separator is found
+        print('"Python is fun".partition('is '):',
+        "Python is fun".partition('is '))
+        # 'not' separator is not found
+        print('"Python is fun".partition(\'not \'):',
+        "Python is fun".partition('not '))
+        # splits at first occurence of 'is'
+        print('"Python is fun, isn\'t it".partition(\'is\'):',
+        "Python is fun, isn't it".partition('is'))
+            
+        # str.replace(old, new[, count])
+        print('\n# str.replace(old, new[, count])')
+        # Return a copy of the string with all occurrences of substring old 
+        # replaced by new. If the optional argument count is given, only the 
+        # first count occurrences are replaced.
+        print ("'cold, cold heart'.replace('cold', 'hurt'):",
+        'cold, cold heart'.replace('cold', 'hurt'))
+        '''only two occurences of 'let' is replaced'''
+        print("'let it be, let it be, let it be'.replace('let', \"don't let\", 2):",
+        'let it be, let it be, let it be'.replace('let', "don't let", 2))
+        song = 'cold, cold heart'
+        replaced_song =  song.replace('o', 'e')
+        # The original string is unchanged
+        print ('Original string:', song)
+        print ('Replaced string:', replaced_song)
+        song = 'let it be, let it be, let it be'
+        # maximum of 0 substring is replaced
+        # returns copy of the original string
+        print(song.replace('let', 'so', 0))
+        
+        # str.rfind(sub[, start[, end]])
+        print('\n# str.rfind(sub[, start[, end]])')
+        # Return the highest index in the string where substring sub is found, 
+        # such that sub is contained within s[start:end]. Optional arguments 
+        # start and end are interpreted as in slice notation. Return -1 on 
+        # failure.
+        quote = 'Let it be, let it be, let it be'
+        print('quote:',quote)
+        result = quote.rfind('let it')
+        print("Substring 'let it':", result)
+        result = quote.rfind('small')
+        print("Substring 'small ':", result)
+        result = quote.rfind('be,')
+        if result != -1:
+            print("Highest index where 'be,' occurs:", result)
+        else:
+            print("Doesn't contain substring")
 
+        # Substring is searched in 'hings with great love'
+        print("'Do small things with great love'.rfind('things', 10):",
+        'Do small things with great love'.rfind('things', 10))
+        
+        # Substring is searched in ' small things with great love' 
+        print("'Do small things with great love'.rfind('t', 2):",
+        'Do small things with great love'.rfind('t', 2))
+        # Substring is searched in 'hings with great lov'
+        print("'Do small things with great love'.rfind('o small ', 10, -1)",
+        'Do small things with great love'.rfind('o small ', 10, -1))
+        # Substring is searched in 'll things with'
+        print("'Do small things with great love'.rfind('th', 6, 20):",
+        'Do small things with great love'.rfind('th', 6, 20))
+        
+        # str.rindex(sub[, start[, end]])
+        print('\n# str.rindex(sub[, start[, end]])')
+        # The rindex() method returns the highest index of the substring 
+        # inside the string (if found).
+        # Like rfind() but raises ValueError when the substring sub is not 
+        # found.
+        quote = 'Let it be, let it be, let it be'
+        print('quote:',quote)
+        result = quote.rindex('let it')
+        print("Substring 'let it':", result)
+        try:
+            result = quote.rindex('small')
+            print("Substring 'small ':", result)
+        except Exception as e:
+            print(e)
+        quote = 'Do small things with great love'
+        print('quote:',quote)
+        # Substring is searched in ' small things with great love' 
+        print("quote.rindex('t', 2):",quote.rindex('t', 2))
+        # Substring is searched in 'll things with'
+        print("quote.rindex('th', 6, 20):",quote.rindex('th', 6, 20))
+        try:
+            # Substring is searched in 'hings with great lov'
+            print(quote.rindex('o small ', 10, -1))
+        except Exception as e:
+            print(e)
+            
+        # str.rjust(width[, fillchar])
+        print('\n# str.rjust(width[, fillchar])')
+        # Return the string right justified in a string of length width. 
+        # Padding is done using the specified fillchar (default is an ASCII 
+        # space). The original string is returned if width is less than or 
+        # equal to len(s).
+        # example string
+        # print right justified string
+        print("'cat'.rjust(5):",'cat'.rjust(5))
+        # example string
+        # print right justified string
+        print("'cat'.rjust(5, '*'):",'cat'.rjust(5, '*'))
+        
+        # str.rpartition(sep)
+        print('\n# str.rpartition(sep)')
+        # Split the string at the last occurrence of sep, and return a 3-tuple 
+        # containing the part before the separator, the separator itself, and 
+        # the part after the separator. If the separator is not found, return 
+        # a 3-tuple containing two empty strings, followed by the string 
+        # itself.
+        # 'is' separator is found
+        print('"Python is fun".rpartition("is "):',
+        "Python is fun".rpartition("is "))
+        # 'not' separator is not found
+        print('"Python is fun".rpartition("not "):',
+        "Python is fun".rpartition("not "))
+        # splits at last occurence of 'is'
+        print('"Python is fun, isn\'t it".rpartition("is"):',
+        "Python is fun, isn't it".rpartition("is"))
+        
+        # str.rstrip([chars])
+        print('\n# str.rstrip([chars])')
+        # Return a copy of the string with trailing characters removed. The 
+        # chars argument is a string specifying the set of characters to be 
+        # removed. If omitted or None, the chars argument defaults to removing 
+        # whitespace. The chars argument is not a suffix; rather, all 
+        # combinations of its values are stripped.
+        print("'   spacious   '.rstrip():",'   spacious   '.rstrip())
+        print("'mississippi'.rstrip('ipz'):",'mississippi'.rstrip('ipz'))
+        # Leading whitepsace are removed
+        print("' this is good'.rstrip():",' this is good'.rstrip())
+        # Argument doesn't contain 'd'
+        # No characters are removed.
+        print("' this is good'.rstrip('si oo'):",
+        ' this is good'.rstrip('si oo'))
+        print("' this is good'.rstrip('sid oo'):",
+        ' this is good'.rstrip('sid oo'))
+        print("'www.programiz.com/'.rstrip('m/.'):",
+        'www.programiz.com/'.rstrip('m/.'))
+        
+        # str.split(sep=None, maxsplit=-1)
+        print('\n# str.split(sep=None, maxsplit=-1)')
+        # Return a list of the words in the string, using sep as the delimiter 
+        # string. If maxsplit is given, at most maxsplit splits are done 
+        # (thus, the list will have at most maxsplit+1 elements). If maxsplit 
+        # is not specified or -1, then there is no limit on the number of 
+        # splits (all possible splits are made).
+        # If sep is given, consecutive delimiters are not grouped together and 
+        # are deemed to delimit empty strings (for example, '1,,2'.split(',') 
+        # returns ['1', '', '2']). The sep argument may consist of multiple 
+        # characters (for example, '1<>2<>3'.split('<>') returns 
+        # ['1', '2', '3']). Splitting an empty string with a specified 
+        # separator returns [''].
+        print("'1,2,3'.split(','):",'1,2,3'.split(','))
+        print("'1,2,3'.split(',', maxsplit=1):",'1,2,3'.split(',', maxsplit=1))
+        print("'1,2,,3,'.split(','):",'1,2,,3,'.split(','))
+        # If sep is not specified or is None, a different splitting algorithm 
+        # is applied: runs of consecutive whitespace are regarded as a single 
+        # separator, and the result will contain no empty strings at the start 
+        # or end if the string has leading or trailing whitespace. 
+        # Consequently, splitting an empty string or a string consisting of 
+        # just whitespace with a None separator returns [].
+        print("'1 2 3'.split():",'1 2 3'.split())
+        print("'1 2 3'.split(maxsplit=1):",'1 2 3'.split(maxsplit=1))
+        print("'   1   2   3   '.split():",'   1   2   3   '.split())
+        
+        # splits at space
+        print("'Love thy neighbor'.split():",'Love thy neighbor'.split())
+        # splits at ','
+        print("'Milk, Chicken, Bread'.split(', '):",
+        'Milk, Chicken, Bread'.split(', '))
+        # Splitting at ':'
+        print("'Milk, Chicken, Bread'.split(':'):",
+        'Milk, Chicken, Bread'.split(':'))
+        # maxsplit: 2
+        print("'Milk, Chicken, Bread, Butter'.split(', ', 2):",
+        'Milk, Chicken, Bread, Butter'.split(', ', 2))
+        # maxsplit: 1
+        print("'Milk, Chicken, Bread, Butter'.split(', ', 1):",
+        'Milk, Chicken, Bread, Butter'.split(', ', 1))
+        # maxsplit: 5
+        print("'Milk, Chicken, Bread, Butter'.split(', ', 5):",
+        'Milk, Chicken, Bread, Butter'.split(', ', 5))
+        # maxsplit: 0
+        print("'Milk, Chicken, Bread, Butter'.split(', ', 0):",
+        'Milk, Chicken, Bread, Butter'.split(', ', 0))
+        
+        # str.splitlines([keepends])
+        print('\n# str.splitlines([keepends])')
+        # Return a list of the lines in the string, breaking at line 
+        # boundaries. Line breaks are not included in the resulting list 
+        # unless keepends is given and true.
+        # This method splits on the following line boundaries. In particular, 
+        # the boundaries are a superset of universal newlines.
+        
+        # Representation 	        Description
+        # \n 	                       Line Feed
+        # \r 	                       Carriage Return
+        # \r\n 	                  Carriage Return + Line Feed
+        # \v or \x0b 	             Line Tabulation
+        # \f or \x0c 	             Form Feed
+        # \x1c 	                  File Separator
+        # \x1d 	                  Group Separator
+        # \x1e 	                  Record Separator
+        # \x85 	                  Next Line (C1 Control Code)
+        # \u2028 	                  Line Separator
+        # \u2029 	                  Paragraph Separator
+        print("'ab c\\n\\nde fg\\rkl\\r\\n'.splitlines():",
+        'ab c\n\nde fg\rkl\r\n'.splitlines())
+        print("'ab c\\n\\nde fg\\rkl\\r\\n'.splitlines(keepends=True):",
+        'ab c\n\nde fg\rkl\r\n'.splitlines(keepends=True))
+        print('"".splitlines():',"".splitlines())
+        print('"One line\\n".splitlines():',"One line\n".splitlines())
+        print("''.split('\\n'):",''.split('\n'))
+        print("'Two lines\\n'.split('\\n'):",'Two lines\n'.split('\n'))
 
+        print("'Milk\\nChicken\\r\\nBread\\rButter'.splitlines():",
+        'Milk\nChicken\r\nBread\rButter'.splitlines())
+        print("'Milk\\nChicken\\r\\nBread\\rButter'.splitlines(True):",
+        'Milk\nChicken\r\nBread\rButter'.splitlines(True))
+        print("'Milk Chicken Bread Butter'.splitlines():",
+        'Milk Chicken Bread Butter'.splitlines())
+          
+        # str.startswith(prefix[, start[, end]])
+        print('\n# str.startswith(prefix[, start[, end]])')
+        # Return True if string starts with the prefix, otherwise return False. 
+        # prefix can also be a tuple of prefixes to look for. With optional 
+        # start, test string beginning at that position. With optional end, 
+        # stop comparing string at that position.
+        # returns False
+        print("'Python is easy to learn.'.startswith('is easy'):",
+        'Python is easy to learn.'.startswith('is easy'))
+        # returns True
+        print("'Python is easy to learn.'.startswith('Python is '):",
+        'Python is easy to learn.'.startswith('Python is '))
+        # returns True
+        print("'Python is easy to learn.'.startswith('Python is easy to learn.'):",
+        'Python is easy to learn.'.startswith('Python is easy to learn.'))
+        # start parameter: 7
+        # 'programming is easy.' string is searched
+        print('"Python programming is easy.".startswith("programming is", 7):',
+        "Python programming is easy.".startswith("programming is", 7))     
+        # start: 7, end: 18
+        # 'programming' string is searched
+        print('"Python programming is easy.".startswith("programming is", 7, 18):',
+        "Python programming is easy.".startswith("programming is", 7, 18))
+        print('"Python programming is easy.".startswith("program", 7, 18):',
+        "Python programming is easy.".startswith("program", 7, 18))
+        # If the string starts with any item of the tuple, startswith() 
+        # returns True. If not, it returns False
+        # prints True
+        print("'programming is easy'.startswith(('python', 'programming')):",
+        'programming is easy'.startswith(('python', 'programming')))
+        # prints False
+        print("'programming is easy'.startswith(('is', 'easy', 'java')):",
+        'programming is easy'.startswith(('is', 'easy', 'java')))  
+        # With start and end parameter
+        # 'is easy' string is checked
+        # prints False
+        print("'programming is easy'.startswith(('programming', 'easy'), 12, 19):",
+        'programming is easy'.startswith(('programming', 'easy'), 12, 19))
+        
+        # str.strip([chars])
+        print('\n# str.strip([chars])')
+        # Return a copy of the string with the leading and trailing characters 
+        # removed. The chars argument is a string specifying the set of 
+        # characters to be removed. If omitted or None, the chars argument 
+        # defaults to removing whitespace. The chars argument is not a prefix 
+        # or suffix; rather, all combinations of its values are stripped.
+        print("'   spacious   '.strip():",'   spacious   '.strip())
+        print("'www.example.com'.strip('cmowz.'):",
+        'www.example.com'.strip('cmowz.'))
+        print("'#....... Section 3.2.1 Issue #32 .......'.strip('.#! '):",
+        '#....... Section 3.2.1 Issue #32 .......'.strip('.#! '))
+        # Leading whitepsace are removed
+        print("' xoxo love xoxo   '.strip():",' xoxo love xoxo   '.strip())
+        print("' xoxo love xoxo   '.strip(' xoxoe'):",
+        ' xoxo love xoxo   '.strip(' xoxoe'))
+        # Argument doesn't contain space
+        # No characters are removed.
+        print("' xoxo love xoxo   '.strip('sti'):",
+        ' xoxo love xoxo   '.strip('sti'))
+        print("'android is awesome'.strip('an'):",
+        'android is awesome'.strip('an'))
+        
+        # str.swapcase()
+        print('\n# str.swapcase()')
+        # Return a copy of the string with uppercase characters converted to 
+        # lowercase and vice versa. Note that it is not necessarily true that 
+        # s.swapcase().swapcase() == s.
+        # example string
+        print('"THIS SHOULD ALL BE LOWERCASE.".swapcase():',
+        "THIS SHOULD ALL BE LOWERCASE.".swapcase())
+        print('"this should all be uppercase.".swapcase():',
+        "this should all be uppercase.".swapcase())
+        print('"ThIs ShOuLd Be MiXeD cAsEd.".swapcase():',
+        "ThIs ShOuLd Be MiXeD cAsEd.".swapcase())
+        
+        # str.title()
+        print('\n# str.title()')
+        # Return a titlecased version of the string where words start with an 
+        # uppercase character and the remaining characters are lowercase.
+        print("'Hello world'.title():",'Hello world'.title())
+        # The algorithm uses a simple language-independent definition of a 
+        # word as groups of consecutive letters. The definition works in many 
+        # contexts but it means that apostrophes in contractions and 
+        # possessives form word boundaries, which may not be the desired 
+        # result.
+        print('"they\'re bill\'s friends from the UK".title():',
+        "they're bill's friends from the UK".title())
+        # A workaround for apostrophes can be constructed using regular 
+        # expressions.
+        import re
+        def titlecase(s):
+            return re.sub(r"[A-Za-z]+('[A-Za-z]+)?",
+                          lambda mo: mo.group(0)[0].upper() +
+                            mo.group(0)[1:].lower(),s)
+        print(titlecase("they're bill's friends."))
+        print("'My favorite number is 25.'.title():",
+        'My favorite number is 25.'.title())
+        print("'234 k3l2 *43 fun'.title():",'234 k3l2 *43 fun'.title())
+        print('"He\'s an engineer, isn\'t he?".title():',
+        "He's an engineer, isn't he?".title())
+        
+        # str.translate(table)
+        print('\n# str.translate(table)')
+        # Return a copy of the string in which each character has been mapped 
+        # through the given translation table. The table must be an object 
+        # that implements indexing via __getitem__(), typically a mapping or 
+        # sequence. When indexed by a Unicode ordinal (an integer), the table 
+        # object can do any of the following: return a Unicode ordinal or a 
+        # string, to map the character to one or more other characters; return 
+        # None, to delete the character from the return string; or raise a 
+        # LookupError exception, to map the character to itself.
+        # You can use str.maketrans() to create a translation map from 
+        # character-to-character mappings in different formats.
+        # See also the codecs module for a more flexible approach to custom 
+        # character mappings.
+        # first string
+        print('translation = "abcdef".maketrans("abc", "ghi", "ab")')
+        translation = "abcdef".maketrans("abc", "ghi", "ab")
+        print('translation:',translation)
+        # translate string
+        print('"abcdef".translate(translation):',
+              "abcdef".translate(translation))
+
+        intab = "aeiou"
+        outtab = "12345"
+        trantab = ''.maketrans(intab, outtab,'akyth')
+        print(trantab)
+        s = "this is string example....wow!!!"
+        print(s,'\n',s.translate(trantab))
+        # translation table - a dictionary
+        translation = {97: None, 98: None, 99: 105}
+        string = "abcdef"
+        print("Original string:", string)
+        # translate string
+        print("Translated string:", string.translate(translation))
+        
+        # str.upper()
+        print('\n# str.upper()')
+        # Return a copy of the string with all the cased characters [4] 
+        # converted to uppercase. Note that s.upper().isupper() might be False 
+        # if s contains uncased characters or if the Unicode category of the 
+        # resulting character(s) is not “Lu” (Letter, uppercase), but e.g. 
+        # “Lt” (Letter, titlecase).
+        # The uppercasing algorithm used is described in section 3.13 of the 
+        # Unicode Standard.
+        # example string
+        print('"this should be uppercase!".upper():',
+        "this should be uppercase!".upper())
+        # string with numbers
+        # all alphabets whould be lowercase
+        print('"Th!s Sh0uLd B3 uPp3rCas3!".upper():',
+        "Th!s Sh0uLd B3 uPp3rCas3!".upper())
+        # first string
+        firstString = "python is awesome!"
+        # second string
+        secondString = "PyThOn Is AwEsOmE!"
+        print(firstString, secondString, sep='\n')
+        if(firstString.upper() == secondString.upper()):
+            print("The strings are same.")
+        else:
+            print("The strings are not same.")
+         
+        # str.zfill(width)
+        print('\n# str.zfill(width)')
+        # Return a copy of the string left filled with ASCII '0' digits to 
+        # make a string of length width. A leading sign prefix ('+'/'-') is 
+        # handled by inserting the padding after the sign character rather 
+        # than before. The original string is returned if width is less than 
+        # or equal to len(s).
+        print('"42".zfill(5):',"42".zfill(5))
+        print('"-42".zfill(5):',"-42".zfill(5))
+        print('"program is fun".zfill(15):',"program is fun".zfill(15))
+        print('"program is fun".zfill(20):',"program is fun".zfill(20))
+        print('"program is fun".zfill(10):',"program is fun".zfill(10))
+        print('"-290".zfill(8):',"-290".zfill(8))
+        print('"+290".zfill(8):',"+290".zfill(8))
+        print('"--random+text".zfill(20):',"--random+text".zfill(20))
+        
+        # printf-style String Formatting
+        print('\n# printf-style String Formatting')
+        print('%(language)s has %(number)03d quote types.' 
+              %{'language': "Python", "number": 2})
+        return
+        
+    def binary_sequence_test(self, *args, **kwargs):
+        """
+        The core built-in types for manipulating binary data are bytes and 
+        bytearray. They are supported by memoryview which uses the buffer 
+        protocol to access the memory of other binary objects without needing 
+        to make a copy.
+        """
+        # bytes([source[, encoding[, errors]]])
+        print('# bytes([source[, encoding[, errors]]])')
+        # Bytes objects are immutable sequences of single bytes. Since many 
+        # major binary protocols are based on the ASCII text encoding, bytes 
+        # objects offer several methods that are only valid when working with 
+        # ASCII compatible data and are closely related to string objects in a 
+        # variety of other ways.
+        # Firstly, the syntax for bytes literals is largely the same as that 
+        # for string literals, except that a b prefix is added.
+        # As with string literals, bytes literals may also use a r prefix to 
+        # disable processing of escape sequences. See String and Bytes 
+        # literals for more about the various forms of bytes literal, 
+        # including supported escape sequences.
+        # string with encoding 'utf-8'
+        print('bytes("Python is interesting.", "utf-8"):',
+              bytes("Python is interesting.", "utf-8"))
+        print('bytes(5):',bytes(5))
+        print('bytes([1, 2, 3, 4, 5]):',bytes([1, 2, 3, 4, 5]))
+        
+        # fromhex(string)
+        print('\n# fromhex(string)')
+        # This bytes class method returns a bytes object, decoding the given 
+        # string object. The string must contain two hexadecimal digits per 
+        # byte, with ASCII whitespace being ignored.
+        print("bytes.fromhex('2Ef0 F1f2  '):",bytes.fromhex('2Ef0 F1f2  '))
+        # A reverse conversion function exists to transform a bytes object 
+        # into its hexadecimal representation.
+        
+        # hex()
+        print('\n# hex()')
+        # Return a string object containing two hexadecimal digits for each 
+        # byte in the instance.
+        print("b'.\\xf0\\xf1\\xf2'.hex():",b'.\xf0\xf1\xf2'.hex())
+        
+        # bytearray([source[, encoding[, errors]]])
+        print('\n# bytearray([source[, encoding[, errors]]])')
+        # bytearray objects are a mutable counterpart to bytes objects.
+        # There is no dedicated literal syntax for bytearray objects, instead 
+        # they are always created by calling the constructor.
+        # Creating an empty instance: bytearray()
+        # Creating a zero-filled instance with a given length: bytearray(10)
+        # From an iterable of integers: bytearray(range(20))
+        # Copying existing binary data via the buffer protocol: bytearray(b'Hi!')
+        # string with encoding 'utf-8'
+        print('bytearray("Python is interesting.", "utf-8"):',
+              bytearray("Python is interesting.", "utf-8"))
+        print('bytearray(5):',bytearray(5))
+        print('bytearray([1, 2, 3, 4, 5]):',bytearray([1, 2, 3, 4, 5]))
+        
+        # fromhex(string)
+        print('\n# fromhex(string)')
+        # This bytearray class method returns bytearray object, decoding the 
+        # given string object. The string must contain two hexadecimal digits 
+        # per byte, with ASCII whitespace being ignored.
+        print("bytearray.fromhex('2Ef0 F1f2  '):",
+              bytearray.fromhex('2Ef0 F1f2  '))
+        # A reverse conversion function exists to transform a bytearray object 
+        # into its hexadecimal representation.
+        
+        # hex()
+        print('\n# hex()')
+        # Return a string object containing two hexadecimal digits for each 
+        # byte in the instance.
+        print("bytearray(b'.\\xf0\\xf1\\xf2').hex():",
+              bytearray(b'.\xf0\xf1\xf2').hex())
+        return
+        
+    def memoryview_test(self, *args, **kwargs):
+        """
+        memoryview objects allow Python code to access the internal data of an 
+        object that supports the buffer protocol without copying.
+        Create a memoryview that references obj. obj must support the buffer 
+        protocol. Built-in objects that support the buffer protocol include 
+        bytes and bytearray.
+        A memoryview has the notion of an element, which is the atomic memory 
+        unit handled by the originating object obj. For many simple types such 
+        as bytes and bytearray, an element is a single byte, but other types 
+        such as array.array may have bigger elements.
+        len(view) is equal to the length of tolist. If view.ndim = 0, the 
+        length is 1. If view.ndim = 1, the length is equal to the number of 
+        elements in the view. For higher dimensions, the length is equal to 
+        the length of the nested list representation of the view. The itemsize 
+        attribute will give you the number of bytes in a single element.
+        A memoryview supports slicing and indexing to expose its data. 
+        One-dimensional slicing will result in a subview.
+        """
+        v = memoryview(b'abcefg')
+        print('v[1]:',v[1])
+        print('v[-1]:',v[-1])
+        print('v[1:4]:', v[1:4])
+        print('bytes(v[1:4]):',bytes(v[1:4]))
+        import array
+        a = array.array('l', [-11111111, 22222222, -33333333, 44444444])
+        m = memoryview(a)
+        print('m[0]:',m[0])
+        print('m[-1]:',m[-1])
+        print('m[::2].tolist():',m[::2].tolist())
+        
+        data = bytearray(b'abcefg')
+        v = memoryview(data)
+        print('v.readonly:',v.readonly)
+        v[0] = ord(b'z')
+        print('data:',data)
+        v[1:4] = b'123'
+        print('data:',data)
+        try:
+            v[2:3] = b'spam'
+        except Exception as e:
+            print(e)
+        v[2:6] = b'spam'
+        print('data:',data)
+        v = memoryview(b'abcefg')
+        print("hash(v) == hash(b'abcefg'):",hash(v) == hash(b'abcefg'))
+        print("hash(v[2:4]) == hash(b'ce'):",hash(v[2:4]) == hash(b'ce'))
+        print("hash(v[::-2]) == hash(b'abcefg'[::-2]):",
+              hash(v[::-2]) == hash(b'abcefg'[::-2]))
+        
+        # __eq__(exporter)
+        print('\n# __eq__(exporter)')
+        # For the subset of struct format strings currently supported by 
+        # tolist(), v and w are equal if v.tolist() == w.tolist()
+        import array
+        a = array.array('I', [1, 2, 3, 4, 5])
+        b = array.array('d', [1.0, 2.0, 3.0, 4.0, 5.0])
+        c = array.array('b', [5, 3, 1])
+        x = memoryview(a)
+        y = memoryview(b)
+        print('x == a == y == b:',x == a == y == b)
+        print('x.tolist() == a.tolist() == y.tolist() == b.tolist():',
+              x.tolist() == a.tolist() == y.tolist() == b.tolist())
+        z = y[::-2]
+        print('z == c:',z == c)
+        print('z.tolist() == c.tolist():',z.tolist() == c.tolist())
+        
+        # If either format string is not supported by the struct module, then 
+        # the objects will always compare as unequal (even if the format 
+        # strings and buffer contents are identical)
+        from ctypes import BigEndianStructure, c_long
+        class BEPoint(BigEndianStructure):
+            _fields_ = [("x", c_long), ("y", c_long)]
+                        
+        point = BEPoint(100, 200)
+        a = memoryview(point)
+        b = memoryview(point)
+        print('a == point:',a == point)
+        print('a == b:',a == b)
+        
+        # tobytes()
+        print('\n# tobytes()')
+        # Return the data in the buffer as a bytestring. This is equivalent to 
+        # calling the bytes constructor on the memoryview.
+        m = memoryview(b"abc")
+        print('m.tobytes():',m.tobytes())
+        print('bytes(m):',bytes(m))
+        
+        # hex()
+        print('\n# hex()')
+        # Return a string object containing two hexadecimal digits for each 
+        # byte in the buffer.
+        m = memoryview(b"abc")
+        print('m.hex():',m.hex())
+        
+        # tolist()
+        print('\n# tolist()')
+        # Return the data in the buffer as a list of elements.
+        print("memoryview(b'abc').tolist():",memoryview(b'abc').tolist())
+        import array
+        a = array.array('d', [1.1, 2.2, 3.3])
+        m = memoryview(a)
+        print('m.tolist():',m.tolist())
+        
+        # release()
+        print('\n# release()')
+        # Release the underlying buffer exposed by the memoryview object. Many 
+        # objects take special actions when a view is held on them (for 
+        # example, a bytearray would temporarily forbid resizing); therefore, 
+        # calling release() is handy to remove these restrictions (and free 
+        # any dangling resources) as soon as possible.
+        # After this method has been called, any further operation on the view 
+        # raises a ValueError (except release() itself which can be called 
+        # multiple times)
+        m = memoryview(b'abc')
+        m.release()
+        try:
+            print('m[0]:',m[0])
+        except Exception as e:
+            print(e)
+        # The context management protocol can be used for a similar effect, 
+        # using the with statement.
+        with memoryview(b'abc') as m:
+            print('m[0]:',m[0])
+            
+        # cast(format[, shape])
+        print('\n# cast(format[, shape])')
+        # Cast a memoryview to a new format or shape. shape defaults to 
+        # [byte_length//new_itemsize], which means that the result view will 
+        # be one-dimensional. The return value is a new memoryview, but the 
+        # buffer itself is not copied. Supported casts are 1D -> C-contiguous 
+        # and C-contiguous -> 1D.
+        # The destination format is restricted to a single element native 
+        # format in struct syntax. One of the formats must be a byte format 
+        # (‘B’, ‘b’ or ‘c’). The byte length of the result must be the same as 
+        # the original length.
+        a = array.array('l', [1,2,3])
+        x = memoryview(a)
+        print('x.format:',x.format)
+        print('x.itemsize:',x.itemsize)
+        print('len(x):',len(x))
+        print('x.nbytes:',x.nbytes)
+        y = x.cast('B')
+        print('y.format:',y.format)
+        print('y.itemsize:',y.itemsize)
+        print('len(y):',len(y))
+        print('y.nbytes:',y.nbytes)
+        b = bytearray(b'zyz')
+        x = memoryview(b)
+        try:
+            x[0] = b'a'
+        except Exception as e:
+            print(e)
+        y = x.cast('c')
+        y[0] = b'a'
+        print('b:',b)
+        
+        import struct
+        buf = struct.pack("i"*12, *list(range(12)))
+        x = memoryview(buf)
+        y = x.cast('i', shape=[2,2,3])
+        print('y.tolist():',y.tolist())
+        print('y.format:',y.format)
+        print('y.itemsize:',y.itemsize)
+        print('len(y):',len(y))
+        print('y.nbytes:',y.nbytes)
+        z = y.cast('b')
+        print('z.format:',z.format)
+        print('z.itemsize:',z.itemsize)
+        print('len(z):',len(z))
+        print('z.nbytes:',z.nbytes)
+        
+        buf = struct.pack("L"*6, *list(range(6)))
+        x = memoryview(buf)
+        y = x.cast('L', shape=[2,3])
+        print('len(y):',len(y))
+        print('y.nbytes:',y.nbytes)
+        print('y.tolist():',y.tolist())
+        
+        # obj
+        print('\n# obj')
+        # The underlying object of the memoryview.
+        b  = bytearray(b'xyz')
+        m = memoryview(b)
+        print('m.obj is b:',m.obj is b)
+        
+        # nbytes
+        print('\n# nbytes')
+        # nbytes == product(shape) * itemsize == len(m.tobytes()). This is the 
+        # amount of space in bytes that the array would use in a contiguous 
+        # representation. It is not necessarily equal to len(m)
+        a = array.array('i', [1,2,3,4,5])
+        m = memoryview(a)
+        print('len(m):',len(m))
+        print('m.nbytes:',m.nbytes)
+        y = m[::2]
+        print('len(y):',len(y))
+        print('y.nbytes:',y.nbytes)
+        print('len(y.tobytes()):',len(y.tobytes()))
+        buf = struct.pack("d"*12, *[1.5*x for x in range(12)])
+        x = memoryview(buf)
+        y = x.cast('d', shape=[3,4])
+        print('y.tolist():',y.tolist())
+        print('len(y):',len(y))
+        print('y.nbytes:',y.nbytes)
+        
+        # readonly
+        print('\n# readonly')
+        # A bool indicating whether the memory is read only.
+        print('y.readonly:',y.readonly)
+        
+        # format
+        print('\n# format')
+        # A string containing the format (in struct module style) for each 
+        # element in the view. A memoryview can be created from exporters with 
+        # arbitrary format strings, but some methods (e.g. tolist()) are 
+        # restricted to native single element formats.
+        # Changed in version 3.3: format 'B' is now handled according to the 
+        # struct module syntax. This means that 
+        # memoryview(b'abc')[0] == b'abc'[0] == 97.
+        print('y.format:',y.format)
+        
+        # itemsize
+        print('\n# itemsize')
+        # The size in bytes of each element of the memoryview.
+        m = memoryview(array.array('H', [32000, 32001, 32002]))
+        print('m.itemsize:',m.itemsize)
+        print('m[0]:',m[0])
+        print("struct.calcsize('H') == m.itemsize:",
+              struct.calcsize('H') == m.itemsize)
+        
+        # ndim
+        print('\n# ndim')
+        # An integer indicating how many dimensions of a multi-dimensional 
+        # array the memory represents.
+        buf = struct.pack("i"*12, *list(range(12)))
+        x = memoryview(buf)
+        y = x.cast('i', shape=[2,2,3])
+        print('y.ndim:',y.ndim)
+        
+        # shape
+        print('\n# shape')
+        # A tuple of integers the length of ndim giving the shape of the 
+        # memory as an N-dimensional array.
+        # Changed in version 3.3: An empty tuple instead of None when ndim = 0.
+        print('y.shape:',y.shape)
+        
+        # strides
+        print('\n # strides')
+        # A tuple of integers the length of ndim giving the size in bytes to 
+        # access each element for each dimension of the array.
+        # Changed in version 3.3: An empty tuple instead of None when ndim = 0.
+        print('y.strides:',y.strides)
+        
+        # suboffsets
+        print('\n# suboffsets')
+        # Used internally for PIL-style arrays. The value is informational only.
+        print('y.suboffsets:',y.suboffsets)
+        
+        # c_contiguous
+        print('\n# c_contiguous')
+        # A bool indicating whether the memory is C-contiguous.
+        print('y.c_contiguous:',y.c_contiguous)
+        
+        # f_contiguous
+        print('\n# f_contiguous')
+        # A bool indicating whether the memory is Fortran contiguous.
+        print('y.f_contiguous:',y.f_contiguous)
+        
+        # contiguous
+        print('\n# contiguous')
+        # A bool indicating whether the memory is contiguous.
+        print('y.contiguous:',y.contiguous)
+        
+        #random bytearray
+        randomByteArray = bytearray('ABC', 'utf-8')
+        mv = memoryview(randomByteArray)
+        # access memory view's zeroth index
+        print('\nmv[0]:',mv[0])
+        # create byte from memory view
+        print('bytes(mv[0:2]):',bytes(mv[0:2]))
+        # create list from memory view
+        print('list(mv[0:3]):',list(mv[0:3]))
+        
+        #random bytearray
+        randomByteArray = bytearray('ABC', 'utf-8')
+        print('\nBefore updation:', randomByteArray)
+        mv = memoryview(randomByteArray)
+        # update 1st index of mv to Z
+        mv[1] = 90
+        print('After updation:', randomByteArray)
+        return
+
+    def set_test(self, *args, **kwargs):
+        """
+        A set object is an unordered collection of distinct hashable objects. 
+        Common uses include membership testing, removing duplicates from a 
+        sequence, and computing mathematical operations such as intersection, 
+        union, difference, and symmetric difference. (For other containers see 
+        the built-in dict, list, and tuple classes, and the collections module.)
+        Like other collections, sets support x in set, len(set), and for x in 
+        set. Being an unordered collection, sets do not record element 
+        position or order of insertion. Accordingly, sets do not support 
+        indexing, slicing, or other sequence-like behavior.
+        There are currently two built-in set types, set and frozenset. The set 
+        type is mutable — the contents can be changed using methods like add() 
+        and remove(). Since it is mutable, it has no hash value and cannot be 
+        used as either a dictionary key or as an element of another set. 
+        The frozenset type is immutable and hashable — its contents cannot be 
+        altered after it is created; it can therefore be used as a dictionary 
+        key or as an element of another set.
+        Non-empty sets (not frozensets) can be created by placing a 
+        comma-separated list of elements within braces, for example: 
+        {'jack', 'sjoerd'}, in addition to the set constructor.        
+        """
+        # set([iterable])
+        print('# set([iterable])')
+        # set of integers
+        print('{1, 2, 3}:',{1, 2, 3})
+        # set of mixed datatypes
+        print('{1.0, "Hello", (1, 2, 3)}:',{1.0, "Hello", (1, 2, 3)})
+        # set do not have duplicates
+        # Output: {1, 2, 3, 4}
+        print('{1,2,3,4,3,2}:',{1,2,3,4,3,2})
+        # set cannot have mutable items
+        # here [3, 4] is a mutable list
+        # If you uncomment line #12,
+        # this will cause an error.
+        # TypeError: unhashable type: 'list'
+        try:
+            my_set = {1, 2, [3, 4]}
+        except Exception as e:
+            print(e)
+        # we can make set from a list
+        # Output: {1, 2, 3}
+        print('set([1,2,3,2]):',set([1,2,3,2]))
+        # initialize a with {}
+        # check data type of a
+        # Output: <class 'dict'>
+        print('type({}):',type({}))
+        # initialize a with set()
+        # check data type of a
+        # Output: <class 'set'>
+        print('type(set()):',type(set()))
+        # initialize my_set
+        my_set = {1,3}
+        print('my_set:',my_set)
+        # if you uncomment line 9,
+        # you will get an error
+        # TypeError: 'set' object does not support indexing
+        try:
+            my_set[0]
+        except Exception as e:
+            print(e)
+        # add an element
+        # Output: {1, 2, 3}
+        my_set.add(2)
+        print('my_set:',my_set)
+        # add multiple elements
+        # Output: {1, 2, 3, 4}
+        my_set.update([2,3,4])
+        print('my_set:',my_set)
+        # add list and set
+        # Output: {1, 2, 3, 4, 5, 6, 8}
+        my_set.update([4,5], {1,6,8})
+        print('my_set:',my_set)
+        # initialize my_set
+        my_set = {1, 3, 4, 5, 6}
+        print('my_set:',my_set)
+        # discard an element
+        # Output: {1, 3, 5, 6}
+        my_set.discard(4)
+        print('my_set:',my_set)
+        # remove an element
+        # Output: {1, 3, 5}
+        my_set.remove(6)
+        print('my_set:',my_set)
+        # discard an element
+        # not present in my_set
+        # Output: {1, 3, 5}
+        my_set.discard(2)
+        print('my_set:',my_set)
+        # remove an element
+        # not present in my_set
+        # If you uncomment line 27,
+        # you will get an error.
+        # Output: KeyError: 2
+        try:
+            my_set.remove(2)
+        except Exception as e:
+            print('KeyError:',e)
+        # initialize A and B
+        A = {1, 2, 3, 4, 5}
+        B = {4, 5, 6, 7, 8}
+        print('A:',A,'\nB:',B)
+        # use | operator
+        # Output: {1, 2, 3, 4, 5, 6, 7, 8}
+        print('A | B:',A | B)
+        print('A.union(B):',A.union(B))
+        print('B.union(A):',B.union(A))
+        # use & operator
+        # Output: {4, 5}
+        print('A & B:',A & B)
+        print('A.intersection(B):',A.intersection(B))
+        print('B.intersection(A):',B.intersection(A))
+        # use - operator on A
+        # Output: {1, 2, 3}
+        print('A - B:',A - B)
+        print('A.difference(B):',A.difference(B))
+        print('B - A:',B - A)
+        print('B.difference(A):',B.difference(A))
+        # use ^ operator
+        # Output: {1, 2, 3, 6, 7, 8}
+        print('A ^ B:',A ^ B)
+        print('A.symmetric_difference(B):',A.symmetric_difference(B))
+        print('B.symmetric_difference(A):',B.symmetric_difference(A))
+        # check if 'a' is present
+        # Output: True
+        print("'a' in set('apple'):",'a' in set("apple"))
+        # check if 'p' is present
+        # Output: False
+        print("'p' not in set('apple'):",'p' not in set('apple'))
+        for letter in set("apple"):
+            print(letter)
+            
+        # add(elem)
+        print('\n# add(elem)')
+        # Add element elem to the set.
+        # set of vowels
+        vowels = {'a', 'e', 'i', 'u'}
+        # adding 'o'
+        vowels.add('o')
+        print('Vowels are:', vowels)
+        # adding 'a' again
+        vowels.add('a')
+        print('Vowels are:', vowels)
+        # set of vowels
+        vowels = {'a', 'e', 'u'}
+        # a tuple ('i', 'o')
+        tup = ('i', 'o')
+        # adding tuple
+        vowels.add(tup)
+        print('Vowels are:', vowels)
+        # adding same tuple again
+        vowels.add(tup)
+        print('Vowels are:', vowels)
+        
+        # clear()
+        print('\n# clear()')
+        # Remove all elements from the set.
+        # set of vowels
+        vowels = {'a', 'e', 'i', 'o', 'u'}
+        print('Vowels (before clear):', vowels)
+        # clearing vowels
+        vowels.clear()
+        print('Vowels (after clear):', vowels)
+        
+        # copy()
+        print('\n# copy()')
+        # Return a new set with a shallow copy.
+        numbers = {1, 2, 3, 4}
+        new_numbers = numbers
+        new_numbers.add('5')
+        print('numbers: ', numbers)
+        print('new_numbers: ', new_numbers)
+        
+        numbers = {1, 2, 3, 4}
+        new_numbers = numbers.copy()
+        new_numbers.add('5')
+        print('numbers: ', numbers)
+        print('new_numbers: ', new_numbers)
+        
+        # difference()
+        print('\n# difference()')
+        # Return a new set with elements in the set that are not in the others.
+        A = {'a', 'b', 'c', 'd'}
+        B = {'c', 'f', 'g'}
+        print('A:',A,'\nB:',B)
+        # Equivalent to A-B
+        print('A.difference(B):',A.difference(B))
+        # Equivalent to B-A
+        print('B.difference(A):',B.difference(A))
+        print('A-B:',A-B)
+        print('B-A:',B-A)
+        
+        # difference_update(*others)
+        print('\n# difference_update(*others)')
+        # Update the set, removing elements found in others.
+        # The difference_update() returns None indicating the object (set) is 
+        # mutated.
+        # Suppose,
+        # result = A.difference_update(B)
+        # When you run the code,
+        # result will be None
+        # A will be equal to A-B
+        # B will be unchanged
+        A = {'a', 'c', 'g', 'd'}
+        B = {'c', 'f', 'g'}
+        result = A.difference_update(B)
+        print('A = ', A)
+        print('B = ', B)
+        print('result = ', result)
+        
+        # discard(elem)
+        print('\n# discard(elem)')
+        # Remove element elem from the set if it is present.
+        numbers = {2, 3, 4, 5}
+        numbers.discard(3)
+        print('numbers = ', numbers)
+        numbers.discard(10)
+        print('numbers = ', numbers)
+        numbers = {2, 3, 5, 4}
+        # Returns None
+        # Meaning, absence of a return value 
+        print(numbers.discard(3))
+        print('numbers =', numbers)
+        
+        # intersection(*others)
+        print('\n# intersection(*others)')
+        # Return a new set with elements common to the set and all others.
+        A = {2, 3, 5, 4}
+        B = {2, 5, 100}
+        C = {2, 3, 8, 9, 10}
+        print('A:',A,'\nB:',B,'\nC:',C)
+        print('B.intersection(A):',B.intersection(A))
+        print('B.intersection(C):',B.intersection(C))
+        print('A.intersection(C):',A.intersection(C))
+        print('C.intersection(A, B):',C.intersection(A, B))
+        A = {100, 7, 8}
+        B = {200, 4, 5}
+        C = {300, 2, 3}
+        D = {100, 200, 300}
+        print('\nA:',A,'\nB:',B,'\nC:',C,'\nD:',D)
+        print('A.intersection(D):',A.intersection(D))
+        print('B.intersection(D):',B.intersection(D))
+        print('C.intersection(D):',C.intersection(D))
+        print('A.intersection(B, C, D):',A.intersection(B, C, D))
+        A = {100, 7, 8}
+        B = {200, 4, 5}
+        C = {300, 2, 3, 7}
+        D = {100, 200, 300}
+        print('\nA:',A,'\nB:',B,'\nC:',C,'\nD:',D)
+        print('A & C:',A & C)
+        print('A & D:',A & D)
+        print('A & C & D:',A & C & D)
+        print('A & B & C & D:',A & B & C & D)
+        
+        # intersection_update(*others)
+        print('\n# intersection_update(*others)')
+        # Update the set, keeping only elements found in it and all others. 
+        # This method returns None (meaning, absence of a return value). It 
+        # only updates the set calling the intersection_update() method.
+        # Suppose,
+        # result = A.intersection_update(B, C)
+        # When you run the code,
+        # result will be None
+        # A will be equal to the intersection of A, B and C
+        # B remains unchanged
+        # C remains unchanged
+        A = {1, 2, 3, 4}
+        B = {2, 3, 4, 5}
+        print('A:',A,'\nB:',B)
+        result = A.intersection_update(B)
+        print('result =', result)
+        print('A =', A)
+        print('B =', B)
+        A = {1, 2, 3, 4}
+        B = {2, 3, 4, 5, 6}
+        C = {4, 5, 6, 9, 10}
+        print('\nA:',A,'\nB:',B,'\nC:',C)
+        result = C.intersection_update(B, A)
+        print('result =', result)
+        print('C =', C)
+        print('B =', B)
+        print('A =', A)
+        
+        # isdisjoint(other)
+        print('\n# isdisjoint(other)')
+        # Return True if the set has no elements in common with other. Sets 
+        # are disjoint if and only if their intersection is the empty set.
+        A = {1, 2, 3, 4}
+        B = {5, 6, 7}
+        C = {4, 5, 6}
+        print('A:',A,'\nB:',B,'\nC:',C)
+        print('Are A and B disjoint?', A.isdisjoint(B))
+        print('Are A and C disjoint?', A.isdisjoint(C))
+        A = {'a', 'b', 'c', 'd'}
+        B = ['b', 'e', 'f']
+        C = '5de4'
+        D ={1 : 'a', 2 : 'b'}
+        E ={'a' : 1, 'b' : 2}
+        print('\nA:',A,'\nB:',B,'\nC:',C,'\nD:',D,'\nE:',E)
+        print('Are A and B disjoint?', A.isdisjoint(B))
+        print('Are A and C disjoint?', A.isdisjoint(C))
+        print('Are A and D disjoint?', A.isdisjoint(D))
+        print('Are A and E disjoint?', A.isdisjoint(E))
+        
+        # issubset(other)
+        print('\n# issubset(other)')
+        # Test whether every element in the set is in other.
+        A = {1, 2, 3}
+        B = {1, 2, 3, 4, 5}
+        C = {1, 2, 4, 5}
+        print('\nA:',A,'\nB:',B,'\nC:',C)
+        # Returns True
+        print('A.issubset(B):',A.issubset(B))
+        # Returns False
+        # B is not subset of A
+        print('B.issubset(A):',B.issubset(A))
+        # Returns False
+        print('A.issubset(C):',A.issubset(C))
+        # Returns True
+        print('C.issubset(B):',C.issubset(B))
+        
+        # issuperset(other)
+        print('\n# issuperset(other)')
+        # Test whether every element in other is in the set.
+        A = {1, 2, 3, 4, 5}
+        B = {1, 2, 3}
+        C = {1, 2, 3}
+        print('A:',A,'\nB:',B,'\nC:',C)
+        # Returns True
+        print('A.issuperset(B):',A.issuperset(B))
+        # Returns False
+        print('B.issuperset(A):',B.issuperset(A))
+        # Returns True
+        print('C.issuperset(B):',C.issuperset(B))
+        
+        # pop()
+        print('\n# pop()')
+        # Remove and return an arbitrary element from the set. Raises KeyError 
+        # if the set is empty.
+        A ={'a', 'b', 'c', 'd'}
+        print('A:',A)
+        print('Return Value is', A.pop())
+        print('A = ', A)
+        
+        # remove(elem)
+        print('\n# remove(elem)')
+        # Remove element elem from the set. Raises KeyError if elem is not 
+        # contained in the set.
+        # language set
+        language = {'English', 'French', 'German'}
+        print('language:',language)
+        # 'German' element is removed
+        language.remove('German')
+        # Updated language set
+        print('Updated language set: ', language)
+        # animal set
+        animal = {'cat', 'dog', 'rabbit', 'guinea pig'}
+        print('animal:',animal)
+        # Deleting 'fish' element
+        try:
+            animal.remove('fish')
+        except Exception as e:
+            print('KeyError:',e)
+        # Updated animal
+        print('Updated animal set: ', animal)
+        
+        # symmetric_difference(other)
+        print('\n# symmetric_difference(other)')
+        # Return a new set with elements in either the set or other but not 
+        # both.
+        A = {'a', 'b', 'c', 'd'}
+        B = {'c', 'd', 'e' }
+        C = {}
+        print('A:',A,'\nB:',B,'\nC:',C)
+        print('A.symmetric_difference(B):',A.symmetric_difference(B))
+        print('B.symmetric_difference(A):',B.symmetric_difference(A))
+        print('A.symmetric_difference(C):',A.symmetric_difference(C))
+        print('B.symmetric_difference(C):',B.symmetric_difference(C))
+        A = {'a', 'b', 'c', 'd'}
+        B = {'c', 'd', 'e' }
+        print('\nA:',A,'\nB:',B)
+        print('A ^ B:',A ^ B)
+        print('B ^ A:',B ^ A)
+        print('A ^ A:',A ^ A)
+        print('B ^ B:',B ^ B)
+        
+        # symmetric_difference_update(other)
+        print('\n# symmetric_difference_update(other)')
+        # Update the set, keeping only elements found in either set, but not 
+        # in both.
+        A = {'a', 'c', 'd'}
+        B = {'c', 'd', 'e' }
+        print('A:',A,'\nB:',B)
+        result = A.symmetric_difference_update(B)
+        print('A = ', A)
+        print('B = ', B)
+        print('result = ', result)
+        
+        # union(*others)
+        print('\n# union(*others)')
+        # Return a new set with elements from the set and all others.
+        A = {'a', 'c', 'd'}
+        B = {'c', 'd', 2 }
+        C= {1, 2, 3}
+        print('A:',A,'\nB:',B,'\nC:',C)
+        print('A U B =', A.union(B))
+        print('B U C =', B.union(C))
+        print('A U B U C =', A.union(B, C))
+        print('A.union() = ', A.union())
+        
+        A = {'a', 'c', 'd'}
+        B = {'c', 'd', 2 }
+        C= {1, 2, 3}
+        print('\nA:',A,'\nB:',B,'\nC:',C)
+        print('A U B =', A| B)
+        print('B U C =', B | C)
+        print('A U B U C =', A | B | C)
+        
+        # update(*others)
+        print('\n# update(*others)')
+        # Update the set, adding elements from all others.
+        A = {'a', 'b'}
+        B = {1, 2, 3}
+        print('A:',A,'\nB:',B)
+        result = A.update(B)
+        print('A =',A)
+        print('B =',B)
+        print('result =',result)
+        # Update With String
+        string_alphabet = 'abc'
+        numbers_set = {1, 2}
+        print('\nstring_alphabet:',string_alphabet,'\nnumbers_set:',numbers_set)
+        numbers_set.update(string_alphabet)
+        print('numbers_set =',numbers_set)
+        print('string_alphabet =',string_alphabet)
+        # Update With Dictionary
+        info_dictionary = {'key': 1, 2 : 'lock'}
+        numbers_set = {'a', 'b'}
+        print('\ninfo_dictionary:',info_dictionary,'\nnumbers_set:',numbers_set)
+        numbers_set.update(info_dictionary)
+        print('numbers_set =',numbers_set)
+        
+        # frozenset([iterable])
+        print('\n# frozenset([iterable])')
+        # The frozenset() method returns an immutable frozenset object 
+        # initialized with elements from the given iterable.
+        # rozen set is just an immutable version of a Python set object. While 
+        # elements of a set can be modified at any time, elements of frozen 
+        # set remains the same after creation.
+        # Due to this, frozen sets can be used as key in Dictionary or as 
+        # element of another set. But like sets, it is not ordered (the 
+        # elements can be set at any index).
+        # tuple of vowels
+        vowels = ('a', 'e', 'i', 'o', 'u')
+        fSet = frozenset(vowels)
+        print('The frozen set is:', fSet)
+        print('The empty frozen set is:', frozenset())
+        # random dictionary
+        person = {"name": "John", "age": 23, "sex": "male"}
+        fSet = frozenset(person)
+        print('The frozen set is:', fSet)
+        
+    def dict_test(self, *args, **kwarg):
+        """
+        A mapping object maps hashable values to arbitrary objects. Mappings 
+        are mutable objects. There is currently only one standard mapping type, 
+        the dictionary. (For other containers see the built-in list, set, and 
+        tuple classes, and the collections module.)
+        A dictionary’s keys are almost arbitrary values. Values that are not 
+        hashable, that is, values containing lists, dictionaries or other 
+        mutable types (that are compared by value rather than by object 
+        identity) may not be used as keys. Numeric types used for keys obey 
+        the normal rules for numeric comparison: if two numbers compare equal 
+        (such as 1 and 1.0) then they can be used interchangeably to index the 
+        same dictionary entry. (Note however, that since computers store 
+        floating-point numbers as approximations it is usually unwise to use 
+        them as dictionary keys.)
+        If no positional argument is given, an empty dictionary is created. If 
+        a positional argument is given and it is a mapping object, a 
+        dictionary is created with the same key-value pairs as the mapping 
+        object. Otherwise, the positional argument must be an iterable object. 
+        Each item in the iterable must itself be an iterable with exactly two 
+        objects. The first object of each item becomes a key in the new 
+        dictionary, and the second object the corresponding value. If a key 
+        occurs more than once, the last value for that key becomes the 
+        corresponding value in the new dictionary.
+        """
+        print('{1.0:4,1:3}:',{1.0:4,1:3})
+        print('1==1.0:',1==1.0)
+        a = dict(one=1, two=2, three=3)
+        print('a = dict(one=1, two=2, three=3):',a)
+        b = {'one': 1, 'two': 2, 'three': 3}
+        print("b = {'one': 1, 'two': 2, 'three': 3}:",b)
+        c = dict(zip(['one', 'two', 'three'], [1, 2, 3]))
+        print("c = dict(zip(['one', 'two', 'three'], [1, 2, 3])):",c)
+        d = dict([('two', 2), ('one', 1), ('three', 3)])
+        print("d = dict([('two', 2), ('one', 1), ('three', 3)]):",d)
+        e = dict({'three': 3, 'one': 1, 'two': 2})
+        print("e = dict({'three': 3, 'one': 1, 'two': 2}):",e)
+        print('a == b == c == d == e:',a == b == c == d == e)
+        
+        numbers = dict(x=5, y=0)
+        print('numbers = ',numbers)
+        print('type(numbers):',type(numbers))
+        
+        empty = dict()
+        print('empty = ',empty)
+        print('type(empty):',type(empty))
+        
+        # keyword argument is not passed
+        numbers1 = dict([('x', 5), ('y', -5)])
+        print('numbers1 =',numbers1)
+        
+        # keyword argument is also passed
+        numbers2 = dict([('x', 5), ('y', -5)], z=8)
+        print('numbers2 =',numbers2)
+        
+        # zip() creates an iterable in Python 3
+        numbers3 = dict(zip(['x', 'y', 'z'], [1, 2, 3]))
+        print('numbers3 =',numbers3)
+        
+        numbers1 = dict({'x': 4, 'y': 5})
+        print('\nnumbers1 =',numbers1)
+        
+        # you don't need to use dict() in above code
+        numbers2 = {'x': 4, 'y': 5}
+        print('numbers2 =',numbers2)
+        
+        # keyword argument is also passed
+        numbers3 = dict({'x': 4, 'y': 5}, z=8)
+        print('numbers3 =',numbers3)
+        
+        d = {'a':1,'b':2,'c':3,'d':4}
+        print("\nd = {'a':1,'b':2,'c':3,'d':4}:")
+        
+        # len(d)
+        print('\n# len(d):')
+        # Return the number of items in the dictionary d.
+        print('len(d):',len(d))
+        
+        # d[key]
+        print('\n# d[key]')
+        # Return the item of d with key key. Raises a KeyError if key is not 
+        # in the map.
+        # If a subclass of dict defines a method __missing__() and key is not 
+        # present, the d[key] operation calls that method with the key key as 
+        # argument. The d[key] operation then returns or raises whatever is 
+        # returned or raised by the __missing__(key) call. No other operations 
+        # or methods invoke __missing__(). If __missing__() is not defined, 
+        # KeyError is raised. __missing__() must be a method; it cannot be an 
+        # instance variable.
+        class Counter(dict):
+            def __missing__(self, key):
+                return 0
+        c = Counter()
+        print("c['red']:",c['red'])
+        
+        # d[key] = value
+        print('\n# d[key] = value')
+        # Set d[key] to value.
+        print('d =',d)
+        print("d['e'] = 5")
+        d['e'] = 5
+        print('d =',d)
+        
+        # del d[key]
+        print('\n# del d[key]')
+        # Remove d[key] from d. Raises a KeyError if key is not in the map.
+        print('d =',d)
+        print('del d["e"]')
+        del d['e']
+        print('d =',d)
+        
+        # key in d
+        print('\n# key in d')
+        # Return True if d has a key key, else False.
+        print('d =',d)
+        print('"c" in d:',"c" in d)
+        
+        # key not in d
+        print('\n# key not in d')
+        # Equivalent to not key in d.
+        print('d =',d)
+        print('"c" not in d:',"c" not in d)
+        
+        # iter(d)
+        print('\n# iter(d)')
+        # Return an iterator over the keys of the dictionary. This is a 
+        # shortcut for iter(d.keys()).
+        print('d =',d)
+        print('iter(d):',iter(d))
+        for k in iter(d):
+            print(k)
+        print()
+        for k in iter(d.keys()):
+            print(k)
+        print()
+        for v in iter(d.values()):
+            print(v)
+            
+        print("[*iter(d)]:",[*iter(d)])
+        
+        # clear()
+        print('\n# clear()')
+        # Remove all items from the dictionary.
+        print('d =',d)
+        print('d.clear()')
+        d.clear()
+        print('d =',d)
+        
+        d = {'a':1,'b':2,'c':3,'d':4}
+        
+        # copy()
+        print('\n# copy()')
+        # Return a shallow copy of the dictionary.
+        print('d =',d)
+        print('id(d):',id(d))
+        print('dc = d.copy()')
+        dc = d.copy()
+        print('id(dc):',id(dc))
+        print('dc =',dc)
+        
+        # fromkeys(iterable[, value])
+        print('\n# fromkeys(iterable[, value])')
+        # Create a new dictionary with keys from iterable and values set to 
+        # value.
+        # fromkeys() is a class method that returns a new dictionary. value 
+        # defaults to None.
+        # vowels keys
+        keys = {'a', 'e', 'i', 'o', 'u' }
+        print("keys = {'a', 'e', 'i', 'o', 'u' }")
+        vowels = dict.fromkeys(keys)
+        print(vowels)
+        
+        # vowels keys
+        keys = {'a', 'e', 'i', 'o', 'u' }
+        value = 'vowel'
+        vowels = dict.fromkeys(keys, value)
+        print('\n',vowels)
+        
+        # vowels keys
+        keys = {'a', 'e', 'i', 'o', 'u' }
+        value = [1]
+        vowels = dict.fromkeys(keys, value)
+        print('\n',vowels)
+        # updating the value
+        value.append(2)
+        print(vowels)
+        
+        # vowels keys
+        keys = {'a', 'e', 'i', 'o', 'u' }
+        value = [1]
+        vowels = { key : list(value) for key in keys }
+        # you can also use { key : value[:] for key in keys }
+        print('\n',vowels)
+        # updating the value
+        value.append(2)
+        print(vowels)
+        
+        # get(key[, default])
+        print('\n# get(key[, default])')
+        # Return the value for key if key is in the dictionary, else default. 
+        # If default is not given, it defaults to None, so that this method 
+        # never raises a KeyError.
+        d = {'b': 2, 'c': 3, 'd': 4, 'a': 1}
+        print("d = {'b': 2, 'c': 3, 'd': 4, 'a': 1}")
+        print("d.get('a',0):",d.get('a',0))
+        print("d.get('e',0):",d.get('e',0))
+        
+        # items()
+        print('\n# items()')
+        # Return a new view of the dictionary’s items ((key, value) pairs).
+        # random sales dictionary
+        sales = { 'apple': 2, 'orange': 3, 'grapes': 4 }
+        print("{ 'apple': 2, 'orange': 3, 'grapes': 4 }.items():",
+              { 'apple': 2, 'orange': 3, 'grapes': 4 }.items())
+        
+        # random sales dictionary
+        sales = { 'apple': 2, 'orange': 3, 'grapes': 4 }
+        items = sales.items()
+        print('Original items:', items)
+        # delete an item from dictionary
+        del[sales['apple']]
+        print('Updated items:', items)
+        
+        # keys()
+        print('\n# keys()')
+        # Return a new view of the dictionary’s keys.
+        print('d =',d)
+        print('d.keys():',d.keys())
+        
+        # pop(key[, default])
+        print('\n# pop(key[, default])')
+        # If key is in the dictionary, remove it and return its value, else 
+        # return default. If default is not given and key is not in the 
+        # dictionary, a KeyError is raised.
+        print('d =',d)
+        print('d.pop("d"):',d.pop("d"))
+        print('d =',d)
+        try:
+            print(d.pop("e"))
+        except Exception as e:
+            print('KeyError:',e)
+        print('d.pop("e",0):',d.pop("e",0))
+        
+        # popitem()
+        print('\n# popitem()')
+        # Remove and return a (key, value) pair from the dictionary. Pairs are 
+        # returned in LIFO order.
+        # popitem() is useful to destructively iterate over a dictionary, as 
+        # often used in set algorithms. If the dictionary is empty, calling 
+        # popitem() raises a KeyError.
+        # Changed in version 3.7: LIFO order is now guaranteed. In prior 
+        # versions, popitem() would return an arbitrary key/value pair.
+        d = {'b': 2, 'c': 3, 'd': 4, 'a': 1}
+        print("d = {'b': 2, 'c': 3, 'd': 4, 'a': 1}")
+        print('d.popitem():',d.popitem())
+        print('d.popitem():',d.popitem())
+        
+        # setdefault(key[, default])
+        print('\n# setdefault(key[, default])')
+        # If key is in the dictionary, return its value. If not, insert key 
+        # with a value of default and return default. default defaults to None.
+        person = {'name': 'Phill', 'age': 22}
+        print("age = person.setdefault('age')")
+        age = person.setdefault('age')
+        print('person = ',person)
+        print('Age = ',age)
+        
+        person = {'name': 'Phill'}
+        # key is not in the dictionary
+        salary = person.setdefault('salary')
+        print('\nperson = ',person)
+        print('salary = ',salary)
+        
+        # key is not in the dictionary
+        # default_value is provided
+        age = person.setdefault('age', 22)
+        print('person = ',person)
+        print('age = ',age)
+        
+        # update([other])
+        print('\n# update([other])')
+        # Update the dictionary with the key/value pairs from other, 
+        # overwriting existing keys. Return None.
+        # update() accepts either another dictionary object or an iterable of 
+        # key/value pairs (as tuples or other iterables of length two). If 
+        # keyword arguments are specified, the dictionary is then updated with 
+        # those key/value pairs: d.update(red=1, blue=2).
+        d = {1: "one", 2: "three"}
+        print('d =',d)
+        d1 = {2: "two"}
+        print('d1 =',d1)
+        # updates the value of key 2
+        print('d.update(d1)')
+        d.update(d1)
+        print('d =',d)
+        d1 = {3: "three"}
+        print('d1 =',d1)
+        # adds element with key 3
+        print('d.update(d1)')
+        d.update(d1)
+        print('d =',d)
+        d = {'x': 2}
+        print('d =',d)
+        print('d.update(y = 3, z = 0)')
+        d.update(y = 3, z = 0)
+        print('d =',d)
+        
+        # values()
+        print('\n# values()')
+        # Return a new view of the dictionary’s values. See the documentation 
+        # of view objects.
+        # Dictionaries compare equal if and only if they have the same (key, 
+        # value) pairs. Order comparisons (‘<’, ‘<=’, ‘>=’, ‘>’) raise 
+        # TypeError.
+        # Dictionaries preserve insertion order. Note that updating a key does 
+        # not affect the order. Keys added after deletion are inserted at the 
+        # end.
+        d = {"one": 1, "two": 2, "three": 3, "four": 4}
+        print('d =',d)
+        l = list(d)
+        print('l =',l)
+        l1 = list(d.values())
+        print('l1 =',l1)
+        d["one"] = 42
+        print('d =',d)
+        del d["two"]
+        d["two"] = None
+        print('d =',d)
+        # random sales dictionary
+        sales = { 'apple': 2, 'orange': 3, 'grapes': 4 }
+        print('\nsales =',sales)
+        print('sales.values():',sales.values())
+        # random sales dictionary
+        print('\nsales =',sales)
+        values = sales.values()
+        print('Original items:', values)
+        # delete an item from dictionary
+        del[sales['apple']]
+        print('Updated items:', values)
+        
+        # Dictionary view objects
+        print('\n# Dictionary view objects')
+        # The objects returned by dict.keys(), dict.values() and dict.items() 
+        # are view objects. They provide a dynamic view on the dictionary’s 
+        # entries, which means that when the dictionary changes, the view 
+        # reflects these changes.
+        # Dictionary views can be iterated over to yield their respective 
+        # data, and support membership tests.
+        dishes = {'eggs': 2, 'sausage': 1, 'bacon': 1, 'spam': 500}
+        print('dishes =',dishes)
+        keys = dishes.keys()
+        print('keys =',keys)
+        values = dishes.values()
+        print('values =', values) 
+        n = 0
+        # iteration
+        for val in values:
+            n += val
+        print('n =',n)
+        # keys and values are iterated over in the same order (insertion order)
+        key_list = list(keys)
+        print('key_list =',key_list)
+        value_list = list(values)
+        print('value_list =',value_list)
+        # view objects are dynamic and reflect dict changes
+        print("del dishes['eggs']\ndel dishes['sausage']")
+        del dishes['eggs']
+        del dishes['sausage']
+        print('keys =',list(keys))
+        # set operations
+        print("keys & {'eggs', 'bacon', 'salad'}:",
+              keys & {'eggs', 'bacon', 'salad'})
+        print("keys ^ {'sausage', 'juice'}:",keys ^ {'sausage', 'juice'})
+        
+    def context_manager_test(self, *args, **kwargs):
+        """
+        Python’s with statement supports the concept of a runtime context 
+        defined by a context manager. This is implemented using a pair of 
+        methods that allow user-defined classes to define a runtime context that 
+        is entered before the statement body is executed and exited when the 
+        statement ends.
+        """
+        # contextmanager.__enter__()
+        print('# contextmanager.__enter__()')
+        # Enter the runtime context and return either this object or another 
+        # object related to the runtime context. The value returned by this method 
+        # is bound to the identifier in the as clause of with statements using 
+        # this context manager.
+        # An example of a context manager that returns itself is a file object. 
+        # File objects return themselves from __enter__() to allow open() to be 
+        # used as the context expression in a with statement.
+        # An example of a context manager that returns a related object is the one 
+        # returned by decimal.localcontext(). These managers set the active 
+        # decimal context to a copy of the original decimal context and then 
+        # return the copy. This allows changes to be made to the current decimal 
+        # context in the body of the with statement without affecting code outside 
+        # the with statement.
+        
+        # contextmanager.__exit__(exc_type, exc_val, exc_tb)
+        print('# contextmanager.__exit__(exc_type, exc_val, exc_tb)')
+        # Exit the runtime context and return a Boolean flag indicating if any 
+        # exception that occurred should be suppressed. If an exception occurred 
+        # while executing the body of the with statement, the arguments contain 
+        # the exception type, value and traceback information. Otherwise, all 
+        # three arguments are None.
+        # Returning a true value from this method will cause the with statement to suppress the exception and continue execution with the statement immediately following the with statement. Otherwise the exception continues propagating after this method has finished executing. Exceptions that occur during execution of this method will replace any exception that occurred in the body of the with statement.
+        # The exception passed in should never be reraised explicitly - instead, 
+        # this method should return a false value to indicate that the method 
+        # completed successfully and does not want to suppress the raised 
+        # exception. This allows context management code to easily detect whether 
+        # or not an __exit__() method has actually failed.
+        
+        with open('some_file', 'w') as opened_file:
+            opened_file.write('Hola!')
+            print('some_file is opened in write mode and if some_file does not'
+            ' exist it will create one and open in write mode.')
+            print('opened_file:',opened_file)
+        # The above code opens the file, writes some data to it and then 
+        # closes it. If an error occurs while writing the data to the file, it 
+        # tries to close it. The above code is equivalent to:
+        file = open('some_file', 'w')
+        try:
+            file.write('Hola!')
+            print('file:',file)
+        finally:
+            file.close()
+            
+        # At the very least a context manager has an __enter__ and __exit__ 
+        # method defined. Let’s make our own file-opening Context Manager and 
+        # learn the basics.
+        class File(object):
+            def __init__(self, file_name, method):
+                self.file_obj = open(file_name, method)
+            def __enter__(self):
+                return self.file_obj
+            def __exit__(self, type, value, traceback):
+                self.file_obj.close()
+                print('type:',type)
+                print('value:',value)
+                print('traceback:',traceback)
+                return True
+        
+        with File('demo.txt', 'w') as opened_file:
+            opened_file.write('Hola!')
+            print('opened_file:',opened_file)
+        
+        with File('demo.txt', 'w') as opened_file:
+            opened_file.undefined_function('Hola!')
+            print('opened_file:',opened_file)
+            
+        from contextlib import contextmanager
+        @contextmanager
+        def open_file(name):
+            f = open(name, 'w')
+            yield f
+            f.close()
+            
+        with open_file('some_file') as f:
+            f.write('hola!')
+            print('f:',f)
+            
+    def modules_test(self, *args, **kwargs):
+        """
+        The only special operation on a module is attribute access: m.name, 
+        where m is a module and name accesses a name defined in m’s symbol 
+        table. Module attributes can be assigned to. (Note that the import 
+        statement is not, strictly speaking, an operation on a module object; 
+        import foo does not require a module object named foo to exist, rather 
+        it requires an (external) definition for a module named foo somewhere.)
+        A special attribute of every module is __dict__. This is the dictionary
+        containing the module’s symbol table. Modifying this dictionary will 
+        actually change the module’s symbol table, but direct assignment to 
+        the __dict__ attribute is not possible (you can write 
+        m.__dict__['a'] = 1, which defines m.a to be 1, but you can’t write 
+        m.__dict__ = {}). Modifying __dict__ directly is not recommended.
+        Modules built into the interpreter are written like this: 
+            <module 'sys' (built-in)>. If loaded from a file, they are written 
+            as <module 'os' from '/usr/local/lib/pythonX.Y/os.pyc'>.
+        """
+        import example
+        print('import example')
+        print('example.add(4,5.5):',example.add(4,5.5))
+
+        import example as e
+        print('import example as e')
+        print('e.add(4,5.5):',e.add(4,5.5))
+
+        from example import add
+        print('from example import add')
+        print('add(4,5.5):',add(4,5.5))
+        
+        try:
+            eval('from example import *')
+            print('from example import *')
+            print('add(4,5.5):',add(4,5.5))
+        except SyntaxError as e:
+            print('SyntaxError:','import * only allowed at module level\n',e.msg)
+        
+        # The Python interpreter imports a module only once during a session. 
+        # This makes things more efficient. Here is an example to show how 
+        # this works.
+        print('\nimport my_module')
+        import my_module
+        print('import my_module')
+        import my_module
+        
+        # Python provides a neat way of doing this. We can use the reload() 
+        # function inside the imp module to reload a module. This is how its 
+        # done.
+        import imp
+        print('\nimp.reload(my_module)')
+        imp.reload(my_module)
+        
+        print('\ndir(example):',dir(example))
+        return
+        
+    def class_object_test(self, *args, **kwargs):
+        """
+        
+        """
+        class MyClass:
+            "This is my second class"
+            a = 10
+            def func(self):
+                print('Hello')
+        # Output: 10
+        print(MyClass.a)
+        # Output: <function MyClass.func at 0x0000000003079BF8>
+        print(MyClass.func)
+        # Output: 'This is my second class'
+        print(MyClass.__doc__)
+        
+        class MyClass:
+        	"This is my second class"
+        	a = 10
+        	def func(self):
+        		print('Hello')
+        
+        # create a new MyClass
+        ob = MyClass()
+        
+        # Output: <function MyClass.func at 0x000000000335B0D0>
+        print('\n',MyClass.func)
+        
+        # Output: <bound method MyClass.func of <__main__.MyClass object at 0x000000000332DEF0>>
+        print(ob.func)
+        
+        # Calling function func()
+        # Output: Hello
+        print('ob.func()')
+        ob.func()
 
         
-
-         
-
-
-
+        
+        
         
         
         
@@ -2086,11 +3901,37 @@ if __name__ == '__main__':
     
     # String Methods
     print('\n# String Methods')
-    bit.string_method_test()
+    #bit.string_method_test()
     
+    # Binary Sequence
+    print('\n# Binary Sequence')
+    #bit.binary_sequence_test()
     
+    # memoryview(obj)
+    print('\n# memoryview(obj)')
+    #bit.memoryview_test()
     
+    # Set
+    print('\n# Set')
+    #bit.set_test()
     
+    # dict(**kwarg)
+    # dict(mapping, **kwarg)
+    # dict(iterable, **kwarg)
+    print('\n# dict(**kwarg)\n# dict(mapping, **kwarg)\n# dict(iterable, **kwarg)')
+    #bit.dict_test()
+    
+    # Context Manager
+    print('\n# Context Manager')
+    #bit.context_manager_test()
+    
+    # Modules
+    print('\n# Modules')
+    #bit.modules_test()
+
+    # Classes and Class Instances
+    print('\n# Classes and Class Instances')
+    bit.class_object_test()
     
     
     
