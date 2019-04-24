@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
+"""
+Created on Tue Feb 19 14:31:24 2019
 
+@author: Rajesh Samui
+"""
 
 class BuiltInType:
     """
@@ -3840,7 +3844,390 @@ class BuiltInType:
         # Output: Hello
         print('ob.func()')
         ob.func()
-
+        return
+        
+    def function_test(self, *args, **kwargs):
+        """
+        Function objects are created by function definitions. The only 
+        operation on a function object is to call it: func(argument-list).
+        There are really two flavors of function objects: built-in functions 
+        and user-defined functions. Both support the same operation (to call 
+        the function), but the implementation is different, hence the 
+        different object types.
+        """
+        def greet(name):
+            """
+            This function greets to the person passed in as parameter
+            """
+            print("Hello, " + name + ". Good morning!")
+            
+        greet('Rajesh')
+        print(greet.__doc__)
+        print(greet("Samui"))
+        
+        def absolute_value(num):
+            """This function returns the absolute
+            value of the entered number"""
+        
+            if num >= 0:
+                return num
+            else:
+                return -num
+        
+        # Output: 2
+        print('\nabsolute_value(2):',absolute_value(2))
+        # Output: 4
+        print('absolute_value(-4):',absolute_value(-4))
+        
+        def my_func():
+            x = 10
+            print("\nValue inside function:",x)
+        
+        x = 20
+        my_func()
+        print("Value outside function:",x)
+        return
+        
+    def method_test(self, *args, **kwargs):
+        """
+        Methods are functions that are called using the attribute notation. 
+        There are two flavors: built-in methods (such as append() on lists) 
+        and class instance methods. Built-in methods are described with the 
+        types that support them.
+        If you access a method (a function defined in a class namespace) 
+        through an instance, you get a special object: a bound method (also 
+        called instance method) object. When called, it will add the self 
+        argument to the argument list. Bound methods have two special 
+        read-only attributes: m.__self__ is the object on which the method 
+        operates, and m.__func__ is the function implementing the method. 
+        Calling m(arg-1, arg-2, ..., arg-n) is completely equivalent to 
+        calling m.__func__(m.__self__, arg-1, arg-2, ..., arg-n).
+        Like function objects, bound method objects support getting arbitrary 
+        attributes. However, since method attributes are actually stored on 
+        the underlying function object (meth.__func__), setting method 
+        attributes on bound methods is disallowed. Attempting to set an 
+        attribute on a method results in an AttributeError being raised. In 
+        order to set a method attribute, you need to explicitly set it on the 
+        underlying function object
+        """
+        class C:
+            def method(self):
+                pass
+        c = C()
+        try:
+            c.method.whoami = 'my name is method'  
+            # can't set on the method
+        except Exception as e:
+            print(e)    
+        c.method.__func__.whoami = 'my name is method'
+        print('c.method.whoami:',c.method.whoami)
+        return
+        
+    def code_object_test(self, *args, **kwargs):
+        """
+        Code objects are used by the implementation to represent 
+        “pseudo-compiled” executable Python code such as a function body. They 
+        differ from function objects because they don’t contain a reference to 
+        their global execution environment. Code objects are returned by the 
+        built-in compile() function and can be extracted from function objects 
+        through their __code__ attribute. See also the code module.
+        A code object can be executed or evaluated by passing it (instead of a 
+        source string) to the exec() or eval() built-in functions.
+        """
+        code_obj = compile('sum([1, 2, 3])', '', 'eval')
+        print("compile('sum([1, 2, 3])', '', 'eval'):", code_obj)
+        print('exec(code_obj):',eval(code_obj))
+        code_obj = compile('print("Hello world")', '', 'exec')
+        exec(code_obj)
+        return
+        
+    def type_object_test(self, *args, **kwargs):
+        """
+        Type objects represent the various object types. An object’s type is 
+        accessed by the built-in function type(). There are no special 
+        operations on types. The standard module types defines names for all 
+        standard built-in types.
+        Types are written like this: <class 'int'>.
+        """
+        numberList = [1, 2]
+        print('type(numberList):',type(numberList))
+        
+        numberDict = {1: 'one', 2: 'two'}
+        print('type(numberDict):',type(numberDict))
+        
+        class Foo:
+            a = 0
+        
+        InstanceOfFoo = Foo()
+        print('type(InstanceOfFoo):',type(InstanceOfFoo))
+        
+        o1 = type('X', (object,), dict(a='Foo', b=12))
+        print('type(o1):',type(o1))
+        print('vars(o1):',vars(o1))
+        class test:
+            a = 'Foo'
+            b = 12
+          
+        o2 = type('Y', (test,), dict(a='Foo', b=12))
+        print('type(o2):',type(o2))
+        print('vars(o2):',vars(o2))
+        
+    def null_object_test(self, *args, **kwargs):
+        """
+        This object is returned by functions that don’t explicitly return a 
+        value. It supports no special operations. There is exactly one null 
+        object, named None (a built-in name). type(None)() produces the same 
+        singleton.
+        It is written as None.
+        """
+        obj = None
+        print(obj, type(obj))
+        return
+        
+    def ellipsis_object_test(self, *args, **kwargs):
+        """
+        This object is commonly used by slicing (see Slicings). It supports no 
+        special operations. There is exactly one ellipsis object, named 
+        Ellipsis (a built-in name). type(Ellipsis)() produces the Ellipsis 
+        singleton.
+        It is written as Ellipsis or "...".
+        """
+        class TestGetitem(object):
+            def __getitem__(self, item):
+                print('type:',type(item),'\titem:', item)
+                
+        t = TestGetitem()
+        t[1]
+        t[3-2]
+        t['test']
+        t[t]
+        t[1:2]
+        t[1:'this':t]
+        t[...]
+        t[...,1:]
+        return
+        
+    def not_implemented_object_test(self, *args, **kwargs):
+        """
+        This object is returned from comparisons and binary operations when 
+        they are asked to operate on types they don’t support. See Comparisons 
+        for more information. There is exactly one NotImplemented object. 
+        type(NotImplemented)() produces the singleton instance.
+        It is written as NotImplemented.
+        """
+        def f1():
+            print('type(NotImplemented):',type(NotImplemented))
+            try:
+                eval("None = 'hello'")
+            except SyntaxError as e:
+                print("can't assign to keyword",e.text)
+                
+            print(NotImplemented, type(NotImplemented))
+        f1()
+        def f2():
+            print("\nNotImplemented = 'do not'")
+            NotImplemented = 'do not'
+            print('NotImplemented:',NotImplemented)
+        f2()
+        def f3():
+            print('\nbool(NotImplemented):',bool(NotImplemented))
+        f3()
+        print()
+        class A(object):
+            def __init__(self, value):
+                self.value = value
+        
+            def __eq__(self, other):
+                if isinstance(other, A):
+                    print('Comparing an A with an A')
+                    return other.value == self.value
+                if isinstance(other, B):
+                    print('Comparing an A with a B')
+                    return other.value == self.value
+                print('Could not compare A with the other class')
+                return NotImplemented
+        
+        class B(object):
+            def __init__(self, value):
+                self.value = value
+        
+            def __eq__(self, other):
+                if isinstance(other, B):
+                    print('Comparing a B with another B')
+                    return other.value == self.value
+                print('Could not compare B with the other class')
+                return NotImplemented
+            
+        a1 = A(1)
+        b1 = B(1)
+        print('a1 == a1:',a1 == a1)
+        print('b1 == b1:',b1 == b1)
+        print('a1 == b1:',a1 == b1)
+        print('b1 == a1:',b1 == a1)
+        
+    def boolean_value_test(self, *args, **kwargs):
+        """
+        Boolean values are the two constant objects False and True. They are 
+        used to represent truth values (although other values can also be 
+        considered false or true). In numeric contexts (for example when used 
+        as the argument to an arithmetic operator), they behave like the 
+        integers 0 and 1, respectively. The built-in function bool() can be 
+        used to convert any value to a Boolean, if the value can be 
+        interpreted as a truth value (see section Truth Value Testing above).
+        They are written as False and True, respectively.
+        """
+        print('True:',True)
+        print('type(True):',type(True))
+        print('type(False):',type(False))
+        return
+        
+    def internal_object_test(self, *args, **kwargs):
+        """
+        A few types used internally by the interpreter are exposed to the user.
+        Their definitions may change with future versions of the interpreter, 
+        but they are mentioned here for completeness.
+        Internal Objects:
+            - Code objects
+            - Frame objects
+            - Traceback objects
+            - Slice objects
+            - Static method objects
+            - Class method objects
+        """
+        pass
+    
+    def special_attribute_test(self, *args, **kwargs):
+        """
+        The implementation adds a few special read-only attributes to several 
+        object types, where they are relevant. Some of these are not reported 
+        by the dir() built-in function.
+        """
+        # object.__dict__
+        print('# object.__dict__')
+        # A dictionary or other mapping object used to store an object’s 
+        # (writable) attributes.
+        
+        class MyClass(object):
+            class_var = 1
+        
+            def __init__(self, i_var):
+                self.i_var = i_var
+            def func(self):
+                pass
+        
+        foo = MyClass(2)
+        bar = MyClass(3)
+        
+        print('MyClass.__dict__:',MyClass.__dict__)
+        print('foo.__dict__:',foo.__dict__)
+        print('bar.__dict__:',bar.__dict__)
+        
+        # instance.__class__
+        print('\n# instance.__class__')
+        # The class to which a class instance belongs.
+        class A:
+            a = 1
+            def __init(self, b):
+                self.b = b
+        a = A()
+        print('a.__class__:',a.__class__)
+        print('a.__class__ is A:',a.__class__ is A)
+        
+        # class.__bases__
+        print('\n# class.__bases__')
+        # The tuple of base classes of a class object.
+        class A(object):
+            pass
+        class B(object):
+            pass
+        class C(A,B):
+            pass
+        class D(C):
+            pass
+        c = C()
+        print('c.__class__.__bases__:',c.__class__.__bases__)
+        d = D()
+        print('d.__class__.bases__:',d.__class__.__bases__)
+        
+        # definition.__name__
+        print('\n# definition.__name__')
+        # The name of the class, function, method, descriptor, or generator 
+        # instance.
+        import File1 
+  
+        print("File2 __name__ = %s" %__name__)
+          
+        if __name__ == "__main__": 
+            print("File2 is being run directly")
+        else: 
+            print("File2 is being imported")
+            
+        class A(object):
+            def method(self):
+                pass
+        print('A.__name__:',A.__name__)
+        a = A()
+        print('a.method.__name__:',a.method.__name__)
+        def func():
+            pass
+        print('func.__name__:',func.__name__)
+        
+        # definition.__qualname__
+        print('\n# definition.__qualname__')
+        # The qualified name of the class, function, method, descriptor, or 
+        # generator instance.
+        class C:
+            class D:
+                def meth(self):
+                    pass
+        print(C.D.meth.__qualname__)
+        class A:
+            class B:
+                class C:
+                    def me(self):
+                        print('self.__module__:',self.__module__)
+                        print('type(self).__name__:',type(self).__name__)
+                        print('type(self).__qualname__:',type(self).__qualname__)
+                        print('repr(self):',repr(self))
+        x = A.B.C()
+        x.me()
+        
+        # class.__mro__
+        print('\n# class.__mro__')
+        # This attribute is a tuple of classes that are considered when 
+        # looking for base classes during method resolution.
+        class X:
+            pass
+        print('X.__mro__:', X.__mro__)
+        class Y:
+            pass
+        class Z:
+            pass
+        class A(X,Y):
+            pass
+        class B(Y,Z):
+            pass
+        class M(B,A,Z):
+            pass
+        print('M.__mro__:',M.__mro__)
+        
+        # class.mro()
+        print('\n# class.mro()')
+        # This method can be overridden by a metaclass to customize the method 
+        # resolution order for its instances. It is called at class 
+        # instantiation, and its result is stored in __mro__.
+        print('M.mro():',M.mro())
+        
+        # class.__subclasses__()
+        print('\n# class.__subclasses__()')
+        # Each class keeps a list of weak references to its immediate 
+        # subclasses. This method returns a list of all those references still 
+        # alive.
+        print('int.__subclasses__():',int.__subclasses__())
+        print('X.__subclasses__():',X.__subclasses__())
+        print('Y.__subclasses__():',Y.__subclasses__())
+        print('Z.__subclasses__():',Z.__subclasses__())
+        return
         
         
         
@@ -3853,91 +4240,152 @@ class BuiltInType:
 if __name__ == '__main__':
     bit = BuiltInType()
     
-    # Boolean
-    print('\n# Boolean')
+    ##Boolean
+    #print('\n# Boolean')
+    #print(bit.boolean_test.__doc__)
     #bit.boolean_test()
 
-    # Numeric
-    print('\n# Numeric')
+    ##Numeric
+    #print('\n# Numeric')
+    #print(bit.numeric_test.__doc__)
     #bit.numeric_test()
     
-    # Iterator
-    print('\n# Iterator')
+    ##Iterator
+    #print('\n# Iterator')
+    #print(bit.iterator_test.__doc__)
     #bit.iterator_test()
     
-    # Generator
-    print('\n# Generator')
+    ##Generator
+    #print('\n# Generator')
+    #print(bit.generator_test.__doc__)
     #bit.generator_test()
     
-    # Sequence
-    print('\n# Sequence')
+    ##Sequence
+    #print('\n# Sequence')
+    #print(bit.sequence_test.__doc__)
     #bit.sequence_test()
     
-    # Immutable Sequence
-    print('\n# Immutable sequence')
+    ##Immutable Sequence
+    #print('\n# Immutable sequence')
+    #print(bit.immutable_sequence_test.__doc__)
     #bit.immutable_sequence_test()
     
-    # Mutable Sequence
-    print('\n# Mutable Sequence')
+    ##Mutable SequenceTrue
+    #print('\n# Mutable Sequence')
+    #print(bit.mutable_sequence_test.__doc__)
     #bit.mutable_sequence_test()
     
-    # list([iterable])
-    print('\n# list([iterable])')
+    ##list([iterable])
+    #print('\n# list([iterable])')
+    #print(bit.list_test.__doc__)
     #bit.list_test()
     
-    # tuple([iterable])
-    print('\n# tuple([iterable])')
+    ##tuple([iterable])
+    #print('\n# tuple([iterable])')
+    #print(bit.tuple_test.__doc__)
     #bit.tuple_test()
     
-    # range(stop)
-    # range(start, stop[, step])
-    print('\n# range(stop)\n# range(start, stop[, step])')
+    ##range(stop)
+    ##range(start, stop[, step])
+    #print('\n# range(stop)\n# range(start, stop[, step])')
+    #print(bit.range_test.__doc__)
     #bit.range_test()
     
-    # str(object='')
-    # str(object=b'', encoding='utf-8', errors='strict')
-    print("\n# str(object='')\n# str(object=b'', encoding='utf-8', errors='strict')")
+    ##str(object='')
+    ##str(object=b'', encoding='utf-8', errors='strict')
+    #print("\n# str(object='')\n# str(object=b'', encoding='utf-8', errors='strict')")
+    #print(bit.str_test.__doc__)
     #bit.str_test()
     
-    # String Methods
-    print('\n# String Methods')
+    ##String Methods
+    #print('\n# String Methods')
+    #print(bit.string_method_test.__doc__)
     #bit.string_method_test()
     
-    # Binary Sequence
-    print('\n# Binary Sequence')
+    ##Binary Sequence
+    #print('\n# Binary Sequence')
+    #print(bit.binary_sequence_test.__doc__)
     #bit.binary_sequence_test()
     
-    # memoryview(obj)
-    print('\n# memoryview(obj)')
+    ##memoryview(obj)
+    #print('\n# memoryview(obj)')
+    #print(bit.memoryview_test.__doc__)
     #bit.memoryview_test()
     
-    # Set
-    print('\n# Set')
+    ##Set
+    #print('\n# Set')
+    #print(bit.set_test.__doc__)
     #bit.set_test()
     
-    # dict(**kwarg)
-    # dict(mapping, **kwarg)
-    # dict(iterable, **kwarg)
-    print('\n# dict(**kwarg)\n# dict(mapping, **kwarg)\n# dict(iterable, **kwarg)')
+    ##dict(**kwarg)
+    ##dict(mapping, **kwarg)
+    ##dict(iterable, **kwarg)
+    #print('\n# dict(**kwarg)\n# dict(mapping, **kwarg)\n# dict(iterable, **kwarg)')
+    #print(bit.dict_test.__doc__)
     #bit.dict_test()
     
-    # Context Manager
-    print('\n# Context Manager')
+    ##Context Manager
+    #print('\n# Context Manager')
+    #print(bit.context_manager_test.__doc__)
     #bit.context_manager_test()
     
-    # Modules
-    print('\n# Modules')
+    ##Modules
+    #print('\n# Modules')
+    #print(bit.modules_test.__doc__)
     #bit.modules_test()
 
-    # Classes and Class Instances
-    print('\n# Classes and Class Instances')
-    bit.class_object_test()
+    ##Classes and Class Instances
+    #print('\n# Classes and Class Instances')
+    #print(bit.class_object_test.__doc__)
+    #bit.class_object_test()
     
+    ##Functions
+    #print('\n# Functions')
+    #print(bit.function_test.__doc__)
+    #bit.function_test()
     
+    ##Methods
+    #print('\n# Methods')
+    #print(bit.method_test.__doc__)
+    #bit.method_test()
     
+    ##Code Objects
+    #print('\n# Code Objects')
+    #print(bit.code_object_test.__doc__)
+    #bit.code_object_test()
     
+    ##Type Objects
+    #print('\n# Type Objects')
+    #print(bit.type_object_test.__doc__)
+    #bit.type_object_test()
     
+    ##The Null Object
+    #print('\n# The Null Object')
+    #print(bit.null_object_test.__doc__)
+    #bit.null_object_test()
     
+    #The Ellipsis Object
+    #print('\n# The Ellipsis Object')
+    #print(bit.ellipsis_object_test.__doc__)
+    #bit.ellipsis_object_test()
     
+    ##The NotImplemented Object
+    #print('\n# The NotImplemented Object')
+    #print(bit.not_implemented_object_test.__doc__)
+    #bit.not_implemented_object_test()
     
+    ##Boolean Values
+    #print('\n# Boolean Values')
+    #print(bit.boolean_value_test.__doc__)
+    #bit.boolean_value_test()
+    
+    ##Internal Objects
+    #print('\n# Internal Objects')
+    #print(bit.internal_object_test.__doc__)
+    #bit.internal_object_test()
+    
+    ##Special Attributes
+    #print('\n# Special Attributes')
+    #print(bit.special_attribute_test.__doc__)
+    #bit.special_attribute_test()
     

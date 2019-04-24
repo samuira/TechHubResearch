@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+"""
+Created on Fri Feb 1 13:48:52 2019
+
+@author: Rajesh Samui
+"""
 
 class BuiltInConstant:
     """
@@ -21,6 +26,18 @@ class BuiltInConstant:
         may be returned by the in-place binary special methods 
         (e.g. __imul__(), __iand__(), etc.) for the same purpose. Its truth 
         value is true.
+    Note:
+        When a binary (or in-place) method returns NotImplemented the interpreter 
+        will try the reflected operation on the other type (or some other fallback,
+        depending on the operator). If all attempts return NotImplemented, the 
+        interpreter will raise an appropriate exception. Incorrectly returning 
+        NotImplemented will result in a misleading error message or the 
+        NotImplemented value being returned to Python code.
+        See Implementing the arithmetic operations for examples.
+    Note:
+        NotImplementedError and NotImplemented are not interchangeable, even though
+        they have similar names and purposes. See NotImplementedError for details 
+        on when to use it. 
     Ellipsis:
         The same as the ellipsis literal “...”. Special value used mostly in 
         conjunction with extended slicing syntax for user-defined container 
