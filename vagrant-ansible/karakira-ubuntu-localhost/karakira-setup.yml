@@ -1,0 +1,136 @@
+---
+- name: Install Packages
+  hosts: localhost
+  become: true
+
+  tasks:
+    - name: add mysql repo
+      ignore_errors: yes
+      get_url:
+        url: https://dev.mysql.com/get/mysql-apt-config_0.8.6-1_all.deb
+        dest: "/home/vagrant"
+      
+    - name: install mysql repo
+      ignore_errors: yes
+      apt: "deb=/home/vagrant/mysql-apt-config_0.8.6-1_all.deb"
+      
+    - name: install python3-mysqldb
+      apt:
+        name: ['libstdc++6', 'python3-mysqldb', 'libmysqlclient-dev', 'python3-pymysql']
+        state: present
+        update_cache: yes
+        
+    - name: check latest version of mysql 5.7
+      command: bash -c "apt-cache showpkg mysql-server|grep 5.7|head -1|cut -d' ' -f1"
+      register: latestmysql57
+    - debug: msg="{{ latestmysql57.stdout }}"
+    
+    - name: install mysql 57
+      apt:
+        name: mysql-server={{ latestmysql57.stdout }}
+        state: present
+        update_cache: yes
+
+    - name: upgrade all packages
+      apt:
+        force_apt_get: yes
+
+    - name: Start the MySQL service
+      service: 
+        name: mysql 
+        state: started
+        enabled: true
+
+    - name: update mysql root password for all root accounts
+      ignore_errors: yes
+      mysql_user: 
+        name: root 
+        host: "{{ item }}" 
+        password: "karakira"
+        login_user: root
+        login_password: ""
+        check_implicit_admin: yes
+        priv: "*.*:ALL,GRANT"
+      with_items:
+        - "{{ ansible_hostname }}"
+        - 127.0.0.1
+        - ::1
+        - localhost
+
+
+    - name: restart the MySQL service
+      service: name=mysql state=restarted
+
+    - name: create db user
+      mysql_user: name=karakira password=karakira login_user=root login_password=root priv='*.*:ALL,GRANT' host=localhost state=present
+      
+    - name: create mysql database
+      mysql_db: name=karakira login_user=karakira login_password=karakira state=present
+
+    - name: Copy database dump file
+      copy:
+        src: db_dump/KaraKira-DB-Backup-23-04-2019.sql
+        dest: /tmp
+
+    - name: Restore database
+      mysql_db:
+        name: karakira
+        login_user: karakira
+        login_password: karakira
+        state: import
+        target: /tmp/KaraKira-DB-Backup-23-04-2019.sql
+    
+    - name: create /var/www/html/backup/karakira directory
+      file: path=/var/www/html/backup/karakira state=directory
+
+    
+    - name: install makecache,pip, virtualenv, setuptools, unzip
+      apt: 
+        name: ['python-setuptools', 'python-pip','python3-dev', 'build-essential', 'gcc', 'libxml2-dev', 'libxslt1-dev', 'zlib1g-dev', 'libopenblas-dev', 'unzip']
+    
+    - name: Install virtualenv via pip
+      pip:
+        name: virtualenv
+
+    - name: upgrade all packages
+      apt:
+        force_apt_get: yes
+
+    - name: Extract karakira.zip into /var/www/html/backup
+      unarchive:
+        src: code/karakira.zip
+        dest: /var/www/html/backup/karakira
+
+    - name: creating virtual env karakira
+      pip:
+        virtualenv: /var/www/html/backup/karakira_env
+        requirements: /var/www/html/backup/karakira/requirement.txt
+        virtualenv_python: python3.5
+        extra_args: --default-timeout=100
+
+    - name: creating virtual env kpi
+      pip:
+        virtualenv: /var/www/html/backup/karakira_env
+        requirements: /var/www/html/backup/karakira/kpi/requirement.txt
+        virtualenv_python: python3.5
+        extra_args: --default-timeout=100
+
+    - name: run KPI migrate -o True
+      shell: |
+        source /var/www/html/backup/karakira_env/bin/activate
+        pip install -e .
+        KPI migrate -o True
+      args:
+        chdir: /var/www/html/backup/karakira/kpi/
+        executable: /bin/bash
+      tags: run_kpi_migrate
+
+    - name: run karakira
+      shell: |
+        source /var/www/html/backup/karakira_env/bin/activate
+        nohup python3 manage.py runserver 0.0.0.0:8082 & > out.txt
+      args:
+        chdir: /var/www/html/backup/karakira/
+        executable: /bin/bash
+      tags:
+        - run_karakira

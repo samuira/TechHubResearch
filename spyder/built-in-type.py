@@ -4317,12 +4317,12 @@ if __name__ == '__main__':
     #print(bit.set_test.__doc__)
     #bit.set_test()
     
-    ##dict(**kwarg)
-    ##dict(mapping, **kwarg)
-    ##dict(iterable, **kwarg)
-    #print('\n# dict(**kwarg)\n# dict(mapping, **kwarg)\n# dict(iterable, **kwarg)')
-    #print(bit.dict_test.__doc__)
-    #bit.dict_test()
+    #dict(**kwarg)
+    #dict(mapping, **kwarg)
+    #dict(iterable, **kwarg)
+    print('\n# dict(**kwarg)\n# dict(mapping, **kwarg)\n# dict(iterable, **kwarg)')
+    print(bit.dict_test.__doc__)
+    bit.dict_test()
     
     ##Context Manager
     #print('\n# Context Manager')

@@ -41,31 +41,30 @@ services:
     volumes:
       - ".:/workforce"
 
-  client:
-    build: 
-      context: ./angular
-      dockerfile: ./Dockerfile
-    command: ["npm", "start"]
-    ports:
-      - "4200:4200"
-    volumes:
-      - "./angular:/usr/src/app"
+#  client:
+#    build:
+#      context: ./angular
+#      dockerfile: ./Dockerfile
+#    command: ["npm", "start"]
+#    ports:
+#      - "4200:4200"
+#    volumes:
+#      - "./angular:/usr/src/app"
+#
+#  nginx:
+#    build:
+#      context: ./nginx/
+#      dockerfile: ./Dockerfile
+#    restart: always
+#    ports:
+#      - "8089:80"
+#    volumes:
+#      - "./angular/dist/WorkForce:/usr/src/app"
+#      - "./nginx/nginx.conf:/etc/nginx/conf.d/default.conf"
+#      - ".:/workforce"
+#    depends_on:
+#      - django
+#      - client
 
-  nginx:
-    build: 
-      context: ./nginx/
-      dockerfile: ./Dockerfile
-    restart: always
-    ports:
-      - "8089:80"
-    volumes:
-      - "./angular/dist/WorkForce:/usr/src/app"
-      - "./nginx/nginx.conf:/etc/nginx/conf.d/default.conf"
-      - ".:/workforce"
-    depends_on:
-      - django
-      - client
-
-    
 volumes:
   pgdata: ~

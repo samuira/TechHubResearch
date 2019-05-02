@@ -12,12 +12,15 @@
   <link rel="stylesheet" href="{% static 'custom_admin/vendors/css/vendor.bundle.base.css' %}">
   <link rel="stylesheet" href="{% static 'custom_admin/vendors/css/vendor.bundle.addons.css' %}">
   <!-- endinject -->
+  <link rel="stylesheet" href="{% static 'custom_admin/vendors/iconfonts/font-awesome/css/font-awesome.css' %}">
   <!-- plugin css for this page -->
   <!-- End plugin css for this page -->
   <!-- inject:css -->
   <link rel="stylesheet" href="{% static 'custom_admin/css/style.css' %}">
   <!-- endinject -->
   <link rel="shortcut icon" href="{% static 'custom_admin/images/favicon.png' %}" />
+  <!-- ckeditor -->
+  <script src="https://cdn.ckeditor.com/ckeditor5/12.0.0/classic/ckeditor.js"></script>
 </head>
 
 <body>
@@ -30,7 +33,14 @@
       {% include 'custom_admin/partials/_sidebar.html' %}
       <!-- partial -->
       <div class="main-panel">
-
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert {{ message.tags }} alert-dismissible m-1" >
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
         {% block content %}
         {% endblock %}
         
@@ -58,6 +68,7 @@
   <!-- Custom js for this page-->
   <script src="{% static 'custom_admin/js/dashboard.js' %}"></script>
   <!-- End custom js for this page-->
+
 </body>
 
 </html>

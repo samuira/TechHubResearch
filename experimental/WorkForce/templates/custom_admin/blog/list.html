@@ -1,0 +1,68 @@
+{% extends "custom_admin/index.html" %}
+{% load staticfiles %}
+{% block content %}
+<div class="content-wrapper">
+    <div class="col-lg-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Blog Posts</h4>
+          <a class="btn btn-outline-primary btn-fw float-right" href="{% url 'blog-create' %}">
+            <i class="fa fa-plus-square"></i>Create</a>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>
+                    Title
+                  </th>
+                  <th>
+                    Image
+                  </th>
+                  <th>
+                    Description
+                  </th>
+                  <th>
+                    Created on
+                  </th>
+                  <th>
+                    Published on
+                  </th>
+                  <th>
+                    Action
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="py-1">
+                    Title
+                  </td>
+                  <td>
+                    <img src="{% static 'custom_admin/images/faces-clipart/pic-1.png' %}" alt="image" />
+                  </td>
+                  <td>
+                      Description
+                  </td>
+                  <td>
+                    May 15, 2015
+                  </td>
+                  <td>
+                    May 15, 2015
+                  </td>
+                  <td>
+                    <a href="{% url 'blog-edit' %}">
+                      <i class="icon-sm fa fa-edit"></i>
+                    </a>
+                    <a href="{% url 'blog-delete' %}">
+                      <i class="icon-sm fa fa-trash-o"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock content %}

@@ -19,6 +19,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+# root directory used for frontend in nginx
 urlpatterns = [
 	path('cadmin/admin/', admin.site.urls),
 	path('cadmin/', include('custom_admin.urls')),

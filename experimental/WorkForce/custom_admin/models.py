@@ -40,3 +40,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 	def __str__(self):
 		return self.email
+
+	def save(self, *args, **kwargs):
+		self.validate_unique()
+		super(User, self).save(*args, **kwargs)
