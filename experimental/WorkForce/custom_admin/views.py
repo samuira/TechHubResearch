@@ -10,13 +10,16 @@ from django.views.generic import ListView, CreateView
 
 from blog.models import BlogPost
 from custom_admin.models import User
-from .forms import LoginForm, RegisterForm
+from .forms import LoginForm, RegisterForm, BlogPostCreateForm
 from django.shortcuts import redirect
 
 
 class Dashboard(LoginRequiredMixin, View):
 	template_name = 'custom_admin/dashboard.html'
 	login_url = reverse_lazy('login')
+
+	def get(self, request):
+		return render(request, self.template_name)
 
 
 class Login(View):
@@ -62,6 +65,15 @@ class BlogList(LoginRequiredMixin, ListView):
 class BlogCreate(LoginRequiredMixin, CreateView):
 	template_name = 'custom_admin/blog/create.html'
 	login_url = reverse_lazy('login')
+	model = BlogPost
+	fields = ['title_image', 'created_by', 'title', 'description']
+	success_url = reverse_lazy('blog-list')
+
+	def form_valid(self, form):
+		self.object = form.save()
+		self.object.user = self.request.user
+		self.object.save()
+		return redirect(self.success_url)
 
 
 class BlogEdit(LoginRequiredMixin, View):

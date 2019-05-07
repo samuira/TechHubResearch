@@ -30,20 +30,21 @@ class RegisterForm(forms.Form):
 			)
 		return self.cleaned_data
 
-#
-# class BlogPostCreateForm(forms.ModelForm):
-# 	class Meta:
-# 		model = BlogPost
-# 		fields = ['created_on', 'title_image', '']
-#
-# 	def __init__(self, *args, **kwargs):
-# 		self.user = kwargs.pop('user')
-# 		super(BlogPostCreateForm, self).__init__(*args, **kwargs)
-#
-# 	def clean_title(self):
-# 		title = self.cleaned_data['title']
-# 		if BlogPost.objects.filter(title=title).exists():
-# 			messages.error(self.request, 'A blog with same title have already been written.')
-# 			raise forms.ValidationError("A blog with same title have already been written.")
-# 		return title
+
+class BlogPostCreateForm(forms.Form):
+	title_image = forms.ImageField()
+	title = forms.CharField(max_length=300)
+	description = forms.Textarea()
+
+	def __init__(self, *args, **kwargs):
+		self.created_by = kwargs.pop('user')
+		self.slug = self.title
+		super(BlogPostCreateForm, self).__init__(*args, **kwargs)
+
+	def clean_title(self):
+		title = self.cleaned_data['title']
+		if BlogPost.objects.filter(title=title).exists():
+			messages.error(self.request, 'A blog with same title have already been written.')
+			raise forms.ValidationError("A blog with same title have already been written.")
+		return title
 

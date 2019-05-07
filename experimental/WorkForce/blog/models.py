@@ -9,4 +9,4 @@ class BlogPost(models.Model):
     title_image = models.ImageField(upload_to='blog/title_images/%Y/%m/%d', blank=True)
     title = models.CharField(max_length=300)
     description = models.TextField()
-    slug = models.CharField(max_length=300, unique=True)
+    slug = models.SlugField(max_length=300, unique=True)

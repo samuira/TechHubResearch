@@ -4,7 +4,7 @@ Created on Tue Apr 2 14:31:24 2019
 
 @author: Rajesh Samui
 """
-from difflib import SequenceMatcher, Differ, HtmlDiff
+from difflib import SequenceMatcher, Differ, HtmlDiff, context_diff
 from pprint import pprint
 
 class Difflib:
@@ -287,9 +287,35 @@ class Difflib:
         
         print('\n# make_table(fromlines, tolines, fromdesc='', todesc='', context=False, numlines=5)')
         '''
-                
+        Compares fromlines and tolines (lists of strings) and returns a string 
+        which is a complete HTML table showing line by line differences with 
+        inter-line and intra-line changes highlighted.
+        The arguments for this method are the same as those for the make_file()
+        method.
         '''
         print(HtmlDiff().make_table(before, after))
+        
+    def context_diff_test(self):
+        """
+        Compare a and b (lists of strings); return a delta (a generator 
+        generating the delta lines) in context diff format.
+        Context diffs are a compact way of showing just the lines that have 
+        changed plus a few lines of context. The changes are shown in a 
+        before/after style. The number of context lines is set by n which 
+        defaults to three.
+        By default, the diff control lines (those with *** or ---) are created 
+        with a trailing newline. This is helpful so that inputs created from 
+        io.IOBase.readlines() result in diffs that are suitable for use with 
+        io.IOBase.writelines() since both the inputs and outputs have trailing 
+        newlines.
+        For inputs that do not have trailing newlines, set the lineterm 
+        argument to "" so that the output will be uniformly newline free.
+
+        The context diff format normally has a header for filenames and modification times. Any or all of these may be specified using strings for fromfile, tofile, fromfiledate, and tofiledate. The modification times are normally expressed in the ISO 8601 format. If not specified, the strings default to blanks.
+        """
+        before = ['abc\n', 'def\n', 'mno\n']
+        after = ['xyz\n', 'def\n', 'mnop\n']
+        print(context_diff(before, after))
     
     
     
@@ -316,7 +342,10 @@ if __name__ == '__main__':
 #    print(dl.differ_test.__doc__)
 #    dl.differ_test()
 
-    print('\n# difflib.HtmlDiff')
-    print(dl.html_diff_test.__doc__)
-    dl.html_diff_test()
+#    print('\n# difflib.HtmlDiff')
+#    print(dl.html_diff_test.__doc__)
+#    dl.html_diff_test()
     
+    print("\n# difflib.context_diff(a, b, fromfile='', tofile='', fromfiledate='', tofiledate='', n=3, lineterm='\\n')")
+    print(dl.context_diff_test.__doc__)
+    dl.context_diff_test()
