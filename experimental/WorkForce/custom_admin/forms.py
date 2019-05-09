@@ -37,8 +37,7 @@ class BlogPostCreateForm(forms.Form):
 	description = forms.Textarea()
 
 	def __init__(self, *args, **kwargs):
-		self.created_by = kwargs.pop('user')
-		self.slug = self.title
+		print(kwargs)
 		super(BlogPostCreateForm, self).__init__(*args, **kwargs)
 
 	def clean_title(self):

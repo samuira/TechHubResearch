@@ -62,19 +62,19 @@ class BlogList(LoginRequiredMixin, ListView):
 	context_object_name = 'blog_post'
 
 
-class BlogCreate(LoginRequiredMixin, CreateView):
+class BlogCreate(LoginRequiredMixin, View):
 	template_name = 'custom_admin/blog/create.html'
 	login_url = reverse_lazy('login')
-	model = BlogPost
-	fields = ['title_image', 'created_by', 'title', 'description']
-	success_url = reverse_lazy('blog-list')
+	queryset = BlogPost.objects.all()
+	from_class = BlogPostCreateForm
 
-	def form_valid(self, form):
-		self.object = form.save()
-		self.object.user = self.request.user
-		self.object.save()
-		return redirect(self.success_url)
+	def get(self, request):
+		return render(request, self.template_name)
 
+	def post(self, request, *args, **kwargs):
+		form = self.from_class(request.POST, request.FILES, user=request.user)
+		print(form.is_valid())
+		return render(request, self.template_name)
 
 class BlogEdit(LoginRequiredMixin, View):
 	template_name = 'custom_admin/blog/edit.html'
