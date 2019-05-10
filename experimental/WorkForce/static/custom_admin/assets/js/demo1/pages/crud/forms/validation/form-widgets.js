@@ -66,16 +66,16 @@ var KTFormWidgets = function () {
         });
 
         // typeahead
-        var countries = new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.whitespace,
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            prefetch: 'https://keenthemes.com/metronic/themes/themes/metronic/dist/preview/inc/api/typeahead/countries.json'
-        });
-
-        $('#kt_typeahead').typeahead(null, {
-            name: 'countries',
-            source: countries
-        });
+//        var countries = new Bloodhound({
+//            datumTokenizer: Bloodhound.tokenizers.whitespace,
+//            queryTokenizer: Bloodhound.tokenizers.whitespace,
+//            prefetch: 'https://keenthemes.com/metronic/themes/themes/metronic/dist/preview/inc/api/typeahead/countries.json'
+//        });
+//
+//        $('#kt_typeahead').typeahead(null, {
+//            name: 'countries',
+//            source: countries
+//        });
         $('#kt_typeahead').bind('typeahead:select', function(ev, suggestion) {
             validator.element($('#kt_typeahead')); // validate element
         });

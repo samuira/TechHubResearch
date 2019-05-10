@@ -34,6 +34,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 	first_name = models.CharField(max_length=60, blank=True)
 	last_name = models.CharField(max_length=60, blank=True)
 	phone = models.CharField(max_length=20, blank=True)
+	avatar = models.ImageField(upload_to='user/profile_images/%Y/%m/%d', default='')
 
 	objects = UserManager()
 	USERNAME_FIELD = 'email'

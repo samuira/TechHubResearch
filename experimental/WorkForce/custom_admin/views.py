@@ -3,14 +3,15 @@ from django.contrib.auth import authenticate, login
 from django.core.exceptions import ValidationError
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
+from django.utils.text import slugify
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, CreateView
-
 from blog.models import BlogPost
 from custom_admin.models import User
-from .forms import LoginForm, RegisterForm, BlogPostCreateForm
+from custom_admin.utils import Util
+from .forms import LoginForm, RegisterForm, BlogPostCreateForm, BlogPostEditForm
 from django.shortcuts import redirect
 
 
@@ -65,27 +66,73 @@ class BlogList(LoginRequiredMixin, ListView):
 class BlogCreate(LoginRequiredMixin, View):
 	template_name = 'custom_admin/blog/create.html'
 	login_url = reverse_lazy('login')
-	queryset = BlogPost.objects.all()
-	from_class = BlogPostCreateForm
+	form_class = BlogPostCreateForm
+	context = dict()
 
 	def get(self, request):
-		return render(request, self.template_name)
+		self.context.clear()
+		self.context['ckeditor'] = True
+		print(self.context)
+		return render(request, self.template_name, self.context)
 
 	def post(self, request, *args, **kwargs):
-		form = self.from_class(request.POST, request.FILES, user=request.user)
-		print(form.is_valid())
-		return render(request, self.template_name)
+		form = self.form_class(request.POST, request.FILES)
+		self.context['form'] = form
+		if form.is_valid():
+			print(form.cleaned_data)
+			BlogPost.objects.create(
+				created_by=request.user,
+				title_image=form.cleaned_data.get('title_image', ''),
+				title=form.cleaned_data.get('title'),
+				description=form.cleaned_data.get('bp_description'),
+				slug=slugify(form.cleaned_data.get('title'))
+			)
+			messages.success(self.request, 'Blog has been created successfully.')
+			return HttpResponseRedirect(reverse('blog-list'))
+		else:
+			error = Util.form_validation_error(request, form)
+			self.context['error'] = error
+		return render(request, self.template_name, self.context)
+
 
 class BlogEdit(LoginRequiredMixin, View):
 	template_name = 'custom_admin/blog/edit.html'
 	login_url = reverse_lazy('login')
+	form_class = BlogPostEditForm
+	context = dict()
+
+	def get(self, request, **kwargs):
+		self.context['ckeditor'] = True
+		self.context['blog'] = BlogPost.objects.get(pk=kwargs['pk'])
+		print(self.context, kwargs['pk'])
+		return render(request, self.template_name, self.context)
+
+	def post(self, request, *args, **kwargs):
+		form = self.form_class(request.POST, request.FILES, pk=self.context['blog'].id)
+		self.context['form'] = form
+		if form.is_valid():
+			print(form.cleaned_data)
+			blog = self.context['blog']
+			blog.title_image = form.cleaned_data.get('title_image', '')
+			blog.title = form.cleaned_data.get('title')
+			blog.description = form.cleaned_data.get('bp_description')
+			blog.slug = slugify(form.cleaned_data.get('title'))
+			blog.save()
+			messages.success(self.request, 'Blog has been saved successfully.')
+			return HttpResponseRedirect(reverse('blog-list'))
+		else:
+			error = Util.form_validation_error(request, form)
+			self.context['error'] = error
+		return render(request, self.template_name, self.context)
 
 
 class BlogDelete(View):
 	template_name = 'custom_admin/blog/list.html'
 
-	def get(self, request):
-		return HttpResponseRedirect('/blog-list/')
+	def get(self, request, **kwargs):
+		#BlogPost.objects.get(pk=kwargs['pk']).delete()
+		messages.success(self.request, 'Blog has been deleted successfully.')
+		return HttpResponseRedirect(reverse('blog-list'))
 
 
 class UserList(LoginRequiredMixin, View):

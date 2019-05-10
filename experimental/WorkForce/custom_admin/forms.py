@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
-
 from blog.models import BlogPost
 
 
@@ -32,18 +31,29 @@ class RegisterForm(forms.Form):
 
 
 class BlogPostCreateForm(forms.Form):
-	title_image = forms.ImageField()
+	title_image = forms.ImageField(required=False)
 	title = forms.CharField(max_length=300)
-	description = forms.Textarea()
+	bp_description = forms.CharField(required=True, widget=forms.Textarea)
+
+	def clean(self):
+		title = self.cleaned_data.get('title')
+		if BlogPost.objects.filter(title__iexact=title).exists():
+			raise forms.ValidationError(
+				_('A blog with same title have already been written.'),
+				code='title',)
+		return self.cleaned_data
+
+
+class BlogPostEditForm(BlogPostCreateForm):
 
 	def __init__(self, *args, **kwargs):
-		print(kwargs)
-		super(BlogPostCreateForm, self).__init__(*args, **kwargs)
+		self.pk = kwargs.pop('pk', None)
+		super(BlogPostEditForm, self).__init__(*args, **kwargs)
 
-	def clean_title(self):
-		title = self.cleaned_data['title']
-		if BlogPost.objects.filter(title=title).exists():
-			messages.error(self.request, 'A blog with same title have already been written.')
-			raise forms.ValidationError("A blog with same title have already been written.")
-		return title
-
+	def clean(self):
+		title = self.cleaned_data.get('title')
+		if BlogPost.objects.filter(title__iexact=title).exclude(pk=self.pk).exists():
+			raise forms.ValidationError(
+				_('A blog with same title have already been written.'),
+				code='title',)
+		return self.cleaned_data
