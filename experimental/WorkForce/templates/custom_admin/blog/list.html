@@ -112,7 +112,7 @@
 <!-- end:: Subheader -->
 <!-- begin:: Content -->
 <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
-    {% include 'custom_admin/alert_error.html' %}
+    {% include 'custom_admin/partials/alert_error.html' %}
     <div class="kt-portlet kt-portlet--mobile">
         <div class="kt-portlet__head kt-portlet__head--lg">
             <div class="kt-portlet__head-label">
@@ -201,20 +201,20 @@
                         <td>{{ forloop.counter }}</td>
                         <td>{{ blog.title | truncatechars:10 }}</td>
                         <td>{% if blog.title_image %}<img src="{{MEDIA_URL}}{{ blog.title_image }}" height="30" >{% endif %}</td>
-                        <td>{% if blog.published_on %}{{ blog.published_on }}{% endif %}</td>
+                        <td>{% if blog.published_on %}{{ blog.published_on }}{% else %}Not yet published{% endif %} </td>
                         <td>{{ blog.created_on }}</td>
                         <td>
                             {% if blog.created_by.avatar %}
-                            <img src="{{MEDIA_URL}}{{ blog.created_by.avatar }}" width="30" height="30" class="rounded-circle"></td>
+                            <img src="{{MEDIA_URL}}{{ blog.created_by.avatar }}" width="30" height="30" class="rounded-circle">
                             {% else %}
-                            <div class="kt-badge kt-badge--md kt-badge--brand">{{ blog.created_by.email.0 }}</div>
+                            <div class="kt-badge kt-badge--md kt-badge--brand">{{ blog.created_by.email.0 | title }}</div>
                             {% endif %}
                             {{ blog.created_by.email }}
                         </td>
                         <td>{{ blog.slug }}</td>
                         <td nowrap>
                             <a href="{% url 'blog-edit' pk=blog.id %}" title="Edit details" class="btn btn-sm btn-clean btn-icon btn-icon-md"> <i class="la la-edit"></i> </a>
-                            <a href="{% url 'blog-delete' pk=blog.id%}" id="kt_sweetalert_demo_9" title="Delete" class="btn btn-sm btn-clean btn-icon btn-icon-md "> <i class="la la-trash"></i> </a>
+                            <a href="{% url 'blog-delete' pk=blog.id%}" title="Delete" class="btn btn-sm btn-clean btn-icon btn-icon-md delete_confirm_swta"> <i class="la la-trash"></i> </a>
                         </td>
                     </tr>
                     {% endfor %}

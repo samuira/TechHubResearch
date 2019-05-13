@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.core.exceptions import ValidationError
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
@@ -26,25 +26,42 @@ class Dashboard(LoginRequiredMixin, View):
 class Login(View):
 	template_name = 'custom_admin/account/login.html'
 	form_class = LoginForm
+	context = dict()
+
+	def get(self, request, *args, **kwargs):
+		self.context.clear()
+		return render(request, self.template_name)
 
 	def post(self, request, *args, **kwargs):
+		self.context.clear()
 		form = self.form_class(request.POST)
+		self.context['form'] = form
 		if form.is_valid():
 			user = authenticate(request=request, email=request.POST['email'], password=request.POST['password'])
 			if user:
 				login(request, user)
 				return redirect('dashboard')
 			else:
-				messages.error(request, 'Wrong email id or password.')
-		return render(request, self.template_name, {'form': form})
+				messages.error(request, 'Incorrect Email or Password')
+		else:
+			error = Util.form_validation_error(request, form)
+			self.context['error'] = error
+		return render(request, self.template_name, self.context)
 
 
 class Register(View):
 	template_name = 'custom_admin/account/register.html'
 	form_class = RegisterForm
+	context = dict()
+
+	def get(self, request, *args, **kwargs):
+		self.context.clear()
+		return render(request, self.template_name)
 
 	def post(self, request, *args, **kwargs):
+		self.context.clear()
 		form = self.form_class(request.POST, request=request)
+		self.context['form'] = form
 		if form.is_valid():
 			try:
 				user = User.objects.create_user(email=request.POST['email'], password=request.POST['password'])
@@ -52,7 +69,19 @@ class Register(View):
 				[messages.error(request, error[0]) for error in e.message_dict.values()]
 			else:
 				return redirect('login')
-		return render(request, self.template_name, {'form': form})
+		else:
+			error = Util.form_validation_error(request, form)
+			self.context['error'] = error
+
+		return render(request, self.template_name, self.context)
+
+
+class Logout(LoginRequiredMixin, View):
+	login_url = reverse_lazy('login')
+
+	def get(self, request):
+		logout(request)
+		return HttpResponseRedirect(reverse('login'))
 
 
 class BlogList(LoginRequiredMixin, ListView):
@@ -76,6 +105,7 @@ class BlogCreate(LoginRequiredMixin, View):
 		return render(request, self.template_name, self.context)
 
 	def post(self, request, *args, **kwargs):
+		self.context.clear()
 		form = self.form_class(request.POST, request.FILES)
 		self.context['form'] = form
 		if form.is_valid():
@@ -102,12 +132,14 @@ class BlogEdit(LoginRequiredMixin, View):
 	context = dict()
 
 	def get(self, request, **kwargs):
+		self.context.clear()
 		self.context['ckeditor'] = True
 		self.context['blog'] = BlogPost.objects.get(pk=kwargs['pk'])
 		print(self.context, kwargs['pk'])
 		return render(request, self.template_name, self.context)
 
 	def post(self, request, *args, **kwargs):
+		self.context.clear()
 		form = self.form_class(request.POST, request.FILES, pk=self.context['blog'].id)
 		self.context['form'] = form
 		if form.is_valid():
@@ -130,14 +162,17 @@ class BlogDelete(View):
 	template_name = 'custom_admin/blog/list.html'
 
 	def get(self, request, **kwargs):
-		#BlogPost.objects.get(pk=kwargs['pk']).delete()
+		BlogPost.objects.get(pk=kwargs['pk']).delete()
 		messages.success(self.request, 'Blog has been deleted successfully.')
 		return HttpResponseRedirect(reverse('blog-list'))
 
 
-class UserList(LoginRequiredMixin, View):
+class UserList(LoginRequiredMixin, ListView):
 	template_name = 'custom_admin/user/list.html'
 	login_url = reverse_lazy('login')
+	queryset = User.objects.all()
+	paginate_by = 10
+	context_object_name = 'user_list'
 
 
 class UserEdit(LoginRequiredMixin, View):

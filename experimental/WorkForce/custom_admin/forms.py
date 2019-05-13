@@ -22,7 +22,6 @@ class RegisterForm(forms.Form):
 		password = self.cleaned_data.get('password')
 		c_password = self.cleaned_data.get('c_password')
 		if password and c_password and password != c_password:
-			messages.error(self.request, 'password mis-matched')
 			raise forms.ValidationError(
 				_('password_mismatch'),
 				code='password_mismatch',
