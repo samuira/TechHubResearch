@@ -2,6 +2,7 @@ from django import forms
 from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 from blog.models import BlogPost
+from custom_admin.models import User
 
 
 class LoginForm(forms.Form):
@@ -26,6 +27,21 @@ class RegisterForm(forms.Form):
 				_('password_mismatch'),
 				code='password_mismatch',
 			)
+		return self.cleaned_data
+
+
+class UserEditForm(forms.Form):
+
+	def __init__(self, *args, **kwargs):
+		self.pk = kwargs.pop('pk', None)
+		super(UserEditForm, self).__init__(*args, **kwargs)
+
+	def clean(self):
+		phone = self.cleaned_data.get('phone')
+		if User.objects.filter(phone__iexact=phone).exclude(pk=self.pk).exists():
+			raise forms.ValidationError(
+				_('A user with same phone no. have already been exist.'),
+				code='phone',)
 		return self.cleaned_data
 
 

@@ -132,7 +132,7 @@
                     </div>
                 </div>
                 <!--begin::Form-->
-                <form class="kt-form kt-form--label-left" action="{% url 'blog-edit' pk=blog.id %}" method="post" enctype="multipart/form-data">
+                <form class="kt-form kt-form--label-left" action="{% url 'user-edit' pk=user.id %}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="kt-portlet__body">
                         <div class="kt-section kt-section--first">
@@ -148,7 +148,7 @@
                               <div class="col-lg-9 col-xl-6">
                                 <div class="kt-avatar kt-avatar--outline kt-avatar--circle-"
                                     id="kt_apps_user_add_avatar">
-                                    <div class="kt-avatar__holder">
+                                    <div class="kt-avatar__holder" align="middle">
                                       <img id="bp_img" src="{{MEDIA_URL}}{{blog.title_image}}" class="kt-avater__holder" width="115" height="115">
                                     </div>
                                     <label class="kt-avatar__upload"

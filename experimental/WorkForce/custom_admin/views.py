@@ -11,7 +11,7 @@ from django.views.generic import ListView, CreateView
 from blog.models import BlogPost
 from custom_admin.models import User
 from custom_admin.utils import Util
-from .forms import LoginForm, RegisterForm, BlogPostCreateForm, BlogPostEditForm
+from .forms import LoginForm, RegisterForm, BlogPostCreateForm, BlogPostEditForm, UserEditForm
 from django.shortcuts import redirect
 
 
@@ -150,7 +150,7 @@ class BlogEdit(LoginRequiredMixin, View):
 			blog.description = form.cleaned_data.get('bp_description')
 			blog.slug = slugify(form.cleaned_data.get('title'))
 			blog.save()
-			messages.success(self.request, 'Blog has been saved successfully.')
+			messages.success(self.request, 'Blog has been updated successfully.')
 			return HttpResponseRedirect(reverse('blog-list'))
 		else:
 			error = Util.form_validation_error(request, form)
@@ -178,4 +178,28 @@ class UserList(LoginRequiredMixin, ListView):
 class UserEdit(LoginRequiredMixin, View):
 	template_name = 'custom_admin/user/edit.html'
 	login_url = reverse_lazy('login')
+	form_class = UserEditForm
+	context = dict()
+
+	def get(self, request, **kwargs):
+		self.context.clear()
+		self.context['user'] = User.objects.get(pk=kwargs['pk'])
+		print(self.context, kwargs['pk'])
+		return render(request, self.template_name, self.context)
+
+	def post(self, request, *args, **kwargs):
+		self.context.clear()
+		form = self.form_class(request.POST, request.FILES, pk=self.context['user'].id)
+		self.context['form'] = form
+		if form.is_valid():
+			print(form.cleaned_data)
+			user = self.context['user']
+			user.email = form.cleaned_data.get('title_image', '')
+			user.save()
+			messages.success(self.request, 'User has been updated successfully.')
+			return HttpResponseRedirect(reverse('user-list'))
+		else:
+			error = Util.form_validation_error(request, form)
+			self.context['error'] = error
+		return render(request, self.template_name, self.context)
 
