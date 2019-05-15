@@ -31,6 +31,13 @@ class RegisterForm(forms.Form):
 
 
 class UserEditForm(forms.Form):
+	avatar = forms.ImageField(required=False)
+	first_name = forms.CharField(required=False, max_length=300)
+	last_name = forms.CharField(required=False, max_length=300)
+	phone = forms.CharField(required=False, max_length=300)
+	is_superuser = forms.BooleanField(required=False)
+	is_staff = forms.BooleanField(required=False)
+	is_active = forms.BooleanField(required=False)
 
 	def __init__(self, *args, **kwargs):
 		self.pk = kwargs.pop('pk', None)
@@ -38,7 +45,7 @@ class UserEditForm(forms.Form):
 
 	def clean(self):
 		phone = self.cleaned_data.get('phone')
-		if User.objects.filter(phone__iexact=phone).exclude(pk=self.pk).exists():
+		if phone and User.objects.filter(phone__iexact=phone).exclude(pk=self.pk).exists():
 			raise forms.ValidationError(
 				_('A user with same phone no. have already been exist.'),
 				code='phone',)

@@ -182,24 +182,31 @@ class UserEdit(LoginRequiredMixin, View):
 	context = dict()
 
 	def get(self, request, **kwargs):
-		self.context.clear()
 		self.context['user'] = User.objects.get(pk=kwargs['pk'])
 		print(self.context, kwargs['pk'])
 		return render(request, self.template_name, self.context)
 
 	def post(self, request, *args, **kwargs):
-		self.context.clear()
+		self.context['user'] = User.objects.get(pk=kwargs['pk'])
 		form = self.form_class(request.POST, request.FILES, pk=self.context['user'].id)
 		self.context['form'] = form
 		if form.is_valid():
 			print(form.cleaned_data)
 			user = self.context['user']
-			user.email = form.cleaned_data.get('title_image', '')
+			user.avatar = form.cleaned_data.get('avatar') or user.avatar
+			user.first_name = form.cleaned_data.get('first_name', '')
+			user.last_name = form.cleaned_data.get('last_name', '')
+			user.phone = form.cleaned_data.get('phone', '')
+			user.is_superuser = form.cleaned_data.get('is_superuser', False)
+			user.is_staff = form.cleaned_data.get('is_staff', False)
+			user.is_active = form.cleaned_data.get('is_active', False)
 			user.save()
+
 			messages.success(self.request, 'User has been updated successfully.')
 			return HttpResponseRedirect(reverse('user-list'))
 		else:
 			error = Util.form_validation_error(request, form)
 			self.context['error'] = error
+			print('Error:', error)
 		return render(request, self.template_name, self.context)
 

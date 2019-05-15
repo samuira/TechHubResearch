@@ -48,3 +48,8 @@ $('.delete_confirm_swta').click(function(e) {
 });
 
 
+// Begin :: Ajax
+
+
+
+// End :: Ajax
