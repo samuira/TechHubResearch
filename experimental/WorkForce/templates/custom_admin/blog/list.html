@@ -188,6 +188,7 @@
                         <th>Title</th>
                         <th>Title Image</th>
                         <th>Published On</th>
+                        <th>Verified</th>
                         <th>Created On</th>
                         <th>Created By</th>
                         <th>Slug</th>
@@ -202,6 +203,7 @@
                         <td>{{ blog.title | truncatechars:10 }}</td>
                         <td>{% if blog.title_image %}<img src="{{MEDIA_URL}}{{ blog.title_image }}" height="30" >{% endif %}</td>
                         <td>{% if blog.published_on %}{{ blog.published_on }}{% else %}Not yet published{% endif %} </td>
+                        <td>{% if blog.is_verified %}Yes{% else %}No{% endif %}</td>
                         <td>{{ blog.created_on }}</td>
                         <td>
                             {% if blog.created_by.avatar %}

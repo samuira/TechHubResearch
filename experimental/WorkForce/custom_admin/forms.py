@@ -67,6 +67,7 @@ class BlogPostCreateForm(forms.Form):
 
 
 class BlogPostEditForm(BlogPostCreateForm):
+	is_verified = forms.BooleanField(required=False)
 
 	def __init__(self, *args, **kwargs):
 		self.pk = kwargs.pop('pk', None)

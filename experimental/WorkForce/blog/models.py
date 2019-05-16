@@ -10,3 +10,4 @@ class BlogPost(models.Model):
     title = models.CharField(max_length=300)
     description = models.TextField()
     slug = models.SlugField(max_length=300, unique=True)
+    is_verified = models.BooleanField(default=False)

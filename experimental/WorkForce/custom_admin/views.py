@@ -6,7 +6,7 @@ from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from django.utils.text import slugify
 from django.views import View
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, CreateView
 from blog.models import BlogPost
 from custom_admin.models import User
@@ -15,9 +15,16 @@ from .forms import LoginForm, RegisterForm, BlogPostCreateForm, BlogPostEditForm
 from django.shortcuts import redirect
 
 
-class Dashboard(LoginRequiredMixin, View):
+class Dashboard(LoginRequiredMixin, UserPassesTestMixin, View):
 	template_name = 'custom_admin/dashboard.html'
 	login_url = reverse_lazy('login')
+
+	def test_func(self):
+		return self.request.user.is_superuser
+
+	def handle_no_permission(self):
+		messages.error(self.request, 'Permission denied!!!')
+		return redirect('login')
 
 	def get(self, request):
 		return render(request, self.template_name)
@@ -76,27 +83,48 @@ class Register(View):
 		return render(request, self.template_name, self.context)
 
 
-class Logout(LoginRequiredMixin, View):
+class Logout(LoginRequiredMixin, UserPassesTestMixin, View):
 	login_url = reverse_lazy('login')
+
+	def test_func(self):
+		return self.request.user.is_superuser
+
+	def handle_no_permission(self):
+		messages.error(self.request, 'Permission denied!!!')
+		return redirect('login')
 
 	def get(self, request):
 		logout(request)
 		return HttpResponseRedirect(reverse('login'))
 
 
-class BlogList(LoginRequiredMixin, ListView):
+class BlogList(LoginRequiredMixin, UserPassesTestMixin, ListView):
 	template_name = 'custom_admin/blog/list.html'
 	login_url = reverse_lazy('login')
 	queryset = BlogPost.objects.all()
 	paginate_by = 10
 	context_object_name = 'blog_post'
 
+	def test_func(self):
+		return self.request.user.is_superuser
 
-class BlogCreate(LoginRequiredMixin, View):
+	def handle_no_permission(self):
+		messages.error(self.request, 'Permission denied!!!')
+		return redirect('login')
+
+
+class BlogCreate(LoginRequiredMixin, UserPassesTestMixin, View):
 	template_name = 'custom_admin/blog/create.html'
 	login_url = reverse_lazy('login')
 	form_class = BlogPostCreateForm
 	context = dict()
+
+	def test_func(self):
+		return self.request.user.is_superuser
+
+	def handle_no_permission(self):
+		messages.error(self.request, 'Permission denied!!!')
+		return redirect('login')
 
 	def get(self, request):
 		self.context.clear()
@@ -125,11 +153,18 @@ class BlogCreate(LoginRequiredMixin, View):
 		return render(request, self.template_name, self.context)
 
 
-class BlogEdit(LoginRequiredMixin, View):
+class BlogEdit(LoginRequiredMixin, UserPassesTestMixin, View):
 	template_name = 'custom_admin/blog/edit.html'
 	login_url = reverse_lazy('login')
 	form_class = BlogPostEditForm
 	context = dict()
+
+	def test_func(self):
+		return self.request.user.is_superuser
+
+	def handle_no_permission(self):
+		messages.error(self.request, 'Permission denied!!!')
+		return redirect('login')
 
 	def get(self, request, **kwargs):
 		self.context.clear()
@@ -139,14 +174,14 @@ class BlogEdit(LoginRequiredMixin, View):
 		return render(request, self.template_name, self.context)
 
 	def post(self, request, *args, **kwargs):
-		self.context.clear()
 		form = self.form_class(request.POST, request.FILES, pk=self.context['blog'].id)
 		self.context['form'] = form
 		if form.is_valid():
 			print(form.cleaned_data)
 			blog = self.context['blog']
-			blog.title_image = form.cleaned_data.get('title_image', '')
+			blog.title_image = form.cleaned_data.get('title_image', '') or blog.title_image
 			blog.title = form.cleaned_data.get('title')
+			blog.is_verified = form.cleaned_data.get('is_verified')
 			blog.description = form.cleaned_data.get('bp_description')
 			blog.slug = slugify(form.cleaned_data.get('title'))
 			blog.save()
@@ -158,8 +193,16 @@ class BlogEdit(LoginRequiredMixin, View):
 		return render(request, self.template_name, self.context)
 
 
-class BlogDelete(View):
+class BlogDelete(LoginRequiredMixin, UserPassesTestMixin, View):
 	template_name = 'custom_admin/blog/list.html'
+	login_url = reverse_lazy('login')
+
+	def test_func(self):
+		return self.request.user.is_superuser
+
+	def handle_no_permission(self):
+		messages.error(self.request, 'Permission denied!!!')
+		return redirect('login')
 
 	def get(self, request, **kwargs):
 		BlogPost.objects.get(pk=kwargs['pk']).delete()
@@ -167,19 +210,33 @@ class BlogDelete(View):
 		return HttpResponseRedirect(reverse('blog-list'))
 
 
-class UserList(LoginRequiredMixin, ListView):
+class UserList(LoginRequiredMixin, UserPassesTestMixin, ListView):
 	template_name = 'custom_admin/user/list.html'
 	login_url = reverse_lazy('login')
 	queryset = User.objects.all()
 	paginate_by = 10
 	context_object_name = 'user_list'
 
+	def test_func(self):
+		return self.request.user.is_superuser
 
-class UserEdit(LoginRequiredMixin, View):
+	def handle_no_permission(self):
+		messages.error(self.request, 'Permission denied!!!')
+		return redirect('login')
+
+
+class UserEdit(LoginRequiredMixin, UserPassesTestMixin, View):
 	template_name = 'custom_admin/user/edit.html'
 	login_url = reverse_lazy('login')
 	form_class = UserEditForm
 	context = dict()
+
+	def test_func(self):
+		return self.request.user.is_superuser
+
+	def handle_no_permission(self):
+		messages.error(self.request, 'Permission denied!!!')
+		return redirect('login')
 
 	def get(self, request, **kwargs):
 		self.context['user'] = User.objects.get(pk=kwargs['pk'])

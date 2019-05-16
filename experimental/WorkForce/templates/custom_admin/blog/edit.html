@@ -143,6 +143,18 @@
                                 {% if error.title %}<span class="kt-font-danger kt-font-bold">{{error.title}}</span>{% endif %}
                                 <span class="form-text text-muted">Please enter a title</span>
                             </div>
+                            <div class="form-group form-group-sm row">
+                                <label class="col-xl-2 col-lg-2 col-form-label">Verified</label>
+                                <div class="col-lg-10 col-xl-6">
+                                    <span class="kt-switch">
+                                        <label>
+                                            <input type="checkbox" {% if blog.is_verified %} checked="checked" {% endif %}
+                                                name="is_verified">
+                                            <span></span>
+                                        </label>
+                                    </span>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label>Title Image</label>
                               <div class="col-lg-9 col-xl-6">
