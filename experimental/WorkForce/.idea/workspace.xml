@@ -3,13 +3,90 @@
   <component name="ChangeListManager">
     <list default="true" id="78d3377f-e215-4674-acda-b020f1ce48c4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WorkForce/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/WorkForce/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WorkForce/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/WorkForce/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/blog/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/custom_admin/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/custom_admin/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/custom_admin/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/custom_admin/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/custom_admin/blog/edit.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/custom_admin/blog/edit.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/custom_admin/blog/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/custom_admin/blog/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/common/scripts.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/common/styles.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/fonts/ionicons.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/fonts/ionicons.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/fonts/ionicons.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/fonts/ionicons.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/fonts/ionicons.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/banner-1-800x200.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/banner-2-300x300.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/business-1-400x300.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/culture-1-400x300.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/footer-1-100x100.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/footer-2-100x100.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/footer-3-100x100.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/footer-4-100x100.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/lifestyle-1-400x300.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/logo-black.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/logo-white.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/map.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/news-1-700x400.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/news-2-250x250.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/news-3-250x250.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/news-4-250x250.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/news-5-250x250.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/news-6-250x250.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/news-7-250x250.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/politics-1-400x300.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/sidebar-most-read-1-100x100.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/sidebar-most-read-2-100x100.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/sidebar-most-read-3-100x100.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/sidebar-most-read-4-100x100.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/sidebar-most-read-5-100x100.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/sidebar-most-read-6-100x100.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/sidebar-news-1-100x100.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/sidebar-news-2-100x100.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/sidebar-news-3-100x100.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/sidebar-news-4-100x100.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/sidebar-news-5-100x100.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/sidebar-news-6-100x100.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/sidebar-news-7-100x100.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/sidebar-news-8-100x100.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/sidebar-profile-1-100x100.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/sidebar-profile-2-100x100.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/sidebar-profile-3-100x100.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/sidebar-profile-4-100x100.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/sidebar-profile-5-100x150.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/sidebar-review-400x300.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/slider-1-550x600.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/slider-2-550x600.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/slider-3-600x300.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/slider-4-600x300.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/slider-5-800x400.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/slider-6-400x400.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/slider-7-400x400.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/slider-8-1200x600.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/sport-1-400x300.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/sport-10-400x300.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/tech-1-400x300.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/typograpgy-400x400.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/video-1-300x300.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/video-2-300x300.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/video-3-300x300.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/images/video-4-300x300.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/plugin-frameworks/bootstrap.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/plugin-frameworks/bootstrap.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/plugin-frameworks/jquery-3.2.1.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/assets/static/plugin-frameworks/tether.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/es2015-polyfills.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/es2015-polyfills.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/main.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/polyfills.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/polyfills.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/runtime.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/runtime.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/styles.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/styles.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/vendor.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/dist/WorkForce/vendor.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/blog/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/blog/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../djangoOscar/oscar_proj" beforeDir="false" afterPath="$PROJECT_DIR$/../djangoOscar/oscar_proj" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,11 +97,59 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/blog/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+            <state relative-caret-position="243">
+              <caret line="20" column="61" selection-start-line="20" selection-start-column="61" selection-end-line="20" selection-end-column="61" />
+              <folding>
+                <element signature="e#0#35#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/WorkForce/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="213">
+              <caret line="123" selection-start-line="123" selection-end-line="123" />
+              <folding>
+                <element signature="e#308#317#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/blog/excempt_csrf.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="5" column="20" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/blog/serializers.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="14" selection-start-line="14" selection-end-line="14" />
+              <folding>
+                <element signature="e#0#38#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/blog/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="12" column="15" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="15" />
+              <folding>
+                <element signature="e#0#28#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -32,11 +157,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/blog/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" selection-start-line="6" selection-end-line="6" />
+            <state relative-caret-position="60">
+              <caret line="4" column="53" selection-start-line="4" selection-start-column="53" selection-end-line="4" selection-end-column="53" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/WorkForce/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="26" column="5" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -131,9 +265,11 @@
         <option value="$PROJECT_DIR$/templates/custom_admin/blog/edit.html" />
         <option value="$PROJECT_DIR$/custom_admin/forms.py" />
         <option value="$PROJECT_DIR$/custom_admin/views.py" />
-        <option value="$PROJECT_DIR$/WorkForce/settings.py" />
-        <option value="$PROJECT_DIR$/WorkForce/urls.py" />
         <option value="$PROJECT_DIR$/blog/urls.py" />
+        <option value="$PROJECT_DIR$/WorkForce/settings.py" />
+        <option value="$PROJECT_DIR$/blog/views.py" />
+        <option value="$PROJECT_DIR$/blog/serializers.py" />
+        <option value="$PROJECT_DIR$/WorkForce/urls.py" />
       </list>
     </option>
   </component>
@@ -235,10 +371,9 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="45" y="-4" width="1321" height="772" extended-state="6" />
-    <editor active="true" />
+    <frame x="44" y="-4" width="1323" height="773" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25828835" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25828835" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Project Explorer" order="2" weight="0.21048574" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -252,7 +387,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Console" order="7" />
       <window_info anchor="bottom" id="Quokka" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.41616768" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.4011976" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="11" />
       <window_info anchor="bottom" id="Python Console" order="12" />
@@ -287,20 +422,6 @@
     </layout-to-restore>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/entrypoint.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="2" selection-start-line="4" selection-start-column="2" selection-end-line="4" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docker-compose.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="33" column="17" selection-start-line="33" selection-start-column="17" selection-end-line="33" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../DjangoVenvs/workForceEnv/lib/python3.5/site-packages/django/contrib/auth/__init__.py" />
     <entry file="file://$PROJECT_DIR$/../../DjangoVenvs/workForceEnv/lib/python3.5/site-packages/django/contrib/auth/mixins.py" />
     <entry file="file://$PROJECT_DIR$/static/custom_admin/css/style.css" />
@@ -573,26 +694,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/blog/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="15" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="15" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WorkForce/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="44" column="21" selection-start-line="44" selection-start-column="21" selection-end-line="44" selection-end-column="21" />
-          <folding>
-            <element signature="e#308#317#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/requirements.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -636,27 +737,67 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/WorkForce/urls.py">
+    <entry file="file://$PROJECT_DIR$/blog/excempt_csrf.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="25" column="39" selection-start-line="25" selection-start-column="39" selection-end-line="25" selection-end-column="39" />
+        <state relative-caret-position="75">
+          <caret line="5" column="20" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="20" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/blog/urls.py">
+    <entry file="file://$PROJECT_DIR$/blog/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
+        <state relative-caret-position="180">
+          <caret line="12" column="15" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="15" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/WorkForce/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="213">
+          <caret line="123" selection-start-line="123" selection-end-line="123" />
+          <folding>
+            <element signature="e#308#317#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/blog/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+        <state relative-caret-position="243">
+          <caret line="20" column="61" selection-start-line="20" selection-start-column="61" selection-end-line="20" selection-end-column="61" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blog/serializers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blog/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="53" selection-start-line="4" selection-start-column="53" selection-end-line="4" selection-end-column="53" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/WorkForce/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="26" column="5" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
         </state>
       </provider>
     </entry>
