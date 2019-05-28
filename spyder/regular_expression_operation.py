@@ -500,6 +500,37 @@ class RegularExpressionOperation:
         print('phone_check.match(phone):', phone_check.match(phone))
         print('phone_check.findall(phone):', phone_check.findall(phone))
         
+        print('\n# re.DEBUG')
+        '''
+        Display debug information about compiled expression. No corresponding 
+        inline flag.
+        '''
+        re.compile('.*', re.DEBUG)
+        re.compile("a+b*\s\w?", 0x80)
+        print('\nre.DEBUG = 0x80\n')
+        re.compile("a+b*\s\w?", re.DEBUG)
+        
+        print('\n# re.I\n# re.IGNORECASE')
+        '''
+        Perform case-insensitive matching; expressions like [A-Z] will also 
+        match lowercase letters. Full Unicode matching (such as Ü matching ü) 
+        also works unless the re.ASCII flag is used to disable non-ASCII 
+        matches. The current locale does not change the effect of this flag 
+        unless the re.LOCALE flag is also used. Corresponds to the inline flag 
+        (?i).
+        Note that when the Unicode patterns [a-z] or [A-Z] are used in 
+        combination with the IGNORECASE flag, they will match the 52 ASCII 
+        letters and 4 additional non-ASCII letters: ‘İ’ (U+0130, Latin capital 
+        letter I with dot above), ‘ı’ (U+0131, Latin small letter dotless i), 
+        ‘ſ’ (U+017F, Latin small letter long s) and ‘K’ (U+212A, Kelvin sign). 
+        If the ASCII flag is used, only letters ‘a’ to ‘z’ and ‘A’ to ‘Z’ are 
+        matched.
+        '''
+        print(re.search('test', 'TeSt', re.IGNORECASE))
+        print(re.match('test', 'TeSt', re.IGNORECASE))
+        print(re.sub('test', 'xxxx', 'Testing', flags=re.IGNORECASE))
+        
+        
         
         
         
