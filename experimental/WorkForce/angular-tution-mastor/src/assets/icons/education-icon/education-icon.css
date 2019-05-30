@@ -1,0 +1,617 @@
+@font-face {
+	font-family: "education-icon";
+	src: url("education-icon.eot");
+	src: url("education-icon.eot#iefix") format("embedded-opentype"),
+	url("education-icon.woff") format("woff"),
+	url("education-icon.ttf") format("truetype"),
+	url("education-icon.svg") format("svg");
+	font-weight: normal;
+	font-style: normal;
+}
+[class^="education-icon-"]:before, [class*=" education-icon-"]:before,
+[class^="education-icon-"]:after, [class*=" education-icon-"]:after {   
+	font-family: education-icon;
+	display: inline-block;
+  font: normal normal normal 14px/1 education-icon;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transform: translate(0, 0);
+}.education-icon-30:before {
+	content: "\e000";
+}
+.education-icon-45:before {
+	content: "\e001";
+}
+.education-icon-601:before {
+	content: "\e002";
+}
+.education-icon-a1:before {
+	content: "\e003";
+}
+.education-icon-a2:before {
+	content: "\e004";
+}
+.education-icon-a3:before {
+	content: "\e005";
+}
+.education-icon-abacus:before {
+	content: "\e006";
+}
+.education-icon-academic:before {
+	content: "\e007";
+}
+.education-icon-adn1:before {
+	content: "\e008";
+}
+.education-icon-alarm1:before {
+	content: "\e009";
+}
+.education-icon-alphabet1:before {
+	content: "\e00a";
+}
+.education-icon-alphabet2:before {
+	content: "\e00b";
+}
+.education-icon-amount:before {
+	content: "\e00c";
+}
+.education-icon-application5:before {
+	content: "\e00d";
+}
+.education-icon-audio7:before {
+	content: "\e00e";
+}
+.education-icon-audiobook:before {
+	content: "\e00f";
+}
+.education-icon-avi1:before {
+	content: "\e010";
+}
+.education-icon-b4:before {
+	content: "\e011";
+}
+.education-icon-b5:before {
+	content: "\e012";
+}
+.education-icon-backpack:before {
+	content: "\e013";
+}
+.education-icon-bag:before {
+	content: "\e014";
+}
+.education-icon-big52:before {
+	content: "\e015";
+}
+.education-icon-big55:before {
+	content: "\e016";
+}
+.education-icon-big56:before {
+	content: "\e017";
+}
+.education-icon-big57:before {
+	content: "\e018";
+}
+.education-icon-book10:before {
+	content: "\e019";
+}
+.education-icon-book11:before {
+	content: "\e01a";
+}
+.education-icon-book12:before {
+	content: "\e01b";
+}
+.education-icon-book13:before {
+	content: "\e01c";
+}
+.education-icon-book14:before {
+	content: "\e01d";
+}
+.education-icon-book15:before {
+	content: "\e01e";
+}
+.education-icon-book7:before {
+	content: "\e01f";
+}
+.education-icon-book8:before {
+	content: "\e020";
+}
+.education-icon-book9:before {
+	content: "\e021";
+}
+.education-icon-brain2:before {
+	content: "\e022";
+}
+.education-icon-briefcase2:before {
+	content: "\e023";
+}
+.education-icon-brush6:before {
+	content: "\e024";
+}
+.education-icon-bulb1:before {
+	content: "\e025";
+}
+.education-icon-bulk:before {
+	content: "\e026";
+}
+.education-icon-calendar5:before {
+	content: "\e027";
+}
+.education-icon-calendar6:before {
+	content: "\e028";
+}
+.education-icon-canvas:before {
+	content: "\e029";
+}
+.education-icon-cd:before {
+	content: "\e02a";
+}
+.education-icon-certificate2:before {
+	content: "\e02b";
+}
+.education-icon-certificate3:before {
+	content: "\e02c";
+}
+.education-icon-certificate:before {
+	content: "\e02d";
+}
+.education-icon-checkered:before {
+	content: "\e02e";
+}
+.education-icon-chemical:before {
+	content: "\e02f";
+}
+.education-icon-chemistry:before {
+	content: "\e030";
+}
+.education-icon-cinema2:before {
+	content: "\e031";
+}
+.education-icon-cinema3:before {
+	content: "\e032";
+}
+.education-icon-clock4:before {
+	content: "\e033";
+}
+.education-icon-clock5:before {
+	content: "\e034";
+}
+.education-icon-competition:before {
+	content: "\e035";
+}
+.education-icon-computer12:before {
+	content: "\e036";
+}
+.education-icon-correct2:before {
+	content: "\e037";
+}
+.education-icon-creche:before {
+	content: "\e038";
+}
+.education-icon-curriculum:before {
+	content: "\e039";
+}
+.education-icon-deleted:before {
+	content: "\e03a";
+}
+.education-icon-desktop:before {
+	content: "\e03b";
+}
+.education-icon-diary1:before {
+	content: "\e03c";
+}
+.education-icon-document5:before {
+	content: "\e03d";
+}
+.education-icon-document6:before {
+	content: "\e03e";
+}
+.education-icon-dotplot:before {
+	content: "\e03f";
+}
+.education-icon-download4:before {
+	content: "\e040";
+}
+.education-icon-download8:before {
+	content: "\e041";
+}
+.education-icon-draw:before {
+	content: "\e042";
+}
+.education-icon-earth2:before {
+	content: "\e043";
+}
+.education-icon-education1:before {
+	content: "\e044";
+}
+.education-icon-education2:before {
+	content: "\e045";
+}
+.education-icon-education3:before {
+	content: "\e046";
+}
+.education-icon-educational1:before {
+	content: "\e047";
+}
+.education-icon-educational:before {
+	content: "\e048";
+}
+.education-icon-education:before {
+	content: "\e049";
+}
+.education-icon-encyclopedia:before {
+	content: "\e04a";
+}
+.education-icon-favorite5:before {
+	content: "\e04b";
+}
+.education-icon-fifteen:before {
+	content: "\e04c";
+}
+.education-icon-file3:before {
+	content: "\e04d";
+}
+.education-icon-filing:before {
+	content: "\e04e";
+}
+.education-icon-first4:before {
+	content: "\e04f";
+}
+.education-icon-first5:before {
+	content: "\e050";
+}
+.education-icon-flag4:before {
+	content: "\e051";
+}
+.education-icon-football1:before {
+	content: "\e052";
+}
+.education-icon-foreign:before {
+	content: "\e053";
+}
+.education-icon-forms:before {
+	content: "\e054";
+}
+.education-icon-geography:before {
+	content: "\e055";
+}
+.education-icon-glasses1:before {
+	content: "\e056";
+}
+.education-icon-glasses:before {
+	content: "\e057";
+}
+.education-icon-graph:before {
+	content: "\e058";
+}
+.education-icon-guitar:before {
+	content: "\e059";
+}
+.education-icon-hand:before {
+	content: "\e05a";
+}
+.education-icon-hierarchical:before {
+	content: "\e05b";
+}
+.education-icon-homework:before {
+	content: "\e05c";
+}
+.education-icon-icloud1:before {
+	content: "\e05d";
+}
+.education-icon-icloud:before {
+	content: "\e05e";
+}
+.education-icon-images:before {
+	content: "\e05f";
+}
+.education-icon-information2:before {
+	content: "\e060";
+}
+.education-icon-injection:before {
+	content: "\e061";
+}
+.education-icon-insignia:before {
+	content: "\e062";
+}
+.education-icon-ipad:before {
+	content: "\e063";
+}
+.education-icon-keyboard2:before {
+	content: "\e064";
+}
+.education-icon-leaf4:before {
+	content: "\e065";
+}
+.education-icon-lecture1:before {
+	content: "\e066";
+}
+.education-icon-lecture:before {
+	content: "\e067";
+}
+.education-icon-library:before {
+	content: "\e068";
+}
+.education-icon-looking1:before {
+	content: "\e069";
+}
+.education-icon-looking2:before {
+	content: "\e06a";
+}
+.education-icon-look:before {
+	content: "\e06b";
+}
+.education-icon-magnet2:before {
+	content: "\e06c";
+}
+.education-icon-mail4:before {
+	content: "\e06d";
+}
+.education-icon-mathematical1:before {
+	content: "\e06e";
+}
+.education-icon-mathematical:before {
+	content: "\e06f";
+}
+.education-icon-measure:before {
+	content: "\e070";
+}
+.education-icon-measuring:before {
+	content: "\e071";
+}
+.education-icon-meeting:before {
+	content: "\e072";
+}
+.education-icon-microscope:before {
+	content: "\e073";
+}
+.education-icon-molecules1:before {
+	content: "\e074";
+}
+.education-icon-mouse2:before {
+	content: "\e075";
+}
+.education-icon-museum2:before {
+	content: "\e076";
+}
+.education-icon-music12:before {
+	content: "\e077";
+}
+.education-icon-music13:before {
+	content: "\e078";
+}
+.education-icon-necktie:before {
+	content: "\e079";
+}
+.education-icon-new5:before {
+	content: "\e07a";
+}
+.education-icon-numbers:before {
+	content: "\e07b";
+}
+.education-icon-olympic:before {
+	content: "\e07c";
+}
+.education-icon-online1:before {
+	content: "\e07d";
+}
+.education-icon-online2:before {
+	content: "\e07e";
+}
+.education-icon-online:before {
+	content: "\e07f";
+}
+.education-icon-open14:before {
+	content: "\e080";
+}
+.education-icon-paper9:before {
+	content: "\e081";
+}
+.education-icon-paperclip:before {
+	content: "\e082";
+}
+.education-icon-paragraph9:before {
+	content: "\e083";
+}
+.education-icon-pdf2:before {
+	content: "\e084";
+}
+.education-icon-pdf:before {
+	content: "\e085";
+}
+.education-icon-pen22:before {
+	content: "\e086";
+}
+.education-icon-pencil7:before {
+	content: "\e087";
+}
+.education-icon-pencil8:before {
+	content: "\e088";
+}
+.education-icon-physical:before {
+	content: "\e089";
+}
+.education-icon-physics:before {
+	content: "\e08a";
+}
+.education-icon-picture5:before {
+	content: "\e08b";
+}
+.education-icon-pie3:before {
+	content: "\e08c";
+}
+.education-icon-pillar:before {
+	content: "\e08d";
+}
+.education-icon-placard:before {
+	content: "\e08e";
+}
+.education-icon-planet1:before {
+	content: "\e08f";
+}
+.education-icon-play6:before {
+	content: "\e090";
+}
+.education-icon-play7:before {
+	content: "\e091";
+}
+.education-icon-protractor:before {
+	content: "\e092";
+}
+.education-icon-pushpin:before {
+	content: "\e093";
+}
+.education-icon-q:before {
+	content: "\e094";
+}
+.education-icon-quarter:before {
+	content: "\e095";
+}
+.education-icon-research:before {
+	content: "\e096";
+}
+.education-icon-robot3:before {
+	content: "\e097";
+}
+.education-icon-rubber3:before {
+	content: "\e098";
+}
+.education-icon-schedule:before {
+	content: "\e099";
+}
+.education-icon-school1:before {
+	content: "\e09a";
+}
+.education-icon-school4:before {
+	content: "\e09b";
+}
+.education-icon-school6:before {
+	content: "\e09c";
+}
+.education-icon-school7:before {
+	content: "\e09d";
+}
+.education-icon-schoolclass:before {
+	content: "\e09e";
+}
+.education-icon-science1:before {
+	content: "\e09f";
+}
+.education-icon-science2:before {
+	content: "\e0a0";
+}
+.education-icon-science:before {
+	content: "\e0a1";
+}
+.education-icon-set1:before {
+	content: "\e0a2";
+}
+.education-icon-shake:before {
+	content: "\e0a3";
+}
+.education-icon-shelf:before {
+	content: "\e0a4";
+}
+.education-icon-shopping7:before {
+	content: "\e0a5";
+}
+.education-icon-signature2:before {
+	content: "\e0a6";
+}
+.education-icon-small53:before {
+	content: "\e0a7";
+}
+.education-icon-small54:before {
+	content: "\e0a8";
+}
+.education-icon-smartphone2:before {
+	content: "\e0a9";
+}
+.education-icon-smartphone:before {
+	content: "\e0aa";
+}
+.education-icon-stage:before {
+	content: "\e0ab";
+}
+.education-icon-steps:before {
+	content: "\e0ac";
+}
+.education-icon-stethoscope2:before {
+	content: "\e0ad";
+}
+.education-icon-student:before {
+	content: "\e0ae";
+}
+.education-icon-table:before {
+	content: "\e0af";
+}
+.education-icon-tablet2:before {
+	content: "\e0b0";
+}
+.education-icon-tactil1:before {
+	content: "\e0b1";
+}
+.education-icon-talking:before {
+	content: "\e0b2";
+}
+.education-icon-teacher:before {
+	content: "\e0b3";
+}
+.education-icon-teach:before {
+	content: "\e0b4";
+}
+.education-icon-telescope:before {
+	content: "\e0b5";
+}
+.education-icon-the25:before {
+	content: "\e0b6";
+}
+.education-icon-thought:before {
+	content: "\e0b7";
+}
+.education-icon-time2:before {
+	content: "\e0b8";
+}
+.education-icon-uniform:before {
+	content: "\e0b9";
+}
+.education-icon-university1:before {
+	content: "\e0ba";
+}
+.education-icon-university2:before {
+	content: "\e0bb";
+}
+.education-icon-university:before {
+	content: "\e0bc";
+}
+.education-icon-unknown1:before {
+	content: "\e0bd";
+}
+.education-icon-unknown:before {
+	content: "\e0be";
+}
+.education-icon-virus:before {
+	content: "\e0bf";
+}
+.education-icon-wagon:before {
+	content: "\e0c0";
+}
+.education-icon-wall3:before {
+	content: "\e0c1";
+}
+.education-icon-window10:before {
+	content: "\e0c2";
+}
+.education-icon-window11:before {
+	content: "\e0c3";
+}
+.education-icon-window8:before {
+	content: "\e0c4";
+}
+.education-icon-window9:before {
+	content: "\e0c5";
+}
+.education-icon-working1:before {
+	content: "\e0c6";
+}

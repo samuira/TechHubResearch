@@ -3,26 +3,16 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { LayoutComponent } from './home/layout/layout.component';
-import { HeaderComponent } from './home/header/header.component';
-import { FooterComponent } from './home/footer/footer.component';
-import { SearchComponent } from './home/search/search.component';
-import { AuthComponent } from './auth/auth.component';
+import { HomeModule } from './home/home.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomeComponent,
-    LayoutComponent,
-    HeaderComponent,
-    FooterComponent,
-    SearchComponent,
-    AuthComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
