@@ -4,8 +4,11 @@ Created on Tue Apr 2 14:31:24 2019
 
 @author: Rajesh Samui
 """
-from difflib import SequenceMatcher, Differ, HtmlDiff, context_diff
+from difflib import ( SequenceMatcher, Differ, HtmlDiff, context_diff, 
+                     get_close_matches, ndiff, restore, unified_diff)
 from pprint import pprint
+import sys
+import keyword
 
 class Difflib:
     """
@@ -294,6 +297,7 @@ class Difflib:
         method.
         '''
         print(HtmlDiff().make_table(before, after))
+        return
         
     def context_diff_test(self):
         """
@@ -310,24 +314,114 @@ class Difflib:
         newlines.
         For inputs that do not have trailing newlines, set the lineterm 
         argument to "" so that the output will be uniformly newline free.
-
-        The context diff format normally has a header for filenames and modification times. Any or all of these may be specified using strings for fromfile, tofile, fromfiledate, and tofiledate. The modification times are normally expressed in the ISO 8601 format. If not specified, the strings default to blanks.
+        The context diff format normally has a header for filenames and 
+        modification times. Any or all of these may be specified using strings 
+        for fromfile, tofile, fromfiledate, and tofiledate. The modification 
+        times are normally expressed in the ISO 8601 format. If not specified, 
+        the strings default to blanks.
         """
-        before = ['abc\n', 'def\n', 'mno\n']
-        after = ['xyz\n', 'def\n', 'mnop\n']
-        print(context_diff(before, after))
+        s1 = ['bacon\n', 'eggs\n', 'ham\n', 'guido\n']
+        s2 = ['python\n', 'eggy\n', 'hamster\n', 'guido\n']
+        sys.stdout.writelines(context_diff(s1, s2, fromfile='before.py', 
+                                           tofile='after.py'))
+        return
     
+    def get_close_matches_test(self):
+        """
+        Return a list of the best “good enough” matches. word is a sequence for
+        which close matches are desired (typically a string), and possibilities
+        is a list of sequences against which to match word (typically a list of
+        strings).
+        Optional argument n (default 3) is the maximum number of close matches 
+        to return; n must be greater than 0.
+        Optional argument cutoff (default 0.6) is a float in the range [0, 1]. 
+        Possibilities that don’t score at least that similar to word are 
+        ignored.
+        The best (no more than n) matches among the possibilities are returned 
+        in a list, sorted by similarity score, most similar first.
+        """
+        print("get_close_matches('appel', ['ape', 'apple', 'peach', 'puppy']):"
+              ,get_close_matches('appel', ['ape', 'apple', 'peach', 'puppy']))
+        print("keyword.kwlist:",keyword.kwlist)
+        print("get_close_matches('wheel', keyword.kwlist):",
+              get_close_matches('wheel', keyword.kwlist))
+        print("get_close_matches('pineapple', keyword.kwlist):",
+              get_close_matches('pineapple', keyword.kwlist))
+        print("get_close_matches('accept', keyword.kwlist):",
+              get_close_matches('accept', keyword.kwlist, cutoff=0.6))
+        return
     
+    def ndiff_test(self):
+        """
+        Compare a and b (lists of strings); return a Differ-style delta (a 
+        generator generating the delta lines).
+        Optional keyword parameters linejunk and charjunk are filtering 
+        functions (or None):
+        linejunk: A function that accepts a single string argument, and returns
+        true if the string is junk, or false if not. The default is None. There
+        is also a module-level function IS_LINE_JUNK(), which filters out lines
+        without visible characters, except for at most one pound character 
+        ('#') – however the underlying SequenceMatcher class does a dynamic 
+        analysis of which lines are so frequent as to constitute noise, and 
+        this usually works better than using this function.
+        charjunk: A function that accepts a character (a string of length 1), 
+        and returns if the character is junk, or false if not. The default is 
+        module-level function IS_CHARACTER_JUNK(), which filters out whitespace
+        characters (a blank or tab; it’s a bad idea to include newline in 
+        this!).
+        Tools/scripts/ndiff.py is a command-line front-end to this function.
+        """
+        diff = ndiff('one\ntwo\nthree\n'.splitlines(keepends=True),
+                     'ore\ntree\nemu\n'.splitlines(keepends=True))
+        print(''.join(diff), end="")
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    def restore_test(self):
+        """
+        Return one of the two sequences that generated a delta.
+        Given a sequence produced by Differ.compare() or ndiff(), extract lines
+        originating from file 1 or 2 (parameter which), stripping off line 
+        prefixes.
+        """
+        diff = ndiff('one\ntwo\nthree\n'.splitlines(keepends=True),
+                     'ore\ntree\nemu\n'.splitlines(keepends=True))
+        print(diff)
+        diff = list(diff) # materialize the generated delta into a list
+        print(diff)
+        print(''.join(restore(diff, 1)), end="\n")
+        print(''.join(restore(diff, 2)), end="")
+        return
+        
+    def unified_diff_test(self):
+        """
+        Compare a and b (lists of strings); return a delta (a generator 
+        generating the delta lines) in unified diff format.
+
+        Unified diffs are a compact way of showing just the lines that have 
+        changed plus a few lines of context. The changes are shown in an inline
+        style (instead of separate before/after blocks). The number of context 
+        lines is set by n which defaults to three.
+        
+        By default, the diff control lines (those with ---, +++, or @@) are 
+        created with a trailing newline. This is helpful so that inputs created
+        from io.IOBase.readlines() result in diffs that are suitable for use 
+        with io.IOBase.writelines() since both the inputs and outputs have 
+        trailing newlines.
+        
+        For inputs that do not have trailing newlines, set the lineterm 
+        argument to "" so that the output will be uniformly newline free.
+        
+        The context diff format normally has a header for filenames and 
+        modification times. Any or all of these may be specified using strings 
+        for fromfile, tofile, fromfiledate, and tofiledate. The modification 
+        times are normally expressed in the ISO 8601 format. If not specified, 
+        the strings default to blanks.
+        """
+        s1 = ['bacon\n', 'eggs\n', 'ham\n', 'guido\n']
+        s2 = ['python\n', 'eggy\n', 'hamster\n', 'guido\n']
+        print(s1,'\n', s2)
+        sys.stdout.writelines(unified_diff(s1, s2, fromfile='before.py', 
+                                           tofile='after.py'))
+
     
     
 if __name__ == '__main__':
@@ -346,6 +440,58 @@ if __name__ == '__main__':
 #    print(dl.html_diff_test.__doc__)
 #    dl.html_diff_test()
     
-    print("\n# difflib.context_diff(a, b, fromfile='', tofile='', fromfiledate='', tofiledate='', n=3, lineterm='\\n')")
-    print(dl.context_diff_test.__doc__)
-    dl.context_diff_test()
+#    print("\n# difflib.context_diff(a, b, fromfile='', tofile='', fromfiledate='', tofiledate='', n=3, lineterm='\\n')")
+#    print(dl.context_diff_test.__doc__)
+#    dl.context_diff_test()
+    
+#    print("\n# difflib.get_close_matches(word, possibilities, n=3, cutoff=0.6)")
+#    print(dl.get_close_matches_test.__doc__)
+#    dl.get_close_matches_test()
+    
+#    print("\n# difflib.ndiff(a, b, linejunk=None, charjunk=IS_CHARACTER_JUNK)")
+#    print(dl.ndiff_test.__doc__)
+#    dl.ndiff_test()
+    
+#    print("\n# difflib.restore(sequence, which)")
+#    print(dl.restore_test.__doc__)
+#    dl.restore_test()
+    
+    print("\n# difflib.unified_diff(a, b, fromfile='', tofile='', fromfiledate='', tofiledate='', n=3, lineterm='\\n')")
+    print(dl.unified_diff_test.__doc__)
+    dl.unified_diff_test()
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
