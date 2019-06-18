@@ -5,7 +5,8 @@ Created on Tue Apr 2 14:31:24 2019
 @author: Rajesh Samui
 """
 from difflib import ( SequenceMatcher, Differ, HtmlDiff, context_diff, 
-                     get_close_matches, ndiff, restore, unified_diff)
+                     get_close_matches, ndiff, restore, unified_diff, 
+                     diff_bytes, IS_LINE_JUNK, IS_CHARACTER_JUNK)
 from pprint import pprint
 import sys
 import keyword
@@ -418,10 +419,71 @@ class Difflib:
         """
         s1 = ['bacon\n', 'eggs\n', 'ham\n', 'guido\n']
         s2 = ['python\n', 'eggy\n', 'hamster\n', 'guido\n']
-        print(s1,'\n', s2)
+        print(s1, s2, sep='\n')
         sys.stdout.writelines(unified_diff(s1, s2, fromfile='before.py', 
                                            tofile='after.py'))
-
+        return
+    
+    def diff_bytes_test(self):
+        """
+        Compare a and b (lists of bytes objects) using dfunc; yield a sequence 
+        of delta lines (also bytes) in the format returned by dfunc. dfunc must
+        be a callable, typically either unified_diff() or context_diff().
+        Allows you to compare data with unknown or inconsistent encoding. All 
+        inputs except n must be bytes objects, not str. Works by losslessly 
+        converting all inputs (except n) to str, and calling dfunc(a, b, 
+        fromfile, tofile, fromfiledate, tofiledate, n, lineterm). The output of
+        dfunc is then converted back to bytes, so the delta lines that you 
+        receive have the same unknown/inconsistent encodings as a and b.
+        New in version 3.5.
+        """
+        a = [b'hello', b'andr\xe9']     # iso-8859-1 bytes
+        b = [b'hello', b'andr\xc3\xa9'] # utf-8 bytes
+        print(a, b, sep='\n')
+        sys.stdout.writelines(diff_bytes(unified_diff, a, b, 
+                                         fromfile=b'before.py', 
+                                         tofile=b'after.py'))
+        print('\n')
+        sys.stdout.writelines(diff_bytes(context_diff, a, b, 
+                                         fromfile=b'before.py', 
+                                         tofile=b'after.py'))
+        return
+    
+    def IS_LINE_JUNK_test(self):
+        """
+        Return true for ignorable lines. The line line is ignorable if line is 
+        blank or contains a single '#', otherwise it is not ignorable. Used as 
+        a default for parameter linejunk in ndiff() in older versions.
+        """
+        diff = ndiff('one\ntwo\nthree\n#\n'.splitlines(keepends=True),
+                     'ore\ntree\nemu\n\n'.splitlines(keepends=True), 
+                     linejunk=IS_LINE_JUNK)
+        print(''.join(diff), end="")
+        print("IS_LINE_JUNK('\\n'):",IS_LINE_JUNK('\n'))
+        print("IS_LINE_JUNK('  #   \\n'):",IS_LINE_JUNK('  #   \n'))
+        print("IS_LINE_JUNK('hello\\n'):",IS_LINE_JUNK('hello\n'))
+        return
+    
+    def IS_CHARACTER_JUNK_test(self):
+        """
+        Return true for ignorable characters. The character ch is ignorable if 
+        ch is a space or tab, otherwise it is not ignorable. Used as a default 
+        for parameter charjunk in ndiff().
+        """
+        diff = ndiff('one\ntwo\nthree\n#\n'.splitlines(keepends=True),
+                     'ore\ntree\nemu\n\n'.splitlines(keepends=True), 
+                     charjunk=IS_CHARACTER_JUNK)
+        print(''.join(diff), end="")
+        print("IS_CHARACTER_JUNK(' '):",IS_CHARACTER_JUNK(' '))
+        print("IS_CHARACTER_JUNK('\\t'):",IS_CHARACTER_JUNK('\t'))
+        print("IS_CHARACTER_JUNK('\\n'):",IS_CHARACTER_JUNK('\n'))
+        print("IS_CHARACTER_JUNK('x'):",IS_CHARACTER_JUNK('x'))
+        return
+    
+    
+    
+    
+    
     
     
 if __name__ == '__main__':
@@ -456,11 +518,21 @@ if __name__ == '__main__':
 #    print(dl.restore_test.__doc__)
 #    dl.restore_test()
     
-    print("\n# difflib.unified_diff(a, b, fromfile='', tofile='', fromfiledate='', tofiledate='', n=3, lineterm='\\n')")
-    print(dl.unified_diff_test.__doc__)
-    dl.unified_diff_test()
+#    print("\n# difflib.unified_diff(a, b, fromfile='', tofile='', fromfiledate='', tofiledate='', n=3, lineterm='\\n')")
+#    print(dl.unified_diff_test.__doc__)
+#    dl.unified_diff_test()
     
+#    print("\n# difflib.diff_bytes(dfunc, a, b, fromfile=b'', tofile=b'', fromfiledate=b'', tofiledate=b'', n=3, lineterm=b'\\n')")
+#    print(dl.diff_bytes_test.__doc__)
+#    dl.diff_bytes_test()
     
+    print("\n# difflib.IS_LINE_JUNK(line)")
+    print(dl.IS_LINE_JUNK_test.__doc__)
+    dl.IS_LINE_JUNK_test()
+    
+    print("\n# difflib.IS_CHARACTER_JUNK(ch)")
+    print(dl.IS_CHARACTER_JUNK_test.__doc__)
+    dl.IS_CHARACTER_JUNK_test()
     
     
     

@@ -530,6 +530,25 @@ class RegularExpressionOperation:
         print(re.match('test', 'TeSt', re.IGNORECASE))
         print(re.sub('test', 'xxxx', 'Testing', flags=re.IGNORECASE))
         
+        print('\n#  re.L\n# re.LOCALE')
+        '''
+        Make \w, \W, \b, \B and case-insensitive matching dependent on the 
+        current locale. This flag can be used only with bytes patterns. The use
+        of this flag is discouraged as the locale mechanism is very unreliable,
+        it only handles one “culture” at a time, and it only works with 8-bit 
+        locales. Unicode matching is already enabled by default in Python 3 for
+        Unicode (str) patterns, and it is able to handle different 
+        locales/languages. Corresponds to the inline flag (?L).
+        Changed in version 3.6: re.LOCALE can be used only with bytes patterns 
+        and is not compatible with re.ASCII.
+        Changed in version 3.7: Compiled regular expression objects with the 
+        re.LOCALE flag no longer depend on the locale at compile time. Only the
+        locale at matching time affects the result of matching.
+        '''
+        print(re.search('test', 'TeSt', re.IGNORECASE))
+        print(re.match('test', 'TeSt', re.IGNORECASE))
+        print(re.sub('test', 'xxxx', 'Testing', flags=re.IGNORECASE))
+        
         
         
         
