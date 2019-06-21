@@ -526,13 +526,13 @@ if __name__ == '__main__':
 #    print(dl.diff_bytes_test.__doc__)
 #    dl.diff_bytes_test()
     
-    print("\n# difflib.IS_LINE_JUNK(line)")
-    print(dl.IS_LINE_JUNK_test.__doc__)
-    dl.IS_LINE_JUNK_test()
-    
-    print("\n# difflib.IS_CHARACTER_JUNK(ch)")
-    print(dl.IS_CHARACTER_JUNK_test.__doc__)
-    dl.IS_CHARACTER_JUNK_test()
+#    print("\n# difflib.IS_LINE_JUNK(line)")
+#    print(dl.IS_LINE_JUNK_test.__doc__)
+#    dl.IS_LINE_JUNK_test()
+#    
+#    print("\n# difflib.IS_CHARACTER_JUNK(ch)")
+#    print(dl.IS_CHARACTER_JUNK_test.__doc__)
+#    dl.IS_CHARACTER_JUNK_test()
     
     
     

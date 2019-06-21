@@ -7,6 +7,7 @@ Created on Mon Mar 4 14:31:24 2019
 
 import re
 
+
 class RegularExpressionOperation:
     """
     Regular expressions use the backslash character ('\') to indicate special 
@@ -545,21 +546,249 @@ class RegularExpressionOperation:
         re.LOCALE flag no longer depend on the locale at compile time. Only the
         locale at matching time affects the result of matching.
         '''
-        print(re.search('test', 'TeSt', re.IGNORECASE))
-        print(re.match('test', 'TeSt', re.IGNORECASE))
-        print(re.sub('test', 'xxxx', 'Testing', flags=re.IGNORECASE))
+        print('Have not found any example of the usage of re.LOCALE')
+        
+        print('\n# re.M\n# re.MULTILINE')
+        '''
+        When specified, the pattern character '^' matches at the beginning of 
+        the string and at the beginning of each line (immediately following 
+        each newline); and the pattern character '$' matches at the end of the 
+        string and at the end of each line (immediately preceding each newline). 
+        By default, '^' matches only at the beginning of the string, and '$' 
+        only at the end of the string and immediately before the newline (if 
+        any) at the end of the string. Corresponds to the inline flag (?m).
+        '''
+        xx = "guru99\ncareerguru99\nselenium"
+        k1 = re.findall(r"^\w", xx)
+        k2 = re.findall(r"^\w", xx, re.MULTILINE)
+        print(k1)
+        print(k2)
+        
+        print('\n# re.S\n# re.DOTALL')
+        '''
+        Make the '.' special character match any character at all, including a 
+        newline; without this flag, '.' will match anything except a newline. 
+        Corresponds to the inline flag (?s).
+        '''
+        print(re.findall(r'.','I am\nR'))
+        print(re.findall(r'.','I am\nR',re.S))
+        
+        print('\n# re.X\n# re.VERBOSE')
+        '''
+        This flag allows you to write regular expressions that look nicer and 
+        are more readable by allowing you to visually separate logical sections
+        of the pattern and add comments. Whitespace within the pattern is 
+        ignored, except when in a character class, or when preceded by an 
+        unescaped backslash, or within tokens like *?, (?: or (?P<...>. When a 
+        line contains a # that is not in a character class and is not preceded 
+        by an unescaped backslash, all characters from the leftmost such # 
+        through the end of the line are ignored.
+        Corresponds to the inline flag (?x).
+        This means that the two following regular expression objects that match
+        a decimal number are functionally equal:
+        '''
+        a = re.compile(r"""\d +  # the integral part
+                   \.    # the decimal point
+                   \d *  # some fractional digits""", re.X)
+        b = re.compile(r"\d+\.\d*")
+        print(re.findall(a,'3.44 555 54. .54'))
+        print(re.findall(b,'3.44 555 54. .54'))        
+        return
+    
+    def re_search_test(self):
+        """
+        Scan through string looking for the first location where the regular 
+        expression pattern produces a match, and return a corresponding match 
+        object. Return None if no position in the string matches the pattern; 
+        note that this is different from finding a zero-length match at some 
+        point in the string.
+        """
+        string = "Python is fun Python"
+        
+        # check if 'Python' is at the beginning
+        match = re.search('\APython', string)
+        print(match)
+        if match:
+            print("pattern found inside the string")
+        else:
+            print("pattern not found") 
+        return
+    
+    def re_match_test(self):
+        """
+        If zero or more characters at the beginning of string match the regular
+        expression pattern, return a corresponding match object. Return None if
+        the string does not match the pattern; note that this is different from
+        a zero-length match.
+        Note that even in MULTILINE mode, re.match() will only match at the 
+        beginning of the string and not at the beginning of each line.
+        If you want to locate a match anywhere in string, use search() instead 
+        (see also search() vs. match()).
+        """
+        pattern = '^a...s$'
+        test_string = 'abyss'
+        result_m = re.match(pattern, test_string)
+        result_s = re.search(pattern, test_string)
+        print(result_m)
+        print(result_s)
+        if result_m:
+            print("Search successful.")
+        else:
+            print("Search unsuccessful.")
+            
+        # re.match vs re.search
+        print(re.match("c", "abcdef"))      # No match
+        print(re.search("c", "abcdef"))     # Match
+        
+        print(re.match("c", "abcdef"))      # No match
+        print(re.search("^c", "abcdef"))    # No match
+        print(re.search("^a", "abcdef"))    # Match
+        
+        print(re.match('X', 'A\nB\nX', re.MULTILINE))       # No match
+        print(re.search('^X', 'A\nB\nX', re.MULTILINE))     # Match
+        return
+    
+    def re_fullmatch_test(self):
+        """
+        If the whole string matches the regular expression pattern, return a 
+        corresponding match object. Return None if the string does not match 
+        the pattern; note that this is different from a zero-length match.
+
+        New in version 3.4.
+        """
+        print(re.search(r'^a|ab$', 'ab'))
+        print(re.match(r'^a|ab$', 'ab'))
+        print(re.fullmatch(r'a|ab', 'ab'))
         
         
+        text = 'This is some text -- with punctuation.'
+        pattern = 'is'
         
+        print('Text       :', text)
+        print('Pattern    :', pattern)
         
+        m = re.search(pattern, text)
+        print('Search     :', m)
+        m = re.match(pattern, text)
+        print('match      :', m)
+        s = re.fullmatch(pattern, text)
+        print('Full match :', s)
         
+    def re_split_test(self):
+        """
+        Split string by the occurrences of pattern. If capturing parentheses 
+        are used in pattern, then the text of all groups in the pattern are 
+        also returned as part of the resulting list. If maxsplit is nonzero, at
+        most maxsplit splits occur, and the remainder of the string is returned
+        as the final element of the list.
+        """
+        print("re.split(r'\W+', 'Words, words, words.'):",
+              re.split(r'\W+', 'Words, words, words.'))
+        print("re.split(r'(\W+)', 'Words, words, words.'):",
+              re.split(r'(\W+)', 'Words, words, words.'))
+        print("re.split(r'\W+', 'Words, words, words.', 1):",
+              re.split(r'\W+', 'Words, words, words.', 1))
+        print("re.split('[a-f]+', '0a3B9', flags=re.IGNORECASE):",
+              re.split('[a-f]+', '0a3B9', flags=re.IGNORECASE))
+        print()
         
+        # If there are capturing groups in the separator and it matches at the 
+        # start of the string, the result will start with an empty string. The 
+        # same holds for the end of the string:
         
-        
-        
-        
-        
-        
+        print("re.split(r'(\W+)', '...words, words...'):",
+              re.split(r'(\W+)', '...words, words...'))
+        # That way, separator components are always found at the same relative 
+        # indices within the result list.
+        print()
+        # Empty matches for the pattern split the string only when not adjacent
+        # to a previous empty match.
+        print("re.split(r'\W', 'Words, words, words.'):",
+              re.split(r'\W', 'Words, words, words.'))
+        print("re.split(r'\W*', '...words...'):",
+              re.split(r'\W*', '...words...'))
+        print("re.split(r'(\W*)', '...words...'):",
+              re.split(r'(\W*)', '...words...'))
+        return
+    
+    def re_findall_test(self):
+        """
+        Return all non-overlapping matches of pattern in string, as a list of 
+        strings. The string is scanned left-to-right, and matches are returned 
+        in the order found. If one or more groups are present in the pattern, 
+        return a list of groups; this will be a list of tuples if the pattern 
+        has more than one group. Empty matches are included in the result.
+        Changed in version 3.7: Non-empty matches can now start just after a 
+        previous empty match.
+        """
+         ## Suppose we have a text with many email addresses
+        s = 'purple alice@google.com, blah monkey bob@abc.com blah dishwasher'
+        print(s)
+        ## Here re.findall() returns a list of all the found email strings
+        emails = re.findall(r'[\w\.-]+@[\w\.-]+', s) ## ['alice@google.com', 'bob@abc.com']
+        print(emails)
+        tuples = re.findall(r'([\w\.-]+)@([\w\.-]+)', s)
+        print(tuples)
+        return
+    
+    def re_finditer_test(self):
+        """
+        Return an iterator yielding match objects over all non-overlapping 
+        matches for the RE pattern in string. The string is scanned 
+        left-to-right, and matches are returned in the order found. Empty 
+        matches are included in the result.
+        Changed in version 3.7: Non-empty matches can now start just after a 
+        previous empty match.
+        You can use re.finditer to iterate over all matches in a string. This 
+        gives you (in comparison to re.findall extra information, such as 
+        information about the match location in the string (indexes):
+        """
+        text = 'You can try to find an ant in this string'
+        pattern = 'an?\w'   # find 'an' either with or without a following word 
+                            # character
+        result = re.finditer(pattern, text)
+        print(result)
+        for match in result:
+            # Start index of match (integer)
+            sStart = match.start()
+            # Final index of match (integer)
+            sEnd = match.end()
+            # Complete match (string)
+            sGroup = match.group()
+            # Print match
+            print('Match "{}" found at: [{},{}]'.format(sGroup, sStart,sEnd))
+    
+    def re_sub_test(self):
+        """
+        Return the string obtained by replacing the leftmost non-overlapping 
+        occurrences of pattern in string by the replacement repl. If the 
+        pattern isn’t found, string is returned unchanged. repl can be a 
+        string or a function; if it is a string, any backslash escapes in it 
+        are processed. That is, \\n is converted to a single newline character, 
+        \\r is converted to a carriage return, and so forth. Unknown escapes of 
+        ASCII letters are reserved for future use and treated as errors. Other 
+        unknown escapes such as \& are left alone. Backreferences, such as \\6, 
+        are replaced with the substring matched by group 6 in the pattern.
+        """
+        result = re.sub(r'def\s+([a-zA-Z_][a-zA-Z_0-9]*)\s*\(\s*\):',
+               r'static PyObject*\npy_\1(void)\n{','def myfunc():')
+        print(result)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 if __name__ == '__main__':
     reo = RegularExpressionOperation()
@@ -569,10 +798,37 @@ if __name__ == '__main__':
 #    print(reo.regular_expression_syntax_test.__doc__)
 #    reo.regular_expression_syntax_test()
     
-    print('\n# Module Contents')
-    print(reo.module_content_test.__doc__)
-    reo.module_content_test()
+#    print('\n# Module Contents')
+#    print(reo.module_content_test.__doc__)
+#    reo.module_content_test()
     
+#    print('\n# re.search(pattern, string, flags=0)')
+#    print(reo.re_search_test.__doc__)
+#    reo.re_search_test()
+    
+#    print('\n# re.match(pattern, string, flags=0)')
+#    print(reo.re_match_test.__doc__)
+#    reo.re_match_test()
+    
+#    print("\n# re.fullmatch(pattern, string, flags=0)")
+#    print(reo.re_fullmatch_test.__doc__)
+#    reo.re_fullmatch_test()
+    
+#    print("\n# re.split(pattern, string, maxsplit=0, flags=0)")
+#    print(reo.re_split_test.__doc__)
+#    reo.re_split_test()
+    
+#    print("\n# re.findall(pattern, string, flags=0)")
+#    print(reo.re_findall_test.__doc__)
+#    reo.re_findall_test()
+    
+#    print("\n# re.finditer(pattern, string, flags=0)")
+#    print(reo.re_finditer_test.__doc__)
+#    reo.re_finditer_test()
+    
+    print("\n# re.sub(pattern, repl, string, count=0, flags=0)")
+    print(reo.re_sub_test.__doc__)
+    reo.re_sub_test()
     
     
     
