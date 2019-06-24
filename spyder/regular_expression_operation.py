@@ -6,7 +6,7 @@ Created on Mon Mar 4 14:31:24 2019
 """
 
 import re
-
+import string
 
 class RegularExpressionOperation:
     """
@@ -773,21 +773,192 @@ class RegularExpressionOperation:
         result = re.sub(r'def\s+([a-zA-Z_][a-zA-Z_0-9]*)\s*\(\s*\):',
                r'static PyObject*\npy_\1(void)\n{','def myfunc():')
         print(result)
+        
+        print("""
+        If repl is a function, it is called for every non-overlapping 
+        occurrence of pattern. The function takes a single match object 
+        argument, and returns the replacement string. 
+        """)
+        def dashrepl(matchobj):
+            if matchobj.group(0) == '-': return ' '
+            else: return '-'
+            
+        print("re.sub('-{1,2}', dashrepl, 'pro----gram-files'):",
+                      re.sub('-{1,2}', dashrepl, 'pro----gram-files'))
+        print("re.sub(r'\sAND\s', ' & ', 'Baked Beans And Spam', flags=re.IGNORECASE):",
+              re.sub(r'\sAND\s', ' & ', 'Baked Beans And Spam', flags=re.IGNORECASE))
     
+        print("""
+        The pattern may be a string or a pattern object.
+        
+        The optional argument count is the maximum number of pattern 
+        occurrences to be replaced; count must be a non-negative integer. If 
+        omitted or zero, all occurrences will be replaced. Empty matches for 
+        the pattern are replaced only when not adjacent to a previous empty 
+        match, so sub('x*', '-', 'abxd') returns '-a-b--d-'.
+        
+        In string-type repl arguments, in addition to the character escapes and
+        backreferences described above, \g<name> will use the substring matched
+        by the group named name, as defined by the (?P<name>...) syntax. 
+        \g<number> uses the corresponding group number; \g<2> is therefore 
+        equivalent to \2, but isn’t ambiguous in a replacement such as \g<2>0. 
+        \20 would be interpreted as a reference to group 20, not a reference to
+        group 2 followed by the literal character '0'. The backreference \g<0> 
+        substitutes in the entire substring matched by the RE.
+        
+        Changed in version 3.1: Added the optional flags argument.
+        
+        Changed in version 3.5: Unmatched groups are replaced with an empty 
+        string.
+        
+        Changed in version 3.6: Unknown escapes in pattern consisting of '\' 
+        and an ASCII letter now are errors.
+        
+        Changed in version 3.7: Unknown escapes in repl consisting of '\' and 
+        an ASCII letter now are errors.
+        
+        Changed in version 3.7: Empty matches for the pattern are replaced when
+        adjacent to a previous non-empty match.
+        """)
+        print("re.sub('x*', '-', 'abxd'):", re.sub('x*', '-', 'abxd'))
+        return
     
+    def re_subn_test(self):
+        """
+        Perform the same operation as sub(), but return a tuple (new_string, 
+        number_of_subs_made).
+
+        Changed in version 3.1: Added the optional flags argument.
+        Changed in version 3.5: Unmatched groups are replaced with an empty 
+        string.
+        """
+        print("re.subn('x*', '-', 'abxd'):", re.subn('x*', '-', 'abxd'))
+        result = re.subn(r'def\s+([a-zA-Z_][a-zA-Z_0-9]*)\s*\(\s*\):',
+               r'static PyObject*\npy_\1(void)\n{','def myfunc():')
+        print(result)
+        def dashrepl(matchobj):
+            if matchobj.group(0) == '-': return ' '
+            else: return '-'
+            
+        print("re.subn('-{1,2}', dashrepl, 'pro----gram-files'):",
+                      re.subn('-{1,2}', dashrepl, 'pro----gram-files'))
+        print("re.subn(r'\sAND\s', ' & ', 'Baked Beans And Spam', flags=re.IGNORECASE):",
+              re.subn(r'\sAND\s', ' & ', 'Baked Beans And Spam', flags=re.IGNORECASE))
+        return
     
+    def re_escape_test(self):
+        """
+        Escape special characters in pattern. This is useful if you want to 
+        match an arbitrary literal string that may have regular expression 
+        metacharacters in it. 
+        """
+        print("re.escape('python.exe'):", re.escape('python.exe'))
+        legal_chars = string.ascii_lowercase + string.digits + "!#$%&'*+-.^_`|~:"
+        print(re.escape(legal_chars))
+        print('[%s]+' % re.escape(legal_chars))
+        operators = ['+', '-', '*', '/', '**']
+        print('\n'.join(map(re.escape, sorted(operators, reverse=True))))
+        
+        print("""
+        This functions must not be used for the replacement string in sub() and
+        subn(), only backslashes should be escaped.
+        """)
+        digits_re = r'\d+'
+        sample = '/usr/sbin/sendmail - 0 errors, 12 warnings'
+        print(re.sub(digits_re, digits_re.replace('\\', r'\\'), sample))
+        print("""
+        Changed in version 3.3: The '_' character is no longer escaped.
+        Changed in version 3.7: Only characters that can have special meaning 
+        in a regular expression are escaped.
+        """)
+        return
     
+    def re_purge_test(self):
+        """
+        Clear the regular expression cache.
+        Most code will not need to worry about purging the re module cache. 
+        It brings very little memory benefit, and can actually hurt performance
+        if you purged it.
+        
+        The cache is used to store compiled regular expression objects when you
+        use the top-level re.* functions directly rather than use 
+        re.compile(pattern). For example, if you used 
+        re.search(r'<some pattern>', string_value) in a loop, then the re 
+        module would compile '<some pattern>' only once and store it in the 
+        cache, avoiding having to re-compile the pattern each time.
+        
+        How many such objects are cached and how the cache is managed is an 
+        implementation detail, really, but regular expression objects are 
+        light-weight objects, taking up at most a few hundred bytes, and Python
+        won't store more than a few hundred of these (Python 3.7 stores up to 
+        512).
+        
+        The cache is also automatically managed, so purging is not normally 
+        needed at all. Use it if you specifically need to account for regular 
+        expression compilation time in a repeated time trial test involving 
+        re.* functions, or are testing the caching functionality itself. The 
+        only locations in the Python standard library that call re.purge() are 
+        in tests (specifically in the test_re unittests for the re module and 
+        the reference leak test in the regression test suite).
+        
+        If your code is creating a lot of regular expression objects that you 
+        intent to keep using, it is better to use re.compile() and keep your 
+        own references to those compiled expression objects.
+        """
+        pass
     
+    def exception_re_error_test(self):
+        """
+        Exception raised when a string passed to one of the functions here is 
+        not a valid regular expression (for example, it might contain unmatched
+        parentheses) or when some other error occurs during compilation or 
+        matching. It is never an error if a string contains no match for a 
+        pattern. The error instance has the following additional attributes:
+
+        msg:
+            The unformatted error message.
     
+        pattern:
+            The regular expression pattern.
     
+        pos:
+            The index in pattern where compilation failed (may be None).
     
+        lineno:
+            The line corresponding to pos (may be None).
+
+        colno:
+            The column corresponding to pos (may be None).
     
+        Changed in version 3.5: Added additional attributes.
+        """
+        pass
     
-    
-    
-    
-    
-    
+    def pattern_search_test(self):
+        """
+        Scan through string looking for the first location where this regular 
+        expression produces a match, and return a corresponding match object. 
+        Return None if no position in the string matches the pattern; note that
+        this is different from finding a zero-length match at some point in the
+        string.
+
+        The optional second parameter pos gives an index in the string where 
+        the search is to start; it defaults to 0. This is not completely 
+        equivalent to slicing the string; the '^' pattern character matches at 
+        the real beginning of the string and at positions just after a newline,
+        but not necessarily at the index where the search is to start.
+        
+        The optional parameter endpos limits how far the string will be 
+        searched; it will be as if the string is endpos characters long, so 
+        only the characters from pos to endpos - 1 will be searched for a 
+        match. If endpos is less than pos, no match will be found; otherwise, 
+        if rx is a compiled regular expression object, rx.search(string, 0, 50)
+        is equivalent to rx.search(string[:50], 0).
+        """
+        pattern = re.compile("d")
+        print(pattern)
+        print(pattern.search("dog"))     # Match at index 0
+        print(pattern.search("dog", 1))  # No match; search doesn't include the "d"
     
     
 if __name__ == '__main__':
@@ -826,12 +997,35 @@ if __name__ == '__main__':
 #    print(reo.re_finditer_test.__doc__)
 #    reo.re_finditer_test()
     
-    print("\n# re.sub(pattern, repl, string, count=0, flags=0)")
-    print(reo.re_sub_test.__doc__)
-    reo.re_sub_test()
+#    print("\n# re.sub(pattern, repl, string, count=0, flags=0)")
+#    print(reo.re_sub_test.__doc__)
+#    reo.re_sub_test()
     
+#    print("\n# re.subn(pattern, repl, string, count=0, flags=0)")
+#    print(reo.re_subn_test.__doc__)
+#    reo.re_subn_test()
     
+#    print("\n# re.escape(pattern)")
+#    print(reo.re_escape_test.__doc__)
+#    reo.re_escape_test()
     
+#    print("\n# re.purge()")
+#    print(reo.re_purge_test.__doc__)
+#    reo.re_purge_test()
+    
+#    print("\n# exception re.error(msg, pattern=None, pos=None)")
+#    print(reo.exception_re_error_test.__doc__)
+#    reo.exception_re_error_test()
+    
+    reo.__doc__ = """
+    Regular Expression Objects:-
+    Compiled regular expression objects support the following methods and 
+    attributes:"""
+    print(reo.__doc__)
+        
+    print("\n# Pattern.search(string[, pos[, endpos]])")
+    print(reo.pattern_search_test.__doc__)
+    reo.pattern_search_test()
     
     
     
