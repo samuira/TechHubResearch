@@ -721,7 +721,7 @@ class RegularExpressionOperation:
         Changed in version 3.7: Non-empty matches can now start just after a 
         previous empty match.
         """
-         ## Suppose we have a text with many email addresses
+        ## Suppose we have a text with many email addresses
         s = 'purple alice@google.com, blah monkey bob@abc.com blah dishwasher'
         print(s)
         ## Here re.findall() returns a list of all the found email strings
@@ -956,9 +956,175 @@ class RegularExpressionOperation:
         is equivalent to rx.search(string[:50], 0).
         """
         pattern = re.compile("d")
-        print(pattern)
-        print(pattern.search("dog"))     # Match at index 0
-        print(pattern.search("dog", 1))  # No match; search doesn't include the "d"
+        print("pattern =",pattern)
+        print('pattern.search("dog"):',pattern.search("dog")) # Match at index 0
+        print('pattern.search("dog", 1):', pattern.search("dog", 1))  # No match; search doesn't include the "d"
+        return
+    
+    def pattern_match_test(self):
+        """
+        If zero or more characters at the beginning of string match this 
+        regular expression, return a corresponding match object. Return None if
+        the string does not match the pattern; note that this is different from
+        a zero-length match.
+
+        The optional pos and endpos parameters have the same meaning as for the
+        search() method.
+        """
+        pattern = re.compile("o")
+        print('pattern =', pattern)
+        print('pattern.match("dog"):', pattern.match("dog"))    # No match as "o" is not at the start of "dog".
+        print('pattern.match("dog", 1):', pattern.match("dog", 1))     # Match as "o" is the 2nd character of "dog".
+        
+        print('''
+        If you want to locate a match anywhere in string, use search() instead 
+        (see also search() vs. match()).
+        ''')
+        return
+    
+    def pattern_fullmatch_test(self):
+        """
+        If the whole string matches this regular expression, return a 
+        corresponding match object. Return None if the string does not match 
+        the pattern; note that this is different from a zero-length match.
+
+        The optional pos and endpos parameters have the same meaning as for the
+        search() method.
+        New in version 3.4.
+        """
+        pattern = re.compile("o[gh]")
+        print('pattern =', pattern)
+        print('pattern.fullmatch("dog"):', pattern.fullmatch("dog"))      # No match as "o" is not at the start of "dog".
+        print('pattern.fullmatch("ogre"):', pattern.fullmatch("ogre"))     # No match as not the full string matches.
+        print('pattern.fullmatch("doggie", 1, 3):', 
+              pattern.fullmatch("doggie", 1, 3))   # Matches within given limits.
+    
+    def pattern_split_test(self):
+        """
+        Identical to the split() function, using the compiled pattern.
+        """
+        pattern = re.compile('\W+')
+        print('pattern =', pattern)
+        print("pattern.split('Words, words, words.'):",
+              pattern.split('Words, words, words.'))
+        return
+    
+    def pattern_findall_test(self):
+        """
+        Similar to the findall() function, using the compiled pattern, but also
+        accepts optional pos and endpos parameters that limit the search region
+        like for search().
+        """
+        ## Suppose we have a text with many email addresses
+        s = 'purple alice@google.com, blah monkey bob@abc.com blah dishwasher'
+        print('s =', s)
+        pattern = re.compile('[\w\.-]+@[\w\.-]+')
+        print('pattern =', pattern)
+        ## Here re.findall() returns a list of all the found email strings
+        print('pattern.findall(s):', pattern.findall(s)) ## ['alice@google.com', 'bob@abc.com']
+        pattern = re.compile('([\w\.-]+)@([\w\.-]+)')
+        print('pattern =', pattern)
+        print('pattern.findall(s):', pattern.findall(s))
+        return
+    
+    def pattern_finditer_test(self):
+        """
+        Similar to the finditer() function, using the compiled pattern, but 
+        also accepts optional pos and endpos parameters that limit the search 
+        region like for search().
+        """
+        text = 'You can try to find an ant in this string'
+        print('text =', text)
+        pattern = re.compile('an?\w')   # find 'an' either with or without a following word 
+        print('pattern =', pattern)
+        result = pattern.finditer(text)
+        print('pattern.finditer(text):', result)
+        for match in result:
+            # Start index of match (integer)
+            sStart = match.start()
+            # Final index of match (integer)
+            sEnd = match.end()
+            # Complete match (string)
+            sGroup = match.group()
+            # Print match
+            print('Match "{}" found at: [{},{}]'.format(sGroup, sStart,sEnd))
+        return
+    
+    def pattern_sub_test(self):
+        """
+        Identical to the sub() function, using the compiled pattern.
+        """
+        pattern = re.compile('def\s+([a-zA-Z_][a-zA-Z_0-9]*)\s*\(\s*\):')
+        print('pattern =', pattern)
+        result = pattern.sub(r'static PyObject*\npy_\1(void)\n{',
+                             'def myfunc():')
+        print('result:',result, sep='\n')
+        return
+    
+    def pattern_subn_test(self):
+        """
+        Identical to the subn() function, using the compiled pattern.
+        """
+        pattern = re.compile('def\s+([a-zA-Z_][a-zA-Z_0-9]*)\s*\(\s*\):')
+        print('pattern =', pattern)
+        result = pattern.subn(r'static PyObject*\npy_\1(void)\n{',
+                             'def myfunc():')
+        print('result:',result, sep='\n')
+        return
+    
+    def pattern_extras_test(self):
+        """
+        Pattern.flags:
+            The regex matching flags. This is a combination of the flags given 
+            to compile(), any (?...) inline flags in the pattern, and implicit 
+            flags such as UNICODE if the pattern is a Unicode string.
+        """
+        pattern = re.compile('(?P<name>[^\W\d_]+)|(?P<number>\d+)')
+        print('pattern =', pattern)
+        print('pattern.flags:', pattern.flags)
+        
+        print('''
+        Pattern.groups:
+            The number of capturing groups in the pattern.
+        ''')
+        print('pattern.groups',pattern.groups)
+        
+        print('''
+        Pattern.groupindex:
+            A dictionary mapping any symbolic group names defined by (?P<id>) 
+            to group numbers. The dictionary is empty if no symbolic groups 
+            were used in the pattern.
+        ''')
+        print('pattern.groupindex:', pattern.groupindex)
+        '''
+        Pattern.pattern:
+            The pattern string from which the pattern object was compiled.
+        '''
+        print('pattern.pattern:', pattern.pattern)
+        '''
+        Changed in version 3.7: Added support of copy.copy() and 
+        copy.deepcopy(). Compiled regular expression objects are considered 
+        atomic.
+        '''
+        return
+    
+    def match_objects_test(self):
+        """
+        Match objects always have a boolean value of True. Since match() and 
+        search() return None when there is no match, you can test whether there
+        was a match with a simple if statement:
+        """
+        pattern = re.compile('(?P<name>[^\W\d_]+)|(?P<number>\d+)')
+        string = 'Compiled regular expression objects are considered atomic.'
+        print('pattern = '+str(pattern), 'string = '+string, sep='\n')
+        match = re.search(pattern, string)
+        if match:
+            print('match = '+str(match))
+    
+    
+    
+    
+    
     
     
 if __name__ == '__main__':
@@ -1017,15 +1183,51 @@ if __name__ == '__main__':
 #    print(reo.exception_re_error_test.__doc__)
 #    reo.exception_re_error_test()
     
-    reo.__doc__ = """
-    Regular Expression Objects:-
-    Compiled regular expression objects support the following methods and 
-    attributes:"""
-    print(reo.__doc__)
+#    reo.__doc__ = """
+#    Regular Expression Objects:-
+#    Compiled regular expression objects support the following methods and 
+#    attributes:"""
+#    print(reo.__doc__)
         
-    print("\n# Pattern.search(string[, pos[, endpos]])")
-    print(reo.pattern_search_test.__doc__)
-    reo.pattern_search_test()
+#    print("\n# Pattern.search(string[, pos[, endpos]])")
+#    print(reo.pattern_search_test.__doc__)
+#    reo.pattern_search_test()
+    
+#    print('\n# Pattern.match(string[, pos[, endpos]])')
+#    print(reo.pattern_match_test.__doc__)
+#    reo.pattern_match_test()
+    
+#    print('\n# Pattern.fullmatch(string[, pos[, endpos]])')
+#    print(reo.pattern_fullmatch_test.__doc__)
+#    reo.pattern_fullmatch_test()
+    
+#    print('\n# Pattern.split(string, maxsplit=0)')
+#    print(reo.pattern_split_test.__doc__)
+#    reo.pattern_split_test()
+    
+#    print('\n# Pattern.findall(string[, pos[, endpos]])')
+#    print(reo.pattern_findall_test.__doc__)
+#    reo.pattern_findall_test()
+    
+#    print('\n# Pattern.finditer(string[, pos[, endpos]])')
+#    print(reo.pattern_finditer_test.__doc__)
+#    reo.pattern_finditer_test()
+    
+#    print('\n# Pattern.sub(repl, string, count=0)')
+#    print(reo.pattern_sub_test.__doc__)
+#    reo.pattern_sub_test()
+    
+#    print('\n# Pattern.subn(repl, string, count=0)')
+#    print(reo.pattern_subn_test.__doc__)
+#    reo.pattern_subn_test()
+    
+#    print('\n# Extra Patterns')
+#    print(reo.pattern_extras_test.__doc__)
+#    reo.pattern_extras_test()
+    
+    print('\n# Match Objects')
+    print(reo.match_objects_test.__doc__)
+    reo.match_objects_test()
     
     
     
