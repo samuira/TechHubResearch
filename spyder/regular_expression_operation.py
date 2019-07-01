@@ -1120,8 +1120,25 @@ class RegularExpressionOperation:
         match = re.search(pattern, string)
         if match:
             print('match = '+str(match))
+            
+        print('\n# Match.expand(template)')
+        print('''
+        Return the string obtained by doing backslash substitution on the 
+        template string template, as done by the sub() method. Escapes such as 
+        \\n are converted to the appropriate characters, and numeric 
+        backreferences (\\1, \\2) and named backreferences (\g<1>, \g<name>) 
+        are replaced by the contents of the corresponding group.
     
-    
+        Changed in version 3.5: Unmatched groups are replaced with an empty 
+        string.
+        ''')
+        xx = re.compile(r"(\d\d\d\d)")
+        print('xx =', xx)
+        yy = xx.search("in the year 1999")
+        print('yy:', yy)
+        print('yy.expand(r"Year: \\1"):',yy.expand(r"Year: \1"))   # Year: 1999
+        
+            
     
     
     
