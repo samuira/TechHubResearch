@@ -1138,6 +1138,115 @@ class RegularExpressionOperation:
         print('yy:', yy)
         print('yy.expand(r"Year: \\1"):',yy.expand(r"Year: \1"))   # Year: 1999
         
+        print('\n# Match.group([group1, ...])')
+        print('''
+        Returns one or more subgroups of the match. If there is a single 
+        argument, the result is a single string; if there are multiple 
+        arguments, the result is a tuple with one item per argument. Without 
+        arguments, group1 defaults to zero (the whole match is returned). If a 
+        groupN argument is zero, the corresponding return value is the entire 
+        matching string; if it is in the inclusive range [1..99], it is the 
+        string matching the corresponding parenthesized group. If a group 
+        number is negative or larger than the number of groups defined in the 
+        pattern, an IndexError exception is raised. If a group is contained in 
+        a part of the pattern that did not match, the corresponding result is 
+        None. If a group is contained in a part of the pattern that matched 
+        multiple times, the last match is returned.
+        ''')
+        m = re.match(r"(\w+) (\w+), (\w+)", "Isaac Newton, physicist scientist")
+        print('m =', m)
+        print('m.group(0):', m.group(0))   # The entire match
+        print('m.group(1):', m.group(1))   # The first parenthesized subgroup.
+        print('m.group(2):', m.group(2))   # The second parenthesized subgroup.
+        print('m.group(1, 2):', m.group(1, 2, 3))  # Multiple arguments give us a tuple.
+        
+        print('''
+        If the regular expression uses the (?P<name>...) syntax, the groupN 
+        arguments may also be strings identifying groups by their group name. 
+        If a string argument is not used as a group name in the pattern, an 
+        IndexError exception is raised.
+        ''')
+        pattern = re.compile("(?P<first_name>\w+) (?P<last_name>\w+)")
+        print('pattern =', pattern)
+        string = "Malcolm Reynolds"
+        print('string =', string)
+        match = pattern.match(string)
+        print('match =', match)
+        print("match.group('first_name'):", match.group('first_name'))
+        print("match.group('last_name'):", match.group('last_name'))
+        
+        # Named groups can also be referred to by their index.
+        print('match.group(1):', match.group(1))
+        print('match.group(2):', match.group(2))
+        
+        # If a group matches multiple times, only the last match is accessible.
+        pattern = re.compile("(..)+")
+        print('pattern =', pattern)
+        string = "a1b2c3"
+        print('string =', string)
+        match = pattern.match(string)  # Matches 3 times.
+        print('match:', match)
+        print('match.group(1):', match.group(1))
+        
+        print('\n# Match.__getitem__(g)')
+        print('''
+        This is identical to m.group(g). This allows easier access to an 
+        individual group from a match.
+        New in version 3.6.
+        ''')
+        pattern = re.compile("(\w+) (\w+)")
+        print('pattern =', pattern)
+        string = "Isaac Newton, physicist"
+        print('string =', string)
+        match = pattern.match(string)
+        print('match:', match)
+        # print('match[0]:', match[0])   # The entire match
+        # print('match[1]:', match[1])   # The first parenthesized subgroup.
+        # print('match[2]:', match[2])   # The second parenthesized subgroup.
+        
+        print('\n# Match.groups(default=None)')
+        print('''
+        Return a tuple containing all the subgroups of the match, from 1 up to 
+        however many groups are in the pattern. The default argument is used 
+        for groups that did not participate in the match; it defaults to None.
+        ''')
+        pattern = re.compile(r"(\d+)\.(\d+)")
+        print('pattern =', pattern)
+        string = "24.1632"
+        print('string =', string)
+        match = pattern.match(string)
+        print('match:', match)
+        print('match.groups():', match.groups())
+        
+        print('''
+        If we make the decimal place and everything after it optional, not all 
+        groups might participate in the match. These groups will default to 
+        None unless the default argument is given.
+        ''')
+        pattern = re.compile(r"(\d+)\.?(\d+)?")
+        print('pattern =', pattern)
+        string = "24"
+        print('string =', string)
+        match = pattern.match(string)
+        print('match:', match)
+        print('match.groups():', match.groups()) # Second group defaults to None.
+        print('match.groups("0"):', match.groups("0")) # Now, the second group defaults to '0'.
+        
+        print('\n# Match.groupdict(default=None)')
+        print('''
+        Return a dictionary containing all the named subgroups of the match, 
+        keyed by the subgroup name. The default argument is used for groups 
+        that did not participate in the match; it defaults to None.
+        ''')
+        pattern = re.compile(r"(?P<first_name>\w+) (?P<last_name>\w+)")
+        print('pattern =', pattern)
+        string = "Malcolm Reynolds"
+        print('string =', string)
+        match = pattern.match(string)
+        print('match:', match)
+        print('match.groupdict():', match.groupdict())
+        
+        
             
     
     
