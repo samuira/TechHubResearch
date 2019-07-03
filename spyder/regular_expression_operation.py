@@ -1246,6 +1246,162 @@ class RegularExpressionOperation:
         print('match:', match)
         print('match.groupdict():', match.groupdict())
         
+        print('\n# Match.start([group])\n# Match.end([group])')
+        print('''
+        Return the indices of the start and end of the substring matched by 
+        group; group defaults to zero (meaning the whole matched substring). 
+        Return -1 if group exists but did not contribute to the match. For a 
+        match object m, and a group g that did contribute to the match, the 
+        substring matched by group g (equivalent to m.group(g)) is
+        m.string[m.start(g):m.end(g)]
+        
+        Note that m.start(group) will equal m.end(group) if group matched a 
+        null string. For example, after m = re.search('b(c?)', 'cba'), 
+        m.start(0) is 1, m.end(0) is 2, m.start(1) and m.end(1) are both 2, 
+        and m.start(2) raises an IndexError exception.
+        An example that will remove remove_this from email addresses.
+        ''')
+        email = "tony@tiremove_thisger.net"
+        print('email =', email)
+        match = re.search("remove_this", email)
+        print('match:', match)
+        print('email[:match.start()] + email[match.end():]:',
+              email[:match.start()] + email[match.end():])
+        
+        print('\n# Match.span([group])')
+        print('''
+        For a match m, return the 2-tuple (m.start(group), m.end(group)). Note 
+        that if group did not contribute to the match, this is (-1, -1). group 
+        defaults to zero, the entire match.
+        ''')
+        statement = r'new (car)|old (car)'
+        print('statement =', statement)
+        text = 'I bought a new car and got rid of the old car'
+        print('text =', text)
+        match = re.search(statement, text)
+        print('match:', match)
+        print('match.span():', match.span())
+        for index, match in enumerate(re.finditer(statement, text)):
+            print(index,'match.span():', match.span())
+            
+        # 1 is referring to the first group, the default is zero - which means 
+        # the whole match.
+        for index, match in enumerate(re.finditer(statement, text)):
+            print(index,'match.span(0):', match.span(0))
+            print(index,'match.span(1):', match.span(1))
+            print(index,'match.span(2):', match.span(2))
+        
+        print('\n# Match.pos')
+        print('''
+        The value of pos which was passed to the search() or match() method of 
+        a regex object. This is the index into the string at which the RE 
+        engine started looking for a match.
+        ''')
+        pattern = re.compile('new (?P<new>car)|old (?P<old>car)')
+        print('pattern =', pattern)
+        text = 'I bought a new car and got rid of the old car'
+        print('text =', text)
+        match = pattern.search(text, 12, 45)
+        print('match:', match)
+        print('match.pos:', match.pos)
+        
+        print('\n# Match.endpos')
+        print('''
+        The value of endpos which was passed to the search() or match() method 
+        of a regex object. This is the index into the string beyond which the 
+        RE engine will not go.
+        ''')
+        print('match.endpos:', match.endpos)
+        
+        print('\n# Match.lastindex')
+        print('''
+        The integer index of the last matched capturing group, or None if no 
+        group was matched at all. For example, the expressions (a)b, ((a)(b)), 
+        and ((ab)) will have lastindex == 1 if applied to the string 'ab', 
+        while the expression (a)(b) will have lastindex == 2, if applied to the
+        same string.
+        ''')
+        print('match.lastindex:', match.lastindex)
+           
+        print('\n# Match.lastgroup')
+        print('''
+        The name of the last matched capturing group, or None if the group 
+        didn’t have a name, or if no group was matched at all.
+        ''')
+        print('match.lastgroup:', match.lastgroup)
+        
+        print('\n# Match.re')
+        '''
+        The regular expression object whose match() or search() method produced
+        this match instance.
+        '''
+        print('match.re:', match.re)
+        
+        print('\n#  Match.string')
+        print('''
+        The string passed to match() or search().
+        ''')
+        print('match.string:', match.string)
+        
+    def regular_expression_examples(self):
+        """
+        Checking for a Pair:
+            In this example, we’ll use the following helper function to display
+            match objects a little more gracefully.
+        """
+        def displaymatch(match):
+            if match is None:
+                return None
+            return '<Match: %r, groups=%r>' % (match.group(), match.groups())
+        
+        pattern = re.compile('new (?P<new>car)|old (?P<old>car)')
+        print('pattern =', pattern)
+        text = 'I bought a new car and got rid of the old car'
+        print('text =', text)
+        match_itr = pattern.finditer(text)
+        print('match_itr:', match_itr)
+        print('displaymatch(match):', 
+              [displaymatch(match) for match in match_itr])
+        
+        print('''
+        Suppose you are writing a poker program where a player’s hand is 
+        represented as a 5-character string with each character representing a 
+        card, “a” for ace, “k” for king, “q” for queen, “j” for jack, “t” for 
+        10, and “2” through “9” representing the card with that value.
+        To see if a given string is a valid hand, one could do the following:
+        ''')
+        valid = re.compile(r"^[a2-9tjqk]{5}$")
+        print('valid =', valid)
+        print('displaymatch(valid.match("akt5q")):',
+              displaymatch(valid.match("akt5q")))  # Valid.
+        print('displaymatch(valid.match("akt5e")):',
+              displaymatch(valid.match("akt5e")))  # Invalid.
+        print('displaymatch(valid.match("akt")):',
+              displaymatch(valid.match("akt")))    # Invalid.
+        print('displaymatch(valid.match("727ak")):',
+              displaymatch(valid.match("727ak")))  # Valid.
+        
+        print('''
+        That last hand, "727ak", contained a pair, or two of the same valued 
+        cards. To match this with a regular expression, one could use 
+        backreferences as such:
+        ''')
+        pair = re.compile(r".*(.).*\1")
+        print('pair =', pair)
+        print('displaymatch(pair.match("717ak")):',
+              displaymatch(pair.match("717ak")))     # Pair of 7s.
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
             
     
@@ -1350,13 +1506,14 @@ if __name__ == '__main__':
 #    print('\n# Extra Patterns')
 #    print(reo.pattern_extras_test.__doc__)
 #    reo.pattern_extras_test()
+
+#    print('\n# Match Objects')
+#    print(reo.match_objects_test.__doc__)
+#    reo.match_objects_test()
     
-    print('\n# Match Objects')
-    print(reo.match_objects_test.__doc__)
-    reo.match_objects_test()
-    
-    
-    
+    print('\n# Regular Expression Examples')
+    print(reo.regular_expression_examples.__doc__)
+    reo.regular_expression_examples()
     
     
     
