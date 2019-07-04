@@ -7,6 +7,8 @@ Created on Mon Mar 4 14:31:24 2019
 
 import re
 import string
+import random
+import collections
 
 class RegularExpressionOperation:
     """
@@ -1390,16 +1392,194 @@ class RegularExpressionOperation:
         print('pair =', pair)
         print('displaymatch(pair.match("717ak")):',
               displaymatch(pair.match("717ak")))     # Pair of 7s.
+        print('displaymatch(pair.match("718ak")):', 
+              displaymatch(pair.match("718ak")))     # No pair
+        print('displaymatch(pair.match("354aa")):', 
+              displaymatch(pair.match("354aa")))     # Pair of aces.
         
+        print('''
+        To find out what card the pair consists of, one could use the group() 
+        method of the match object in the following manner:
+        ''')
+        print('pair.match("717ak").group(1):', pair.match("717ak").group(1))
+        try:
+            pair.match("718ak").group(1)
+        except AttributeError as e:
+            print('AttributeError:', e)
+            
+        print('\n# Simulating scanf()')
+        print('''
+        scanf() Token                   Regular Expression
+        --------------------------------------------------
+        %c                              .
+        %5c                             .{5}
+        %d                              [-+]?\d+
+        %e, %E, %f, %g                  [-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?
+        %i                              [-+]?(0[xX][\dA-Fa-f]+|0[0-7]*|\d+)
+        %o                              [-+]?[0-7]+
+        %s                              \S+
+        %u                              \d+
+        %x, %X                          [-+]?(0[xX])?[\dA-Fa-f]+
+        ''')
         
+        print('\n# search() vs. match()')
+        print('''
+        Python offers two different primitive operations based on regular 
+        expressions: re.match() checks for a match only at the beginning of the
+        string, while re.search() checks for a match anywhere in the string 
+        (this is what Perl does by default).
+        ''')
+        print('re.match("c", "abcdef"):', re.match("c", "abcdef"))   # No match
+        print('re.search("c", "abcdef"):', re.search("c", "abcdef"))    # Match
         
+        print('''
+        Regular expressions beginning with '^' can be used with search() to 
+        restrict the match at the beginning of the string:
+        ''')
+        print('re.match("c", "abcdef"):', re.match("c", "abcdef"))   # No match
+        print('re.search("^c", "abcdef"):', re.search("^c", "abcdef"))# No match
+        print('re.search("^a", "abcdef"):', re.search("^a", "abcdef"))  # Match
         
+        print('''
+        Note however that in MULTILINE mode match() only matches at the 
+        beginning of the string, whereas using search() with a regular 
+        expression beginning with '^' will match at the beginning of each line.
+        ''')
+        print("re.match('X', 'A\\nB\\nX', re.MULTILINE):", 
+              re.match('X', 'A\nB\nX', re.MULTILINE))  # No match
+        print("re.search('^X', 'A\\nB\\nX', re.MULTILINE):", 
+              re.search('^X', 'A\nB\nX', re.MULTILINE))  # Match
         
+        print('\n# Making a Phonebook')
+        '''
+        split() splits a string into a list delimited by the passed pattern. 
+        The method is invaluable for converting textual data into data 
+        structures that can be easily read and modified by Python as 
+        demonstrated in the following example that creates a phonebook.
+
+        First, here is the input. Normally it may come from a file, here we are
+        using triple-quoted string syntax:
+        '''
+        text = """Ross McFluff: 834.345.1254 155 Elm Street
+
+Ronald Heathmore: 892.345.3428 436 Finley Avenue
+Frank Burger: 925.541.7625 662 South Dogwood Way
+
+
+Heather Albrecht: 548.326.4584 919 Park Place"""
+        entries = re.split("\n+", text)
+        print('re.split("\\n+", text):', entries, end='\n\n')
+        print('[re.split(":? ", entry, 3) for entry in entries]:',
+              [re.split(":? ", entry, 3) for entry in entries], end='\n\n')
+        print('[re.split(":? |\.", entry, 3) for entry in entries]:',
+              [re.split(":? |\.", entry, 5) for entry in entries])
         
+        print('\n# Text Munging')
+        print('''
+        sub() replaces every occurrence of a pattern with a string or the 
+        result of a function. This example demonstrates using sub() with a 
+        function to “munge” text, or randomize the order of all the characters 
+        in each word of a sentence except for the first and last characters:
+        ''')
+        def repl(m):
+            inner_word = list(m.group(2))
+            print(inner_word)
+            random.shuffle(inner_word)
+            print('random.shuffle:', inner_word)
+            return m.group(1) + "".join(inner_word) + m.group(3)
+        text = "Professor Abdolmalek, please report your absences promptly."
+        print('text =', text)
+        print('re.sub(r"(\w)(\w+)(\w)", repl, text):',
+              re.sub(r"(\w)(\w+)(\w)", repl, text))
         
+        print('\n# Finding all Adverbs')
+        print('''
+        findall() matches all occurrences of a pattern, not just the first one 
+        as search() does. For example, if a writer wanted to find all of the 
+        adverbs in some text, they might use findall() in the following manner:
+        ''')
+        text = "He was carefully disguised but captured quickly by police."
+        print('text =', text)
+        print('re.findall(r"\w+ly", text):', re.findall(r"\w+ly", text))
         
+        print('\n# Finding all Adverbs and their Positions')
+        print('''
+        If one wants more information about all matches of a pattern than the 
+        matched text, finditer() is useful as it provides match objects instead
+        of strings. Continuing with the previous example, if a writer wanted to
+        find all of the adverbs and their positions in some text, they would 
+        use finditer() in the following manner:
+        ''')
+        [print('%02d-%02d: %s' % (m.start(), m.end(), m.group(0))) 
+        for m in re.finditer(r"\w+ly", text)]
         
+        print('\n# Raw String Notation')
+        print('''
+        Raw string notation (r"text") keeps regular expressions sane. Without 
+        it, every backslash ('\') in a regular expression would have to be 
+        prefixed with another one to escape it. For example, the two following 
+        lines of code are functionally identical:
+        ''')
+        print('re.match(r"\W(.)\\1\W", " ff "):', 
+              re.match(r"\W(.)\1\W", " ff "))
+        print('re.match("\\W(.)\\1\\W", " ff "):', 
+              re.match("\\W(.)\\1\\W", " ff "))
         
+        print('\n# Writing a Tokenizer')
+        print('''
+        A tokenizer or scanner analyzes a string to categorize groups of 
+        characters. This is a useful first step in writing a compiler or 
+        interpreter.
+        The text categories are specified with regular expressions. The 
+        technique is to combine those into a single master regular expression 
+        and to loop over successive matches:
+        ''')
+        Token = collections.namedtuple('Token', ['type', 'value', 'line', 
+                                                 'column'])
+        
+        def tokenize(code):
+            keywords = {'IF', 'THEN', 'ENDIF', 'FOR', 'NEXT', 'GOSUB', 'RETURN'}
+            token_specification = [
+                ('NUMBER',   r'\d+(\.\d*)?'),  # Integer or decimal number
+                ('ASSIGN',   r':='),           # Assignment operator
+                ('END',      r';'),            # Statement terminator
+                ('ID',       r'[A-Za-z]+'),    # Identifiers
+                ('OP',       r'[+\-*/]'),      # Arithmetic operators
+                ('NEWLINE',  r'\n'),           # Line endings
+                ('SKIP',     r'[ \t]+'),       # Skip over spaces and tabs
+                ('MISMATCH', r'.'),            # Any other character
+            ]
+            tok_regex = '|'.join('(?P<%s>%s)' % pair for pair in 
+                                 token_specification)
+            line_num = 1
+            line_start = 0
+            for mo in re.finditer(tok_regex, code):
+                kind = mo.lastgroup
+                value = mo.group()
+                column = mo.start() - line_start
+                if kind == 'NUMBER':
+                    value = float(value) if '.' in value else int(value)
+                elif kind == 'ID' and value in keywords:
+                    kind = value
+                elif kind == 'NEWLINE':
+                    line_start = mo.end()
+                    line_num += 1
+                    continue
+                elif kind == 'SKIP':
+                    continue
+                elif kind == 'MISMATCH':
+                    raise RuntimeError(value +' unexpected on line '+line_num)
+                yield Token(kind, value, line_num, column)
+        
+        statements = '''
+            IF quantity THEN
+                total := total + price * quantity;
+                tax := price * 0.05;
+            ENDIF;
+        '''
+        
+        for token in tokenize(statements):
+            print(token)
         
         
         
