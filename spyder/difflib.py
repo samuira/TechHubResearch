@@ -480,11 +480,182 @@ class Difflib:
         print("IS_CHARACTER_JUNK('x'):",IS_CHARACTER_JUNK('x'))
         return
     
+    def sequence_matcher_objects_test(self):
+        """
+        # class difflib.SequenceMatcher(isjunk=None, a='', b='', autojunk=True)
+        
+        Optional argument isjunk must be None (the default) or a one-argument 
+        function that takes a sequence element and returns true if and only if 
+        the element is “junk” and should be ignored. Passing None for isjunk is
+        equivalent to passing lambda x: 0; in other words, no elements are 
+        ignored. For example, pass:
+        
+        lambda x: x in " \t"
+        
+        if you’re comparing lines as sequences of characters, and don’t want to
+        synch up on blanks or hard tabs.
+        
+        The optional arguments a and b are sequences to be compared; both 
+        default to empty strings. The elements of both sequences must be 
+        hashable.
+        
+        The optional argument autojunk can be used to disable the automatic 
+        junk heuristic.
+        
+        New in version 3.2: The autojunk parameter.
+        
+        SequenceMatcher objects get three data attributes: bjunk is the set of 
+        elements of b for which isjunk is True; bpopular is the set of non-junk
+        elements considered popular by the heuristic (if it is not disabled); 
+        b2j is a dict mapping the remaining elements of b to a list of 
+        positions where they occur. All three are reset whenever b is reset 
+        with set_seqs() or set_seq2().
+        
+        New in version 3.2: The bjunk and bpopular attributes.
+        
+        SequenceMatcher objects have the following methods:
+        """
+        myStr1 = 'Python Programming'
+        myStr2 = ' Python Standard Library'
+        print('myStr1 = '+myStr1, 'myStr2 = '+myStr2, sep='\n')
+        seq_match = SequenceMatcher()
+        print('seq_match:', seq_match)
+        
+        print('\n# set_seqs(a, b)')
+        print('''
+        Set the two sequences to be compared.
+
+        SequenceMatcher computes and caches detailed information about the 
+        second sequence, so if you want to compare one sequence against many 
+        sequences, use set_seq2() to set the commonly used sequence once and 
+        call set_seq1() repeatedly, once for each of the other sequences.
+        ''')
+        seq_match.set_seqs(myStr1, myStr2)
+        print('seq_match.find_longest_match(0, len(myStr1), 0, len(myStr2)):',
+              seq_match.find_longest_match(0, len(myStr1), 0, len(myStr2)))
     
+        print('\n# set_seq1(a)')
+        '''
+        Set the first sequence to be compared. The second sequence to be 
+        compared is not changed.
+        '''
+        myStr3 = 'Programming in Python'
+        print('myStr1 = '+myStr1, 'myStr2 = '+myStr2, 'myStr3 = '+myStr3, 
+              sep='\n')
+        seq_match.set_seq1(myStr3)
+        print('seq_match.find_longest_match(0, len(myStr3), 0, len(myStr2)):',
+              seq_match.find_longest_match(0, len(myStr3), 0, len(myStr2)))
+        
+        print('\n# set_seq2(b)')
+        '''
+        Set the second sequence to be compared. The first sequence to be 
+        compared is not changed.
+        '''
+        myStr4 = 'A Sexy Programming Language is Python'
+        print('myStr1 = '+myStr1, 'myStr2 = '+myStr2, 'myStr3 = '+myStr3, 
+              'myStr4 = '+myStr4, sep='\n')
+        seq_match.set_seq2(myStr4)
+        print('seq_match.find_longest_match(0, len(myStr3), 0, len(myStr4)):',
+              seq_match.find_longest_match(0, len(myStr3), 0, len(myStr4)))
+        print('\n# find_longest_match(alo, ahi, blo, bhi)')
+        print('''
+        Find longest matching block in a[alo:ahi] and b[blo:bhi].
+
+        If isjunk was omitted or None, find_longest_match() returns (i, j, k) 
+        such that a[i:i+k] is equal to b[j:j+k], where alo <= i <= i+k <= ahi 
+        and blo <= j <= j+k <= bhi. For all (i', j', k') meeting those 
+        conditions, the additional conditions k >= k', i <= i', and if i == i',
+        j <= j' are also met. In other words, of all maximal matching blocks, 
+        return one that starts earliest in a, and of all those maximal matching
+        blocks that start earliest in a, return the one that starts earliest in
+        b.
+        ''')
+        s = SequenceMatcher(None, " abcd", "abcd abcd")
+        print('SequenceMatcher(None, " abcd", "abcd abcd"):', s)
+        print('s.find_longest_match(0, 5, 0, 9):', 
+              s.find_longest_match(0, 5, 0, 9))
+        
+        print('''
+        If isjunk was provided, first the longest matching block is determined 
+        as above, but with the additional restriction that no junk element 
+        appears in the block. Then that block is extended as far as possible by
+        matching (only) junk elements on both sides. So the resulting block 
+        never matches on junk except as identical junk happens to be adjacent 
+        to an interesting match.
+
+        Here’s the same example as before, but considering blanks to be junk. 
+        That prevents ' abcd' from matching the ' abcd' at the tail end of the 
+        second sequence directly. Instead only the 'abcd' can match, and 
+        matches the leftmost 'abcd' in the second sequence:
+        ''')
+        s = SequenceMatcher(lambda x: x==" ", " abcd", "abcd abcd")
+        print('SequenceMatcher(lambda x: x==" ", " abcd", "abcd abcd"):', s)
+        print('s.find_longest_match(0, 5, 0, 9):', 
+              s.find_longest_match(0, 5, 0, 9))
+        
+        print('''
+        If no blocks match, this returns (alo, blo, 0).
+        This method returns a named tuple Match(a, b, size).
+        ''')        
+        
+        print('\n# get_matching_blocks()')
+        print('''
+        Return list of triples describing non-overlapping matching 
+        subsequences. Each triple is of the form (i, j, n), and means that 
+        a[i:i+n] == b[j:j+n]. The triples are monotonically increasing in i and
+        j.
+        
+        The last triple is a dummy, and has the value (len(a), len(b), 0). It 
+        is the only triple with n == 0. If (i, j, n) and (i', j', n') are 
+        adjacent triples in the list, and the second is not the last triple in 
+        the list, then i+n < i' or j+n < j'; in other words, adjacent triples 
+        always describe non-adjacent equal blocks.
+        ''')
+        s = SequenceMatcher(None, "abxcd", "abcd")
+        print('SequenceMatcher(None, "abxcd", "abcd"):', s)
+        print('s.get_matching_blocks():', s.get_matching_blocks())
+        
+        print('\n# get_opcodes()')
+        print('''
+        Return list of 5-tuples describing how to turn a into b. Each tuple is 
+        of the form (tag, i1, i2, j1, j2). The first tuple has i1 == j1 == 0, 
+        and remaining tuples have i1 equal to the i2 from the preceding tuple, 
+        and, likewise, j1 equal to the previous j2.
+
+        The tag values are strings, with these meanings:
+            Value               Meaning
+            -------------------------------------------------------------------
+            'replace'           a[i1:i2] should be replaced by b[j1:j2].
+            'delete'            a[i1:i2] should be deleted. Note that j1 == j2 
+                                in this case.
+            'insert'            b[j1:j2] should be inserted at a[i1:i1]. Note 
+                                that i1 == i2 in this case.
+            'equal'             a[i1:i2] == b[j1:j2] (the sub-sequences are 
+                                equal).
+            -------------------------------------------------------------------
+        ''')
+        a = "qabxcdsdf"
+        b = "abycdffar"
+        print('a = '+ a, 'b = '+ b, sep='\n')
+        s = SequenceMatcher(None, a, b)
+        print('SequenceMatcher(None, a, b):', s)
+        print('s.get_opcodes():', s.get_opcodes())
+        for tag, i1, i2, j1, j2 in s.get_opcodes():
+            print('{:10}   a[{:2}:{:2}] --> b[{:2}:{:2}] {!r:>7} --> {!r}'
+                  .format(tag, i1, i2, j1, j2, a[i1:i2], b[j1:j2]))
+            
+        print('\n# get_grouped_opcodes(n=3)')
+        print('''
+        Return a generator of groups with up to n lines of context.
+
+        Starting with the groups returned by get_opcodes(), this method splits 
+        out smaller change clusters and eliminates intervening ranges which 
+        have no changes.
     
-    
-    
-    
+        The groups are returned in the same format as get_opcodes().
+        ''')
+        print(next(s.get_grouped_opcodes(n=7)))
+        
     
 if __name__ == '__main__':
     dl = Difflib()
@@ -534,6 +705,9 @@ if __name__ == '__main__':
 #    print(dl.IS_CHARACTER_JUNK_test.__doc__)
 #    dl.IS_CHARACTER_JUNK_test()
     
+    print('\n# SequenceMatcher Objects')
+    print(dl.sequence_matcher_objects_test.__doc__)
+    dl.sequence_matcher_objects_test()
     
     
     
