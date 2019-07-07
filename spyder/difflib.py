@@ -634,8 +634,28 @@ class Difflib:
                                 equal).
             -------------------------------------------------------------------
         ''')
-        a = "qabxcdsdf"
-        b = "abycdffar"
+        a = """qabxcd
+xyaz
+mnrp
+eflh
+ijpl
+dfer
+sdwe
+mnrp
+eflh
+ijpl
+dfer"""
+        b = """abycd
+xybz
+mnsp
+epmh
+ijql
+dftr
+sdqe
+mnsp
+epmh
+ijql
+dftr"""
         print('a = '+ a, 'b = '+ b, sep='\n')
         s = SequenceMatcher(None, a, b)
         print('SequenceMatcher(None, a, b):', s)
@@ -654,8 +674,119 @@ class Difflib:
     
         The groups are returned in the same format as get_opcodes().
         ''')
-        print(next(s.get_grouped_opcodes(n=7)))
+        s_gen0 = s.get_grouped_opcodes(n=0)
+        [print('opcode0 l_{}:{}'.format(i, opcode0)) for i, opcode0 in 
+         enumerate(s_gen0)]
+        print()
+        s_gen1 = s.get_grouped_opcodes(n=1)
+        [print('opcode1 l_{}:{}'.format(i, opcode1)) for i, opcode1 in 
+         enumerate(s_gen1)]
+        print()
+        s_gen2 = s.get_grouped_opcodes(n=2)
+        [print('opcode2 l_{}:{}'.format(i, opcode2)) for i, opcode2 in 
+         enumerate(s_gen2)]
+        print()
+        s_gen3 = s.get_grouped_opcodes(n=3)
+        [print('opcode3 l_{}:{}'.format(i, opcode3)) for i, opcode3 in 
+         enumerate(s_gen3)]
+        print()
+        s_gen4 = s.get_grouped_opcodes(n=4)
+        [print('opcode4 l_{}:{}'.format(i, opcode4)) for i, opcode4 in 
+         enumerate(s_gen4)]
         
+        print('\n# ratio()')
+        print('''
+        Return a measure of the sequences’ similarity as a float in the range 
+        [0, 1].
+
+        Where T is the total number of elements in both sequences, and M is 
+        the number of matches, this is 2.0*M / T. Note that this is 1.0 if the 
+        sequences are identical, and 0.0 if they have nothing in common.
+
+        This is expensive to compute if get_matching_blocks() or get_opcodes() 
+        hasn’t already been called, in which case you may want to try 
+        quick_ratio() or real_quick_ratio() first to get an upper bound.
+        ''')
+        sm = SequenceMatcher(None, "abcd", "bcde")
+        print('SequenceMatcher(None, "abcd", "bcde"):', sm)
+        print('sm.ratio():', sm.ratio())
+        
+        print('\n# quick_ratio()')
+        print('''
+        Return an upper bound on ratio() relatively quickly.
+        ''')
+        print('sm.quick_ratio():', sm.quick_ratio())
+        
+        print('\n# real_quick_ratio()')
+        print('''
+        Return an upper bound on ratio() very quickly.
+        ''')
+        print('sm.real_quick_ratio():',sm.real_quick_ratio())
+    
+    def sequence_matcher_examples(self):
+        """
+        This example compares two strings, considering blanks to be “junk”:
+        """
+        str1 = "private Thread currentThread;"
+        str2 = "private volatile Thread currentThread;"
+        print('str1 = '+str1, 'str2 = '+str2, sep='\n')
+        sm = SequenceMatcher(lambda x: x == " ", str1, str2)
+        print('SequenceMatcher(lambda x: x == " ", str1, str2):', sm)
+        
+        print('''
+        ratio() returns a float in [0, 1], measuring the similarity of the 
+        sequences. As a rule of thumb, a ratio() value over 0.6 means the 
+        sequences are close matches:
+        ''')
+        print('round(sm.ratio(), 3):', round(sm.ratio(), 3))
+        
+        print('''
+        If you’re only interested in where the sequences match, 
+        get_matching_blocks() is handy:
+        ''')
+        print('sm.get_matching_blocks():', sm.get_matching_blocks())
+        for block in sm.get_matching_blocks():
+            print("block: a[%d] and b[%d] match for %d elements" % block)
+        
+        print('''
+        Note that the last tuple returned by get_matching_blocks() is always a 
+        dummy, (len(a), len(b), 0), and this is the only case in which the last
+        tuple element (number of elements matched) is 0.
+
+        If you want to know how to change the first sequence into the second, 
+        use get_opcodes():
+        ''')
+        print('sm.get_opcodes():', sm.get_opcodes())
+        for opcode in sm.get_opcodes():
+            print("%6s a[%d:%d] b[%d:%d]" % opcode)
+        return
+    
+    def differ_objects_test(self):
+        """
+        Note that Differ-generated deltas make no claim to be minimal diffs. To
+        the contrary, minimal diffs are often counter-intuitive, because they 
+        synch up anywhere possible, sometimes accidental matches 100 pages 
+        apart. Restricting synch points to contiguous matches preserves some 
+        notion of locality, at the occasional cost of producing a longer diff.
+
+        The Differ class has this constructor:
+        """
+        print('\n# difflib.Differ(linejunk=None, charjunk=None)')
+        '''
+        
+        '''
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 if __name__ == '__main__':
     dl = Difflib()
@@ -705,12 +836,17 @@ if __name__ == '__main__':
 #    print(dl.IS_CHARACTER_JUNK_test.__doc__)
 #    dl.IS_CHARACTER_JUNK_test()
     
-    print('\n# SequenceMatcher Objects')
-    print(dl.sequence_matcher_objects_test.__doc__)
-    dl.sequence_matcher_objects_test()
+#    print('\n# SequenceMatcher Objects')
+#    print(dl.sequence_matcher_objects_test.__doc__)
+#    dl.sequence_matcher_objects_test()
     
+#    print('\n# SequenceMatcher Examples')
+#    print(dl.sequence_matcher_examples.__doc__)
+#    dl.sequence_matcher_examples()
     
-    
+    print('\n# Differ Objects')
+    print(dl.differ_objects_test.__doc__)
+    dl.differ_objects_test()
     
     
     
