@@ -772,14 +772,67 @@ dftr"""
         The Differ class has this constructor:
         """
         print('\n# difflib.Differ(linejunk=None, charjunk=None)')
-        '''
+        print('''
+        Optional keyword parameters linejunk and charjunk are for filter 
+        functions (or None):
         
-        '''
-    
-    
-    
-    
-    
+        linejunk: A function that accepts a single string argument, and returns
+        true if the string is junk. The default is None, meaning that no line 
+        is considered junk.
+        
+        charjunk: A function that accepts a single character argument (a string
+        of length 1), and returns true if the character is junk. The default is
+        None, meaning that no character is considered junk.
+        
+        These junk-filtering functions speed up matching to find differences 
+        and do not cause any differing lines or characters to be ignored. Read 
+        the description of the find_longest_match() method’s isjunk parameter 
+        for an explanation.
+        
+        Differ objects are used (deltas generated) via a single method:
+        ''')
+        print('\n# compare(a, b)')
+        print('''
+        Compare two sequences of lines, and generate the delta (a sequence of 
+        lines).
+
+        Each sequence must contain individual single-line strings ending with 
+        newlines. Such sequences can be obtained from the readlines() method of
+        file-like objects. The delta generated also consists of 
+        newline-terminated strings, ready to be printed as-is via the 
+        writelines() method of a file-like object.
+        ''')
+        print('''
+        This example compares two texts. First we set up the texts, sequences 
+        of individual single-line strings ending with newlines (such sequences 
+        can also be obtained from the readlines() method of file-like objects):
+        ''')
+        text1 = '''  1. Beautiful is better than ugly.
+        2. Explicit is better than implicit.
+        3. Simple is better than complex.
+        4. Complex is better than complicated.'''.splitlines(keepends=True)
+        print('text1 =', text1)
+        print('len(text1):', len(text1))
+        print('text1[0][-1]:', repr(text1[0][-1]))
+        text2 = '''  1. Beautiful is better than ugly.
+        3.   Simple is better than complex.
+        4. Complicated is better than complex.
+        5. Flat is better than nested.'''.splitlines(keepends=True)
+        print('text2 =', text2)
+        d = Differ()
+        print('Differ():', d)
+        print('''
+        Note that when instantiating a Differ object we may pass functions to 
+        filter out line and character “junk.” See the Differ() constructor for 
+        details.
+
+        Finally, we compare the two:
+        ''')
+        print('d.compare(text1, text2):', d.compare(text1, text2), end='\n\n')
+        result = list(d.compare(text1, text2))
+        print('list(d.compare(text1, text2)):', result)
+        pprint(result)
+        sys.stdout.writelines(result)
     
     
     
