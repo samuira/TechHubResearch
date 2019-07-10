@@ -4,6 +4,7 @@ Created on Tue July 9 14:31:24 2019
 
 @author: Rajesh Samui
 """
+import stringprep
 
 class InternetStringPreparation:
     """
@@ -38,7 +39,9 @@ class InternetStringPreparation:
         Determine whether code is in tableA.1 (Unassigned code points in 
         Unicode 3.2).
         """
-        pass
+        # print(stringprep.in_table_c11('\u0020')) #It is inside the ASCII space characters
+        # print(stringprep.in_table_d2('L')) #Letter L has bidirectional property from left to right
+        # print(stringprep.in_table_d1('L')) #Letter L has no bidirectional property for right to left
     
     
     

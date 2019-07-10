@@ -4,7 +4,7 @@ Created on Tue July 8 14:31:24 2019
 
 @author: Rajesh Samui
 """
-from unicodedata import ( lookup, name, decimal, digit, )
+from unicodedata import ( lookup, name, decimal, digit, numeric, )
 
 class UnicodeDatabase:
     """
@@ -64,7 +64,22 @@ class UnicodeDatabase:
         such value is defined, default is returned, or, if not given, 
         ValueError is raised.
         """
-        print("digit('9'):", digit('9'))
+        print("digit('1'):", digit('1')) # Decimal digit one.
+        print("digit('١'):", digit('١')) # ARABIC-INDIC digit one
+        print("digit('①'):", digit('①'))    
+        try:
+            print(digit('¼')) # Not a digit, so "ValueError: not a digit" will be generated.
+        except Exception as e:
+            print(type(e), e)
+        
+    def unicodedata_numeric_test(self):
+        """
+        Returns the numeric value assigned to the character chr as float. If no
+        such value is defined, default is returned, or, if not given, 
+        ValueError is raised.
+        """
+        print("numeric('Ⅱ'):", numeric('Ⅱ')) # Roman number two.
+        print("numeric('¼'):", numeric('¼')) # Fraction to represent one quarter.
     
     
     
@@ -94,6 +109,10 @@ if __name__ == '__main__':
     print('\n# unicodedata.digit(chr[, default])')
     print(ud.unicodedata_digit_test.__doc__)
     ud.unicodedata_digit_test()
+    
+    print('\n# unicodedata.numeric(chr[, default])')
+    print(ud.unicodedata_numeric_test.__doc__)
+    ud.unicodedata_numeric_test()
     
     
     
