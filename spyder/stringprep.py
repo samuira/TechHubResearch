@@ -29,7 +29,12 @@ class InternetStringPreparation:
     module uses the Unicode character database internally. The module source 
     code itself was generated using the mkstringprep.py utility.
     
-    As a result, these tables are exposed as functions, not as data structures. There are two kinds of tables in the RFC: sets and mappings. For a set, stringprep provides the “characteristic function”, i.e. a function that returns true if the parameter is part of the set. For mappings, it provides the mapping function: given the key, it returns the associated value. Below is a list of all functions available in the module.
+    As a result, these tables are exposed as functions, not as data structures.
+    There are two kinds of tables in the RFC: sets and mappings. For a set, 
+    stringprep provides the “characteristic function”, i.e. a function that 
+    returns true if the parameter is part of the set. For mappings, it provides
+    the mapping function: given the key, it returns the associated value. Below
+    is a list of all functions available in the module.
     """
     def __init__(self):
         pass
