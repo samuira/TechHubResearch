@@ -6,7 +6,7 @@ Created on Tue July 8 14:31:24 2019
 """
 from unicodedata import ( lookup, name, decimal, digit, numeric, category, 
                          bidirectional, combining, east_asian_width, mirrored, 
-                         decomposition, )
+                         decomposition, normalize, unidata_version, ucd_3_2_0, )
 
 class UnicodeDatabase:
     """
@@ -168,7 +168,7 @@ class UnicodeDatabase:
     
     def unicodedata_normalize_test(self):
         """
-        Return the normal form form for the Unicode string unistr. Valid values
+        Return the normal form for the Unicode string unistr. Valid values
         for form are ‘NFC’, ‘NFKC’, ‘NFD’, and ‘NFKD’.
 
         The Unicode standard defines various normalization forms of a Unicode 
@@ -184,17 +184,44 @@ class UnicodeDatabase:
         Normal form C (NFC) first applies a canonical decomposition, then 
         composes pre-combined characters again.
     
-        In addition to these two forms, there are two additional normal forms based on compatibility equivalence. In Unicode, certain characters are supported which normally would be unified with other characters. For example, U+2160 (ROMAN NUMERAL ONE) is really the same thing as U+0049 (LATIN CAPITAL LETTER I). However, it is supported in Unicode for compatibility with existing character sets (e.g. gb2312).
+        In addition to these two forms, there are two additional normal forms 
+        based on compatibility equivalence. In Unicode, certain characters are 
+        supported which normally would be unified with other characters. For 
+        example, U+2160 (ROMAN NUMERAL ONE) is really the same thing as U+0049 
+        (LATIN CAPITAL LETTER I). However, it is supported in Unicode for 
+        compatibility with existing character sets (e.g. gb2312).
     
-        The normal form KD (NFKD) will apply the compatibility decomposition, i.e. replace all compatibility characters with their equivalents. The normal form KC (NFKC) first applies the compatibility decomposition, followed by the canonical composition.
+        The normal form KD (NFKD) will apply the compatibility decomposition, 
+        i.e. replace all compatibility characters with their equivalents. The 
+        normal form KC (NFKC) first applies the compatibility decomposition, 
+        followed by the canonical composition.
     
-        Even if two unicode strings are normalized and look the same to a human reader, if one has combining characters and the other doesn’t, they may not compare equal.
+        Even if two unicode strings are normalized and look the same to a human
+        reader, if one has combining characters and the other doesn’t, they may
+        not compare equal.
         """
-        pass
+        print("normalize('NFC', '\u0061\u0301'):", 
+              normalize('NFC', '\u0061\u0301'))
+        print("normalize('NFD', '\u00e1'):", normalize('NFD', '\u00e1'))
+        print("normalize('NFC', u'\u2167'):", normalize('NFC', u'\u2167'))  # roman numeral VIII
+        print("normalize('NFKC', u'\u2167'):", normalize('NFKC', u'\u2167')) # roman numeral VIII
+        return
     
+    def unicodedata_unidata_version_test(self):
+        """
+        The version of the Unicode database used in this module.
+        """
+        print('unidata_version:', unidata_version)
+        return
     
-    
-    
+    def unicodedata_ucd_3_2_0_test(self):
+        """
+        This is an object that has the same methods as the entire module, but 
+        uses the Unicode database version 3.2 instead, for applications that 
+        require this specific version of the Unicode database (such as IDNA).
+        """
+        print('ucd_3_2_0.unidata_version:', ucd_3_2_0.unidata_version)
+        return
     
     
 
@@ -246,10 +273,17 @@ if __name__ == '__main__':
 #    print(ud.unicodedata_decomposition_test.__doc__)
 #    ud.unicodedata_decomposition_test()
     
-    print('\n# unicodedata.normalize(form, unistr)')
-    print(ud.unicodedata_normalize_test.__doc__)
-    ud.unicodedata_normalize_test()
+#    print('\n# unicodedata.normalize(form, unistr)')
+#    print(ud.unicodedata_normalize_test.__doc__)
+#    ud.unicodedata_normalize_test()
     
+#    print('\n# unicodedata.unidata_version')
+#    print(ud.unicodedata_unidata_version_test.__doc__)
+#    ud.unicodedata_unidata_version_test()
+    
+    print('\n# unicodedata.ucd_3_2_0')
+    print(ud.unicodedata_ucd_3_2_0_test.__doc__)
+    ud.unicodedata_ucd_3_2_0_test()
     
     
     

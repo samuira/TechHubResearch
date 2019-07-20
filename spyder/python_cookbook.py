@@ -59,7 +59,7 @@ class PythonCookBook:
         record = ('Dave', 'dave@example.com', '773-555-1212', '847-555-1212')
         name, email, *phone_number = record
         print('name = {}, phone_number = {}'.format(name, phone_number))
-        
+            
 
 
 
