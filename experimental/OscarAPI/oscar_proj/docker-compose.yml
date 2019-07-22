@@ -1,0 +1,44 @@
+version: "3"
+services:
+
+  django:
+    build: ./
+    command: "python3 manage.py runserver 0.0.0.0:8082"
+    container_name: oscar_proj
+    entrypoint: /oscar_proj/entrypoint.sh
+    ports:
+      - "8082:8082"
+    volumes:
+      - ".:/oscar_proj"
+    depends_on:
+      - postgres
+
+  postgres:
+    container_name: oscar-postgres
+    image: 'mdillon/postgis'
+    volumes:
+      - pgdata:/data
+    ports:
+      - "127.0.0.1:5433:5432"
+    environment:
+      POSTGRES_DB: db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    restart: unless-stopped
+
+  nginx:
+    build: 
+      context: ./nginx/
+      dockerfile: ./Dockerfile
+    restart: always
+    ports:
+      - "8080:80"
+    volumes:
+      - "./nginx/nginx.conf:/etc/nginx/conf.d/default.conf"
+      - ".:/oscar_proj"
+    depends_on:
+      - django
+
+volumes:
+    pgdata:
+

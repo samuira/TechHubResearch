@@ -1,0 +1,73 @@
+{% extends "layout_2_col.html" %}
+{% load product_tags %}
+{% load i18n %}
+
+{% block navigation %}
+{% include "partials/nav_primary.html" with expand_dropdown=1 %}
+{% endblock %}
+{% block header %}{% endblock %}
+
+{% block column_left %}
+{% endblock %}
+
+{% block content %}
+<div class="owl-carousel owl-theme">
+	<div class="item">
+		<img src="http://wordpress.openpaytestandtrain.com.au/wp-content/uploads/2018/04/openpay-popup-info-widget2.jpg" class="img-responsive" alt="http://wordpress.openpaytestandtrain.com.au/wp-content/uploads/2018/04/openpay-popup-info-widget2.jpg">
+	</div>
+	<div class="item">
+		<img src="http://wordpress.openpaytestandtrain.com.au/wp-content/uploads/2018/04/widget3.jpg" class="img-responsive" alt="http://wordpress.openpaytestandtrain.com.au/wp-content/uploads/2018/04/widget3.jpg">
+	</div>
+	<div class="item">
+		<img src="http://wordpress.openpaytestandtrain.com.au/wp-content/uploads/2018/04/openpay-price-calculator.jpg" class="img-responsive" alt="http://wordpress.openpaytestandtrain.com.au/wp-content/uploads/2018/04/openpay-price-calculator.jpg">
+	</div>
+	<div class="item">
+		<img src="http://wordpress.openpaytestandtrain.com.au/wp-content/uploads/2018/04/openpay-product-calculator.jpg" class="img-responsive" alt="http://wordpress.openpaytestandtrain.com.au/wp-content/uploads/2018/04/openpay-product-calculator.jpg">
+	</div>
+	<div class="item">
+		<img src="http://wordpress.openpaytestandtrain.com.au/wp-content/uploads/2018/04/openpay-cart-dropdown-accelerator.jpg" class="img-responsive" alt="http://wordpress.openpaytestandtrain.com.au/wp-content/uploads/2018/04/openpay-cart-dropdown-accelerator.jpg">
+	</div>
+</div>
+
+
+{% if products %}
+	<section>
+		<div>
+			<ol class="row">
+				{% for product in products %}
+					<li class="col-xs-6 col-sm-4 col-md-3 col-lg-3">{% render_product product %}</li>
+				{% endfor %}
+			</ol>
+			{% include "partials/pagination.html" %}
+		</div>
+	</section>
+{% else %}
+	<p class="nonefound">{% trans "No products found." %}</p>
+{% endif %}
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css">
+<script>
+    $('.owl-carousel').owlCarousel({
+        loop: true,
+        margin: 10,
+        nav: true,
+        items: 1,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 3
+            },
+            1000: {
+                items: 5
+            }
+        }
+    })
+</script>
+
+
+{% endblock content %}

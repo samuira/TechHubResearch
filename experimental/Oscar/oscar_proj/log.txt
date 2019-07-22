@@ -1,0 +1,14 @@
+[14/Mar/2019 14:28:52] "GET /checkout/payment-details/ HTTP/1.1" 200 13359
+[14/Mar/2019 14:28:53] "GET /media/logo-openpay.png HTTP/1.1" 200 10304
+[14/Mar/2019 14:29:02] "GET /checkout/payment-details/ HTTP/1.1" 200 13359
+[14/Mar/2019 14:29:04] "GET /checkout/shipping-address/ HTTP/1.1" 200 30895
+[14/Mar/2019 14:29:06] "GET / HTTP/1.1" 200 36465
+[14/Mar/2019 14:29:06] "GET /media/cache/5b/16/5b16b01f1e0ef35640a6e2bad8785aba.jpg HTTP/1.1" 200 2932
+[14/Mar/2019 14:29:06] "GET /media/cache/90/43/904390601d030a5d2a2c19e123f38412.jpg HTTP/1.1" 200 12687
+[14/Mar/2019 14:29:06] "GET /media/cache/ec/0f/ec0f216e1ac4b53d38cc616eed8ab9a2.jpg HTTP/1.1" 200 2115
+[14/Mar/2019 18:30:16] "GET / HTTP/1.0" 200 32868
+[15/Mar/2019 07:04:52] "GET / HTTP/1.1" 200 36465
+[15/Mar/2019 07:05:30] "GET / HTTP/1.1" 200 36465
+Not Found: /favicon.ico
+[15/Mar/2019 07:05:31] "GET /favicon.ico HTTP/1.1" 404 5105
+[15/Mar/2019 07:06:41] "GET /static/oscar/css/styles.css.map HTTP/1.1" 200 356620

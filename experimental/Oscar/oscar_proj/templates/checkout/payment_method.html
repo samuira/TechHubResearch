@@ -1,0 +1,45 @@
+{% extends "checkout/checkout.html" %}
+{% load i18n %}
+
+{% block checkout_title %}{{ form.payment_method.label }}{% endblock %}
+
+{% block checkout_nav %}
+    {% include 'checkout/nav.html' with step=3 %}
+{% endblock %}
+
+{% block content %}
+<style>
+.radio{float: left; width: 100%;}
+    .openDiv{float: left; width: 100%; padding: 20px 40px; box-sizing: border-box; -webkit-box-sizing: border-box; background: #efefef; border: 1px solid #cccccc; border-radius: 5px;}
+</style>
+
+    {% if error %}
+        <div class="alert alert-error">
+            {{ error }}
+        </div>
+{% endif %}
+    <h4 class="totalamount">Total Price: $ {{ order_total.incl_tax }}</h4>
+
+    <form action="" method="post">        {% csrf_token %}
+
+        {% if form.payment_method.errors %}{{ form.payment_method.errors }}{% endif %}
+        <div class="radio">
+            <input id="id_payment_method_0" name="payment_method" type="radio" value="dbt" style="margin-left: 0px; margin-right: 4px; position: relative;">
+            <label for="id_payment_method_0" style="padding-left: 0px;">{% trans "Direct bank Transfer" %}</label>
+            <div class="openDiv payboxDiv">Bank</div>
+        </div>
+        <div class="radio">
+            <input id="id_payment_method_1" name="payment_method" type="radio" value="cod" style="margin-left: 0px; margin-right: 4px; position: relative;">
+            <label for="id_payment_method_1" style="padding-left: 0px;">{% trans "Cash on delivery" %}</label>
+            <div class="openDiv payboxDiv">COD</div>
+        </div>
+        <div class="radio openpayDiv">
+            <input id="id_payment_method_2" name="payment_method" type="radio" value="custom_payment" style="margin-left: 0px; margin-right: 4px; position: relative;">
+            <label for="id_payment_method_2" class="openpay" style="padding-left: 0px;">{% trans "OpenPay" %}</label>
+            <div class="openDiv payboxDiv"></div>
+        </div>
+        <button type="submit" id="btn_confirm_payment" class="btn btn-large btn-primary" disabled>{% trans "Continue to confirmation" %}</button>
+    </form>
+
+{% endblock %}
+

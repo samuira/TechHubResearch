@@ -1,0 +1,76 @@
+{% load i18n %}
+<footer class="footer container-fluid" id="colophon">
+  {% block footer %}
+
+  <div class="row footer">
+      <div class="col-md-3"><h4><span>Product Category</span> </h4>
+  <ul>
+      <li>Hand picked collection</li>
+      <li>Featured posts</li>
+      <li>Men Collection</li>
+      <li>Women Collection</li>
+  
+  </ul>
+      </div>
+      <div class="col-md-3"><h4><span>Quick Links</span> </h4>
+          <ul>
+              <li>Openpay</li>
+          </ul>
+      </div>
+      <div class="col-md-3"><h4><span>pages</span> </h4>
+          <ul>
+      <li>Home</li>
+      <li>Products</li>
+  
+  
+  </ul>
+      </div>
+      <div class="col-md-3"><h4> <span>Payment</span></h4>
+          <ul class="store-logo">
+  <li><img src="http://wordpress.openpaytestandtrain.com.au/wp-content/uploads/2018/04/paypal.png" alt="paypal"></li>
+  <li><img src="http://wordpress.openpaytestandtrain.com.au/wp-content/uploads/2018/04/visa.png" alt="visa"></li>
+  <li><img src="http://wordpress.openpaytestandtrain.com.au/wp-content/uploads/2018/04/mastercard.png" alt="mastercard"></li>
+  <li><img src="http://wordpress.openpaytestandtrain.com.au/wp-content/uploads/2018/04/american_express.png" alt="American Express"></li>
+  <li><img src="http://wordpress.openpaytestandtrain.com.au/wp-content/uploads/2018/04/openpay-e1524046109210.png" alt="Openpay Logo"></li>
+  </ul>
+  
+      </div>
+  
+  </div>
+    <div id="bottom-footer" class="clearfix">
+      <div class="tg-container text-center">
+        <p>© 2019 Openpay Demo Store</p>
+      </div>
+    </div>
+    <style>
+       
+        .blockbottom{ padding-bottom:50px;}
+        .footer{ margin:50px auto;}
+        .footer ul{ padding:0;     padding: 0 0 0 15px;}
+        .footer h4{     border-bottom: 1px solid #d6d6d6;
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            position: relative;}
+        
+         .footer h4 span {
+            border-bottom: 2px solid #00a9e0;
+            padding-bottom: 10px;
+            display: inline-block;
+            position: relative;
+            top: 1px;
+        }
+        .footer .store-logo li {
+            width: 31%;
+            display: inline-block;
+            vertical-align: top;
+            margin-bottom: 20px;
+            padding-right: 20px;
+            list-style-type: none;
+        }
+    </style>
+  
+  {% endblock %}
+</footer>
+
+
