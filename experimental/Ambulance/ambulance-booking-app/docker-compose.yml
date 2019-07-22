@@ -1,0 +1,41 @@
+version: "3"
+services:
+  pgadmin:
+    depends_on:
+      - postgres
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin@mail.com
+      PGADMIN_DEFAULT_PASSWORD: pgadmin
+    image: dpage/pgadmin4
+    ports:
+      - "5050:80"
+    restart: unless-stopped
+    logging:
+      driver: none
+    volumes:
+      - "/data/pgadmin:/root/.pgadmin"
+  postgres:
+    container_name: ambulance_booking_db
+    environment:
+      POSTGRES_DB: abook_db
+      POSTGRES_PASSWORD: "admin#123"
+      POSTGRES_USER: admin
+    image: "postgres:9.5"
+    ports:
+      - "127.0.0.1:5433:5432"
+    restart: unless-stopped
+    volumes:
+      - "pgdata:/var/lib/postgresql/data/"
+  django:
+    build: ./
+    command: "python3 manage.py runserver 0.0.0.0:8089"
+    container_name: ambulance_booking_proj
+    entrypoint: /entrypoint.sh
+    depends_on:
+      - postgres
+    ports:
+      - "8089:8089"
+    volumes:
+      - ".:/application"
+volumes:
+  pgdata: ~
