@@ -41,27 +41,41 @@ class BinaryDataServices:
         '''
         
         print('\n# struct.pack(format, v1, v2, ...)')
+        print('\n# struct.unpack(format, buffer)')
         print('''
         Return a bytes object containing the values v1, v2, … packed according 
         to the format string format. The arguments must match the values 
         required by the format exactly.
+        
+        Unpack from the buffer buffer (presumably packed by pack(format, ...)) 
+        according to the format string format. The result is a tuple even if it
+        contains exactly one item. The buffer’s size in bytes must match the 
+        size required by the format, as reflected by calcsize().
         ''')
         # Format: h is short in C type 
         # Format: l is long in C type 
         # Format 'hhl' stands for 'short short long' 
         var = struct.pack('hhl',1,2,3) 
-        print("struct.pack('hhl',1,2,3):", var) 
+        print("struct.pack('hhl',1,2,3):", var)
+        print("struct.unpack('hhl', var):",struct.unpack('hhl', var))
 
         # Format: i is int in C type 
         # Format 'iii' stands for 'int int int' 
         var = struct.pack('iii',1,2,3) 
-        print("struct.pack('iii',1,2,3):", var)      
+        print("struct.pack('iii',1,2,3):", var)  
+        print("struct.unpack('iii', var):", struct.unpack('iii', var))
         
         print('\n# struct.pack_into(format, buffer, offset, v1, v2, ...)')
+        print('\n# struct.unpack(format, buffer)')
         print('''
         Pack the values v1, v2, … according to the format string format and 
         write the packed bytes into the writable buffer buffer starting at 
         position offset. Note that offset is a required argument.
+        
+        Unpack from the buffer buffer (presumably packed by pack(format, ...)) 
+        according to the format string format. The result is a tuple even if it
+        contains exactly one item. The buffer’s size in bytes must match the 
+        size required by the format, as reflected by calcsize().
         ''')
         # SIZE of the format is calculated using calcsize() 
         siz = struct.calcsize('hhl') 
@@ -79,11 +93,37 @@ class BinaryDataServices:
           
         # struct.pack_into() packs data into buff, doesn't return any value 
         # struct.unpack_from() unpacks data from buff, returns a tuple of values 
-        struct.pack_into('hhl', buff, 0, 2, 2, 3) 
-        print(struct.unpack_from('hhl', buff, 0)) 
+        struct.pack_into('hhl', buff, 0, 2, 2, 3)
+        print("struct.pack_into('hhl', buff, 0, 2, 2, 3):", 
+              struct.pack_into('hhl', buff, 0, 2, 2, 3) )
+        print("struct.unpack_from('hhl', buff, 0):", 
+              struct.unpack_from('hhl', buff, 0))
         
+        print('\n# struct.iter_unpack(format, buffer)')
+        print('''
+        Iteratively unpack from the buffer buffer according to the format 
+        string format. This function returns an iterator which will read 
+        equally-sized chunks from the buffer until all its contents have been 
+        consumed. The buffer’s size in bytes must be a multiple of the size 
+        required by the format, as reflected by calcsize().
+
+        Each iteration yields a tuple as specified by the format string.
+
+        New in version 3.4.
+        ''')
         
-    
+        print('\n# struct.calcsize(format)')
+        print('''
+        Return the size of the struct (and hence of the bytes object produced 
+        by pack(format, ...)) corresponding to the format string format.
+        ''')
+        
+        def mul():
+            return [lambda x : i * x for i in range(4)]
+        print(mul()[0], mul()[1])
+        print(mul()[1](4))
+        print([m(2) for m in mul()])
+        
     
     
     

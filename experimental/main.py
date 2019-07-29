@@ -7,11 +7,15 @@ from DateTimeCheck.date_time_check import DateTimeCheck
 
 if __name__ == '__main__':
 
+    #######################################
 
+    list_of_json = [{'title':'abc'},{'title':'bc'},{'title':'bc'},{'title':'abc'}, {'title':'bc'}, {'title':'a'}]
+    print(group_by_ss(list_of_json, 'title'))
     ######################################
 
-    dt = DateTimeCheck()
-    print(dt.format_hours_12(60))
+    # dt = DateTimeCheck()
+    # print(dt.format_hours_12(60))
+
 
     ########################################
     #z = ZipcodesCheck()

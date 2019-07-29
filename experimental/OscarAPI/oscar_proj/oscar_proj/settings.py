@@ -227,3 +227,4 @@ CLIENT = Client(merchant=MERCHANT)
 OSCARAPI_BLOCK_ADMIN_API_ACCESS = True
 OSCARAPI_OVERRIDE_MODULES = ["oscar_proj.custom_oscar_api"]
 GOOGLE_MAPS_API_KEY = 'AIzaSyBC8ohCpWs2c7l_qkpjejEN2U3lVnx4KTQ'
+# GOOGLE_MAPS_API_KEY = 'AIzaSyCwRijNhNSd8pko-e_O0BjiMH_0bTS3Yro' # A Roy
