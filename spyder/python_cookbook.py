@@ -4,7 +4,7 @@ Created on Tue July 11 14:31:24 2019
 
 @author: Rajesh Samui
 """
-from collections import deque, defaultdict, OrderedDict
+from collections import deque, defaultdict, OrderedDict, Counter
 import heapq
 from pprint import pprint
 import json
@@ -379,7 +379,78 @@ class PythonCookBook:
                     seen.add(item)
                     
         a = [1, 5, 2, 1, 9, 1, 5, 10]
-        print(list(dedupe(a)))
+        print('a =', a)
+        print('list(dedupe(a)):', list(dedupe(a)))
+        
+        def dedupe(items, key=None):
+            seen = set()
+            for item in items:
+                val = item if key is None else key(item)
+                if val not in seen:
+                    yield item
+                    seen.add(val)
+        a = [ {'x':1, 'y':2}, {'x':1, 'y':3}, {'x':1, 'y':2}, {'x':2, 'y':4}]
+        pprint(a)
+        print("list(dedupe(a, lambda d: (d['x'], d['y']))):", 
+                                list(dedupe(a, lambda d: (d['x'], d['y']))))
+        print("list(dedupe(a, lambda d: d['x'])):",
+                                list(dedupe(a, lambda d: d['x'])))
+        
+        print('\n# 1.11. Naming a Slice')
+        print('''
+        Problem:
+            Your program has become an unreadable mess of hardcoded slice 
+            indices and you want to clean it up.
+        ''')
+        record = '100 513.25'
+        cost = int(record[0:3]) * float(record[4:10])
+        print(cost)
+        SHARES = slice(0,3)
+        PRICE = slice(4,10)
+        cost = int(record[SHARES]) * float(record[PRICE])
+        print(cost)
+        
+        print('*'*50)
+        items = [0, 1, 2, 3, 4, 5, 6]
+        a = slice(2, 4)
+        print('a =', a)
+        print('items =', items)
+        print('items[2:4]:', items[2:4])
+        print('items[a]:', items[a])
+        items[a] = [10,11]
+        print('items =', items)
+        del items[a]
+        print('items =', items)
+        
+        print('*'*50)
+        a = slice(5, 10, 2)
+        print('a =', a)
+        print('a.start:', a.start)
+        print('a.stop:', a.stop)
+        print('a.step:', a.step)
+        
+        print('*'*50)
+        s = 'HelloWorld'
+        print('a.indices(len(s)):', a.indices(len(s)))
+        [print(s[i]) for i in range(*a.indices(len(s)))]
+        
+        print('\n# 1.12. Determining the Most Frequently Occurring Items in a Sequence')
+        '''
+        Problem:
+            You have a sequence of items, and you’d like to determine the most 
+            frequently occurring items in the sequence.
+        '''
+        words = [
+        'look', 'into', 'my', 'eyes', 'look', 'into', 'my', 'eyes',
+        'the', 'eyes', 'the', 'eyes', 'the', 'eyes', 'not', 'around', 'the',
+        'eyes', "don't", 'look', 'around', 'the', 'eyes', 'look', 'into',
+        'my', 'eyes', "you're", 'under'
+        ]
+        word_counts = Counter(words)
+        top_three = word_counts.most_common(3)
+        print(top_three)
+        
+        
         
         
         
