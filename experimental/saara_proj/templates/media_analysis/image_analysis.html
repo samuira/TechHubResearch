@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    {% include 'partials/alert_error.html' %}
+    <div class="row">
+        <form action="/" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="file">Image</label>
+                <input type="file" class="form-control" id="file" name="file" onchange="readURL(this);">
+                {% if error.file %}<span class="kt-font-danger kt-font-bold">{{error.file}}</span>{% endif %}
+                <img id="blah" src="#" alt="your image"/>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+
+{% endblock content %}

@@ -447,11 +447,31 @@ class PythonCookBook:
         'my', 'eyes', "you're", 'under'
         ]
         word_counts = Counter(words)
+        print('word_counts:', word_counts)
         top_three = word_counts.most_common(3)
-        print(top_three)
+        print('top_three:', top_three)
+        print("word_counts['not']:", word_counts['not'])
+        print("word_counts['eyes']:", word_counts['eyes'])
+        morewords = ['why','are','you','not','looking','in','my','eyes']
+        for word in morewords:
+            word_counts[word] += 1
+        print('word_counts:', word_counts)
+        word_counts.update(morewords)
+        print('word_counts:', word_counts)
+        print('*'*50)
+        a = Counter(words)
+        b = Counter(morewords)
+        print('a = '+repr(a), 'b = '+repr(b), sep='\n')
+        print('a + b:', repr(a + b))
+        print('a - b:', repr(a - b))
+        print('*'*50)
         
-        
-        
+        print('\n# 1.13. Sorting a List of Dictionaries by a Common Key')
+        print('''
+        Problem:
+            You have a list of dictionaries and you would like to sort the 
+            entries according to one or more of the dictionary values.
+        ''')
         
         
         
