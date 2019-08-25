@@ -1,0 +1,92 @@
+version: "3"
+
+volumes:
+  mysql-data:
+
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: docker_demo-mysql
+    working_dir: /mysql
+    volumes:
+      - mysql-data:/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=karakira
+      - MYSQL_USER=root
+    ports:
+      - "8306:3306"
+      
+  django:
+    build: ./
+    command: "python3 manage.py runserver 0.0.0.0:8000"
+    container_name: karakira_proj
+    entrypoint: /karakira_proj/entrypoint.sh
+    ports:
+      - "8000:8000"
+    volumes:
+      - ".:/karakira_proj"
+    depends_on:
+      # - restore
+      - mysql
+
+  # restore:
+  #   image: databack/mysql-backup
+  #   volumes:
+  #     - ./dbRestore/Dump.sql.tar.gz:/dbr/Dump.sql.tar.gz
+  #   environment:
+  #     - DB_RESTORE_TARGET=/dbr/Dump.sql.tar.gz
+  #     - DB_USER=root
+  #     - DB_PASS=root
+  #     - DB_PORT=3306
+  #     - DB_DUMP_DEBUG=true
+  #     - DB_SERVER=mysql
+  #   depends_on:
+  #     - mysql
+
+  # backup:
+  #   image: databack/mysql-backup
+  #   restart: always
+  #   user: "0"
+  #   volumes:
+  #     - ./dbBackup:/dbb
+  #   #  - /path/to/pre-backup/scripts:/scripts.d/pre-backup
+  #   #  - /path/to/post-backup/scripts:/scripts.d/post-backup
+  #   environment:
+  #     - DB_DUMP_TARGET=/dbb
+  #     - DB_USER=root
+  #     - DB_PASS=root
+  #     - DB_PORT=3306
+  #     - DB_NAMES=karakira
+  #     - DB_DUMP_FREQ=5
+  #     - DB_DUMP_BEGIN=5
+  #     - DB_SERVER=mysql
+  #   depends_on:
+  #     - django
+
+#  client:
+#    build:
+#      context: ./angular
+#      dockerfile: ./Dockerfile
+#    command: ["npm", "start"]
+#    ports:
+#      - "4200:4200"
+#    volumes:
+#      - "./angular:/usr/src/app"
+#
+#  nginx:
+#    build:
+#      context: ./nginx/
+#      dockerfile: ./Dockerfile
+#    restart: always
+#    ports:
+#      - "8089:80"
+#    volumes:
+#      - "./angular/dist/WorkForce:/usr/src/app"
+#      - "./nginx/nginx.conf:/etc/nginx/conf.d/default.conf"
+#      - ".:/saara_proj"
+#    depends_on:
+#      - django
+#      - client
+
+
