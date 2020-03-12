@@ -2,7 +2,7 @@ Babel==2.6.0
 certifi==2018.11.29
 chardet==3.0.4
 dicttoxml==1.7.4
-Django==2.1.4
+Django==2.2.10
 django-appconf==1.0.2
 django-compressor==2.2
 django-extra-views==0.11.0
