@@ -84,9 +84,9 @@ if __name__ == '__main__':
     gri = GNUReadlineInterface()
     print(gri.__doc__)
     
-#    print('\n# Init file')
-#    print(gri.init_file_test.__doc__)
-#    gri.init_file_test()
+   print('\n# Init file')
+   print(gri.init_file_test.__doc__)
+   gri.init_file_test()
     
     print('\n# Line buffer')
     print(gri.line_buffer_test.__doc__)
