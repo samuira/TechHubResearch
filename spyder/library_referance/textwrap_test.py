@@ -309,9 +309,9 @@ if __name__ == '__main__':
 #    print(tw.textwrap_indent_test.__doc__)
 #    tw.textwrap_indent_test()
     
-    print('\n# textwrap.TextWrapper(**kwargs)')
-    print(tw.textwrap_text_wrapper.__doc__)
-    tw.textwrap_text_wrapper()
+#     print('\n# textwrap.TextWrapper(**kwargs)')
+#     print(tw.textwrap_text_wrapper.__doc__)
+#     tw.textwrap_text_wrapper()
     
     
     
