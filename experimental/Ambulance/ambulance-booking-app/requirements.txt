@@ -6,7 +6,7 @@ idna==2.8
 Pillow==5.4.1
 psycopg2==2.7.7
 psycopg2-binary==2.7.7
-PyJWT==1.7.1
+PyJWT==2.4.0
 pyotp==2.2.7
 PySocks==1.6.8
 pytz==2018.9
